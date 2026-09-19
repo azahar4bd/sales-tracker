@@ -1148,7 +1148,7 @@ function renderTable(){
       <td style="text-align:right">৳ ${Number(e.unitPrice).toLocaleString('bn-BD')}</td>
       <td style="text-align:right;font-weight:700;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('bn-BD')}</td>
       <td style="text-align:right">${e.expenseAmount? '৳ '+Number(e.expenseAmount).toLocaleString('bn-BD'):'-'}</td>
-      <td>${e.status.includes('৫:')||e.status.includes('5:')? `<span style="font-size:10.5px;font-weight:600;background:#f0fdfa;border:1px solid #99f6e4;padding:3px 6px;border-radius:6px;display:inline-block;white-space:nowrap">${e.status}</span>` : `<span class="status-badge status-${e.status}">${e.status}</span>`}</td>
+      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item} • ${getItemBalance(e.item).toLocaleString('bn-BD')} টি</span></td>
       <td>
         <div class="action-btns">
           <button class="btn-sm edit" onclick="editEntry('${e.id}')" title="এডিট">✏️</button>
@@ -1212,7 +1212,7 @@ function renderReport(){
       <td style="text-align:right;font-weight:600">৳ ${Number(e.totalPrice).toLocaleString('bn-BD')}</td>
       <td style="text-align:right">৳ ${Number(e.expenseAmount||0).toLocaleString('bn-BD')}</td>
       <td style="text-align:right;font-weight:700;color:${net>=0?'#059669':'#dc2626'}">${net>=0?'৳ ':'-৳ '}${Math.abs(net).toLocaleString('bn-BD')}</td>
-      <td><span class="status-badge status-${e.status}">${e.status}</span></td>
+      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item} • ${getItemBalance(e.item).toLocaleString('bn-BD')} টি</span></td>
     </tr>`
   }).join('');
 }
