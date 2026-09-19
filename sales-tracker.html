@@ -1141,11 +1141,17 @@ tbody tr:last-child td{border-bottom:none}
           <button class="r-filter-btn" data-filter="all" onclick="setReportFilter('all')">⏳ এ পর্যন্ত</button>
           <button class="r-filter-btn" data-filter="custom" onclick="setReportFilter('custom')">📅 Date to Date</button>
         </div>
-        <div id="reportCustomRange" style="display:none;align-items:center;gap:8px;flex-wrap:wrap;background:#f0f9ff;border:1px solid #dbeafe;padding:8px 10px;border-radius:12px">
-          <input type="date" class="input" id="rFromCustom" style="height:38px;min-width:150px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
-          <span style="font-size:12px;font-weight:800;color:var(--muted)">to</span>
-          <input type="date" class="input" id="rToCustom" style="height:38px;min-width:150px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
-          <button class="btn btn-primary" style="height:38px;padding:0 14px;font-size:12px" onclick="applyCustomReport()">Apply</button>
+        <div id="reportCustomRange" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;background:#f0f9ff;border:1px solid #dbeafe;padding:10px 12px;border-radius:12px">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:10px;font-weight:800;color:#0f766e;letter-spacing:0.5px;text-transform:uppercase">হতে (From)</span>
+            <input type="date" class="input" id="rFromCustom" style="height:38px;min-width:160px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
+          </div>
+          <span style="font-size:12px;font-weight:800;color:var(--muted);margin-top:16px">—</span>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:10px;font-weight:800;color:#0f766e;letter-spacing:0.5px;text-transform:uppercase">পর্যন্ত (To)</span>
+            <input type="date" class="input" id="rToCustom" style="height:38px;min-width:160px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
+          </div>
+          <button class="btn btn-primary" style="height:38px;padding:0 16px;font-size:12px;margin-top:16px" onclick="applyCustomReport()">Apply</button>
         </div>
       </div>
       <div id="reportFilterInfo" style="margin-top:10px;font-size:11px;font-weight:700;color:#0f766e;background:#ecfdf5;border:1px solid #a7f3d0;padding:7px 12px;border-radius:10px;display:inline-block">📅 Filter: এ মাস</div>
@@ -1748,7 +1754,7 @@ function setReportFilter(type){
   });
   const customBox = document.getElementById('reportCustomRange');
   if(customBox) customBox.style.display = (type==='custom'?'flex':'none');
-  // default custom dates to this month if empty
+  // default custom dates to this month if empty (example 1-9-26 to 20-9-26)
   if(type==='custom'){
     const fromEl=document.getElementById('rFromCustom');
     const toEl=document.getElementById('rToCustom');
@@ -1757,7 +1763,11 @@ function setReportFilter(type){
       fromEl.value = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
     }
     if(toEl && !toEl.value){
-      toEl.value = new Date().toISOString().slice(0,10);
+      // default to 20th of this month if today before 20th, else today
+      const now=new Date();
+      const day20 = new Date(now.getFullYear(), now.getMonth(), 20).toISOString().slice(0,10);
+      const today = now.toISOString().slice(0,10);
+      toEl.value = today < day20 ? day20 : today;
     }
   }
   renderReport();
