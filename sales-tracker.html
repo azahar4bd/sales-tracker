@@ -30,14 +30,14 @@ body{
 header{
   background:linear-gradient(135deg,#0f766e 0%,#134e4a 100%);
   color:white;
-  padding:18px 0 0 0;
+  padding:14px 0 0 0;
   position:sticky;
   top:0;
   z-index:50;
   box-shadow:0 4px 20px rgba(0,0,0,0.12);
 }
 .header-inner{
-  max-width:1280px;
+  max-width:1380px;
   margin:0 auto;
   padding:0 20px;
   display:flex;
@@ -52,49 +52,51 @@ header{
   gap:12px;
 }
 .logo-icon{
-  width:44px;height:44px;
+  width:40px;height:40px;
   background:white;
-  border-radius:10px;
+  border-radius:9px;
   display:grid;
   place-items:center;
-  font-size:22px;
+  font-size:20px;
 }
-.logo h1{font-size:22px;font-weight:700;letter-spacing:-0.5px}
-.logo p{font-size:12px;opacity:0.85;margin-top:-2px}
+.logo h1{font-size:20px;font-weight:700;letter-spacing:-0.5px}
+.logo p{font-size:11px;opacity:0.85;margin-top:-2px}
 .header-stats{
   display:flex;
   gap:10px;
   flex-wrap:wrap;
+  transition:all 0.3s;
 }
+.header-stats.hidden{display:none !important}
 .h-stat{
   background:rgba(255,255,255,0.15);
   backdrop-filter:blur(6px);
   border:1px solid rgba(255,255,255,0.2);
-  padding:8px 14px;
-  border-radius:10px;
+  padding:7px 12px;
+  border-radius:9px;
   text-align:center;
-  min-width:110px;
+  min-width:100px;
 }
-.h-stat small{display:block;font-size:11px;opacity:0.85}
-.h-stat b{font-size:15px}
+.h-stat small{display:block;font-size:10px;opacity:0.85}
+.h-stat b{font-size:14px}
 nav{
   display:flex;
   gap:6px;
-  margin-top:16px;
+  margin-top:14px;
   padding:0 20px;
-  max-width:1280px;
+  max-width:1380px;
   margin-left:auto;
   margin-right:auto;
 }
 .nav-btn{
-  padding:10px 22px;
-  border-radius:10px 10px 0 0;
+  padding:9px 20px;
+  border-radius:9px 9px 0 0;
   border:none;
   background:rgba(255,255,255,0.15);
   color:white;
   font-family:inherit;
   font-weight:600;
-  font-size:14px;
+  font-size:13px;
   cursor:pointer;
   transition:all 0.2s;
   display:flex;
@@ -106,9 +108,9 @@ nav{
   color:var(--primary-dark);
 }
 .container{
-  max-width:1280px;
-  margin:22px auto;
-  padding:0 20px 40px;
+  max-width:1380px;
+  margin:16px auto;
+  padding:0 16px 40px;
 }
 .card{
   background:var(--card);
@@ -120,80 +122,83 @@ nav{
 .page.active{display:block;animation:fadeIn 0.25s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 
-/* Form */
-.form-card{padding:22px}
+/* Form - COMPACT 1-2 lines */
+.form-card{padding:14px 16px}
 .form-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:18px;
+  margin-bottom:10px;
   flex-wrap:wrap;
-  gap:12px;
+  gap:10px;
 }
-.form-header h2{font-size:18px;display:flex;align-items:center;gap:10px}
+.form-header h2{font-size:15px;display:flex;align-items:center;gap:8px}
 .form-header h2 span.icon{
-  width:34px;height:34px;
+  width:28px;height:28px;
   background:var(--primary-light);
   color:var(--primary-dark);
   display:grid;place-items:center;
-  border-radius:8px;
-  font-size:16px;
+  border-radius:7px;
+  font-size:14px;
 }
 .badge-editing{
   background:#fef3c7;
   border:1px solid #fde68a;
   color:#92400e;
-  padding:6px 12px;
+  padding:5px 10px;
   border-radius:20px;
-  font-size:12px;
+  font-size:11px;
   font-weight:600;
   display:none;
 }
 .badge-editing.show{display:block}
 .form-grid{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
+  grid-template-columns:repeat(6,1fr);
+  gap:8px 10px;
 }
-@media(max-width:900px){.form-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.form-grid{grid-template-columns:1fr}}
-.field{display:flex;flex-direction:column;gap:6px}
+@media(max-width:1200px){.form-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:768px){.form-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:4px}
 .field label{
-  font-size:13px;
+  font-size:11px;
   font-weight:600;
   color:#334155;
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:4px;
+  white-space:nowrap;
 }
 .field label .req{color:var(--danger)}
 .input, .select{
-  padding:10px 12px;
+  padding:7px 9px;
   border:1px solid var(--border);
-  border-radius:9px;
+  border-radius:7px;
   font-family:inherit;
-  font-size:14px;
+  font-size:12.5px;
   background:white;
   transition:all 0.2s;
   width:100%;
   outline:none;
+  height:34px;
 }
 .input:focus, .select:focus{
   border-color:var(--primary);
-  box-shadow:0 0 0 3px rgba(15,118,110,0.15);
+  box-shadow:0 0 0 2px rgba(15,118,110,0.15);
 }
 .input-wrap{
   display:flex;
-  gap:6px;
+  gap:4px;
 }
 .input-wrap .input, .input-wrap .select{flex:1}
 .btn-icon{
-  width:40px;height:40px;
-  border-radius:9px;
+  width:34px;height:34px;
+  border-radius:7px;
   border:1px dashed var(--primary);
   background:var(--primary-light);
   color:var(--primary-dark);
-  font-size:18px;
+  font-size:16px;
   cursor:pointer;
   display:grid;
   place-items:center;
@@ -201,67 +206,83 @@ nav{
   transition:0.2s;
 }
 .btn-icon:hover{background:var(--primary);color:white;border-style:solid}
-.hint{font-size:11px;color:var(--muted)}
-.row-conditional{
-  display:contents;
-}
+.hint{font-size:10px;color:var(--muted);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .field.hidden{display:none !important}
 .total-preview{
   background:#f0fdfa;
   border:1px solid #99f6e4;
-  padding:8px 10px;
-  border-radius:8px;
-  font-size:12px;
+  padding:4px 6px;
+  border-radius:6px;
+  font-size:10px;
   color:#115e59;
   font-weight:600;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
+.last-status-hint{
+  font-size:10px;
+  color:var(--primary-dark);
+  background:#ecfdf5;
+  border:1px solid #a7f3d0;
+  padding:3px 6px;
+  border-radius:6px;
+  margin-top:2px;
+  display:none;
+  font-weight:600;
+}
+.last-status-hint.show{display:block}
 .form-actions{
   display:flex;
-  gap:10px;
-  margin-top:18px;
+  gap:8px;
+  margin-top:10px;
   flex-wrap:wrap;
+  align-items:center;
 }
 .btn{
-  padding:11px 22px;
-  border-radius:9px;
+  padding:8px 16px;
+  border-radius:8px;
   border:none;
   font-family:inherit;
   font-weight:600;
-  font-size:14px;
+  font-size:12.5px;
   cursor:pointer;
   display:inline-flex;
   align-items:center;
-  gap:8px;
+  gap:6px;
   transition:all 0.2s;
+  height:34px;
 }
 .btn-primary{
   background:var(--primary);
   color:white;
-  box-shadow:0 4px 12px rgba(15,118,110,0.25);
+  box-shadow:0 3px 10px rgba(15,118,110,0.25);
 }
 .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
 .btn-ghost{
   background:white;
   border:1px solid var(--border);
   color:var(--text);
+  height:34px;
 }
 .btn-ghost:hover{background:#f1f5f9}
+.entry-note{font-size:11px;color:var(--muted);margin-left:auto}
 
 /* Table */
-.table-card{margin-top:18px;overflow:hidden}
+.table-card{margin-top:12px;overflow:hidden}
 .table-header{
-  padding:16px 18px;
+  padding:12px 14px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
-  gap:12px;
+  gap:10px;
   border-bottom:1px solid var(--border);
 }
-.table-header h3{font-size:15px}
+.table-header h3{font-size:13px}
 .table-tools{
   display:flex;
-  gap:8px;
+  gap:6px;
   flex-wrap:wrap;
   align-items:center;
 }
@@ -269,94 +290,97 @@ nav{
   position:relative;
 }
 .search input{
-  padding:9px 12px 9px 36px;
+  padding:7px 10px 7px 30px;
   border:1px solid var(--border);
-  border-radius:9px;
+  border-radius:7px;
   font-family:inherit;
-  font-size:13px;
-  width:220px;
+  font-size:12px;
+  width:180px;
+  height:34px;
 }
 .search span{
   position:absolute;
-  left:10px;
+  left:8px;
   top:50%;
   transform:translateY(-50%);
   color:var(--muted);
+  font-size:12px;
 }
 .filter-select{
-  padding:8px 10px;
+  padding:6px 8px;
   border:1px solid var(--border);
-  border-radius:9px;
+  border-radius:7px;
   font-family:inherit;
-  font-size:13px;
+  font-size:12px;
   background:white;
+  height:34px;
 }
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:980px}
+table{width:100%;border-collapse:collapse;min-width:1100px}
 thead th{
   background:#f8fafc;
-  font-size:12px;
+  font-size:11px;
   font-weight:700;
   color:#475569;
   text-transform:uppercase;
-  letter-spacing:0.4px;
-  padding:12px 10px;
+  letter-spacing:0.3px;
+  padding:9px 8px;
   text-align:left;
   white-space:nowrap;
   border-bottom:1px solid var(--border);
 }
 tbody td{
-  padding:11px 10px;
-  font-size:13px;
+  padding:8px 8px;
+  font-size:12.5px;
   border-bottom:1px solid #f1f5f9;
   vertical-align:middle;
 }
 tbody tr:hover{background:#f8fafc}
 .cat-badge{
-  padding:4px 10px;
+  padding:3px 8px;
   border-radius:20px;
-  font-size:11px;
+  font-size:10.5px;
   font-weight:700;
   display:inline-block;
 }
 .cat-ক্রয়{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
 .cat-বিক্রয়{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
 .status-badge{
-  padding:4px 9px;
+  padding:3px 7px;
   border-radius:20px;
-  font-size:11px;
+  font-size:10.5px;
   font-weight:600;
 }
 .status-পরিশোধিত{background:#ecfdf5;color:#065f46}
 .status-বাকি{background:#fef2f2;color:#991b1b}
 .status-আংশিক{background:#fffbeb;color:#92400e}
-.action-btns{display:flex;gap:6px}
+.action-btns{display:flex;gap:4px}
 .btn-sm{
-  width:30px;height:30px;
-  border-radius:7px;
+  width:28px;height:28px;
+  border-radius:6px;
   border:1px solid var(--border);
   background:white;
   cursor:pointer;
   display:grid;
   place-items:center;
-  font-size:13px;
+  font-size:12px;
   transition:0.2s;
 }
 .btn-sm.edit:hover{background:#dbeafe;border-color:#93c5fd;color:#1d4ed8}
 .btn-sm.del:hover{background:#fee2e2;border-color:#fca5a5;color:#dc2626}
 .empty{
   text-align:center;
-  padding:40px 20px;
+  padding:30px 20px;
   color:var(--muted);
 }
-.empty-icon{font-size:40px;margin-bottom:10px}
+.empty-icon{font-size:32px;margin-bottom:8px}
 
 /* Report */
 .report-filters{
   display:grid;
   grid-template-columns:1.2fr 1.2fr 1fr 1fr auto;
   gap:10px;
-  padding:16px;
+  padding:14px;
   align-items:end;
 }
 @media(max-width:900px){.report-filters{grid-template-columns:1fr 1fr}}
@@ -364,14 +388,14 @@ tbody tr:hover{background:#f8fafc}
 .stats{
   display:grid;
   grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-top:16px;
+  gap:12px;
+  margin-top:14px;
 }
 @media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.stats{grid-template-columns:1fr}}
 .stat-card{
-  padding:18px;
-  border-radius:14px;
+  padding:16px;
+  border-radius:12px;
   border:1px solid var(--border);
   background:white;
   position:relative;
@@ -391,69 +415,69 @@ tbody tr:hover{background:#f8fafc}
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:10px;
+  margin-bottom:8px;
 }
 .stat-icon{
-  width:38px;height:38px;
-  border-radius:10px;
+  width:34px;height:34px;
+  border-radius:9px;
   display:grid;
   place-items:center;
-  font-size:18px;
+  font-size:16px;
 }
 .stat-card:nth-child(1) .stat-icon{background:#ccfbf1}
 .stat-card:nth-child(2) .stat-icon{background:#dbeafe}
 .stat-card:nth-child(3) .stat-icon{background:#fef3c7}
 .stat-card:nth-child(4) .stat-icon{background:#dcfce7}
-.stat-label{font-size:12px;color:var(--muted);font-weight:600}
-.stat-value{font-size:22px;font-weight:800;letter-spacing:-0.5px;margin:4px 0}
-.stat-sub{font-size:11px;color:var(--muted)}
+.stat-label{font-size:11px;color:var(--muted);font-weight:600}
+.stat-value{font-size:20px;font-weight:800;letter-spacing:-0.5px;margin:3px 0}
+.stat-sub{font-size:10.5px;color:var(--muted)}
 .charts{
   display:grid;
   grid-template-columns:1.4fr 1fr;
-  gap:14px;
-  margin-top:14px;
+  gap:12px;
+  margin-top:12px;
 }
 @media(max-width:900px){.charts{grid-template-columns:1fr}}
-.chart-card{padding:18px}
-.chart-card h4{font-size:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.chart-card{padding:16px}
+.chart-card h4{font-size:13px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
 .bar-chart{
   display:flex;
   align-items:end;
-  gap:10px;
-  height:180px;
-  padding-top:20px;
+  gap:8px;
+  height:160px;
+  padding-top:16px;
   border-bottom:1px solid var(--border);
   border-left:1px solid var(--border);
 }
-.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
 .bar{
   width:100%;
-  border-radius:8px 8px 0 0;
+  border-radius:6px 6px 0 0;
   transition:height 0.6s ease;
   display:flex;
   align-items:start;
   justify-content:center;
-  padding-top:6px;
+  padding-top:4px;
   color:white;
-  font-size:10px;
+  font-size:9px;
   font-weight:700;
 }
-.bar-label{font-size:11px;font-weight:600;color:#334155;text-align:center;line-height:1.2}
+.bar-label{font-size:10.5px;font-weight:600;color:#334155;text-align:center;line-height:1.2}
 .donut-wrap{
   display:flex;
   align-items:center;
-  gap:18px;
+  gap:16px;
   justify-content:center;
   flex-wrap:wrap;
 }
 .donut{
-  width:140px;height:140px;
+  width:130px;height:130px;
   border-radius:50%;
   position:relative;
 }
 .donut-center{
   position:absolute;
-  inset:18px;
+  inset:16px;
   background:white;
   border-radius:50%;
   display:grid;
@@ -461,10 +485,10 @@ tbody tr:hover{background:#f8fafc}
   text-align:center;
   box-shadow:0 1px 6px rgba(0,0,0,0.08);
 }
-.legend{display:flex;flex-direction:column;gap:8px}
-.legend-item{display:flex;align-items:center;gap:8px;font-size:12px}
-.legend-dot{width:12px;height:12px;border-radius:3px}
-.report-table-wrap{margin-top:14px}
+.legend{display:flex;flex-direction:column;gap:6px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px}
+.legend-dot{width:10px;height:10px;border-radius:3px}
+.report-table-wrap{margin-top:12px}
 
 /* Modal */
 .modal-overlay{
@@ -480,30 +504,30 @@ tbody tr:hover{background:#f8fafc}
 .modal-overlay.open{display:grid}
 .modal{
   background:white;
-  border-radius:14px;
+  border-radius:12px;
   width:100%;
-  max-width:420px;
-  padding:20px;
+  max-width:400px;
+  padding:18px;
   box-shadow:0 20px 40px rgba(0,0,0,0.2);
   animation:pop 0.2s ease;
 }
 @keyframes pop{from{transform:scale(0.95);opacity:0}to{transform:scale(1);opacity:1}}
-.modal h4{font-size:16px;margin-bottom:4px}
-.modal p{font-size:12px;color:var(--muted);margin-bottom:14px}
-.modal-actions{display:flex;gap:10px;justify-content:end;margin-top:14px}
+.modal h4{font-size:15px;margin-bottom:4px}
+.modal p{font-size:11px;color:var(--muted);margin-bottom:12px}
+.modal-actions{display:flex;gap:8px;justify-content:end;margin-top:12px}
 .toast{
   position:fixed;
   bottom:20px;
   right:20px;
   background:#0f172a;
   color:white;
-  padding:12px 16px;
-  border-radius:10px;
-  font-size:13px;
+  padding:10px 14px;
+  border-radius:9px;
+  font-size:12px;
   font-weight:500;
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:8px;
   transform:translateY(80px);
   opacity:0;
   transition:all 0.3s;
@@ -513,9 +537,9 @@ tbody tr:hover{background:#f8fafc}
 .toast.show{transform:translateY(0);opacity:1}
 .footer{
   text-align:center;
-  padding:18px;
+  padding:16px;
   color:var(--muted);
-  font-size:11px;
+  font-size:10.5px;
 }
 </style>
 </head>
@@ -529,7 +553,7 @@ tbody tr:hover{background:#f8fafc}
         <p>ক্রয় • বিক্রয় • খরচ • রিপোর্ট — এক জায়গায়</p>
       </div>
     </div>
-    <div class="header-stats">
+    <div class="header-stats hidden" id="headerStats">
       <div class="h-stat"><small>মোট এন্ট্রি</small><b id="hTotal">0</b></div>
       <div class="h-stat"><small>মোট বিক্রয়</small><b id="hSale">৳ 0</b></div>
       <div class="h-stat"><small>মোট ক্রয়</small><b id="hBuy">৳ 0</b></div>
@@ -537,121 +561,112 @@ tbody tr:hover{background:#f8fafc}
     </div>
   </div>
   <nav>
-    <button class="nav-btn active" onclick="switchPage('entry')" id="btn-entry">📝 এন্ট্রি পেজ</button>
-    <button class="nav-btn" onclick="switchPage('report')" id="btn-report">📈 রিপোর্ট পেজ</button>
+    <button class="nav-btn active" onclick="switchPage('entry')" id="btn-entry">📝 এন্ট্রি</button>
+    <button class="nav-btn" onclick="switchPage('report')" id="btn-report">📈 রিপোর্ট</button>
   </nav>
 </header>
 
 <div class="container">
-  <!-- ENTRY PAGE -->
+  <!-- ENTRY PAGE - NO DASHBOARD, 1-2 LINES -->
   <div id="page-entry" class="page active">
     <div class="card form-card">
       <div class="form-header">
-        <h2><span class="icon">➕</span> নতুন এন্ট্রি যোগ করুন</h2>
-        <div class="badge-editing" id="editingBadge">✏️ এডিট মোড — আপডেট করতে Save চাপুন</div>
+        <h2><span class="icon">➕</span> নতুন এন্ট্রি</h2>
+        <div class="badge-editing" id="editingBadge">✏️ এডিট মোড</div>
+        <span class="entry-note">💡 মোট মূল্য অটো হিসাব হবে</span>
       </div>
 
       <form id="entryForm" onsubmit="handleSave(event)">
         <div class="form-grid">
-          <!-- তারিখ -->
+          <!-- লাইন ১ -->
           <div class="field">
             <label>তারিখ <span class="req">*</span></label>
             <input type="date" class="input" id="fDate" required>
           </div>
 
-          <!-- Category -->
           <div class="field">
             <label>ক্যাটাগরি <span class="req">*</span></label>
             <div class="input-wrap">
               <select class="select" id="fCategory" required onchange="onCategoryChange()">
-                <option value="">সিলেক্ট করুন</option>
+                <option value="">সিলেক্ট</option>
                 <option value="ক্রয়">ক্রয়</option>
                 <option value="বিক্রয়">বিক্রয়</option>
               </select>
-              <button type="button" class="btn-icon" onclick="openAddModal('category')" title="নতুন ক্যাটাগরি যোগ">＋</button>
+              <button type="button" class="btn-icon" onclick="openAddModal('category')" title="নতুন ক্যাটাগরি">＋</button>
             </div>
-            <span class="hint">ক্রয়/বিক্রয় ছাড়াও নতুন ক্যাটাগরি যোগ করতে পারেন</span>
           </div>
 
-          <!-- Item -->
           <div class="field">
             <label>আইটেম <span class="req">*</span></label>
             <div class="input-wrap">
-              <select class="select" id="fItem" required>
-                <option value="">সিলেক্ট করুন</option>
+              <select class="select" id="fItem" required onchange="onItemChange()">
+                <option value="">সিলেক্ট</option>
                 <option value="৫ এর বস্তা">৫ এর বস্তা</option>
                 <option value="১০ এর বস্তা">১০ এর বস্তা</option>
               </select>
-              <button type="button" class="btn-icon" onclick="openAddModal('item')" title="নতুন আইটেম যোগ">＋</button>
+              <button type="button" class="btn-icon" onclick="openAddModal('item')" title="নতুন আইটেম">＋</button>
             </div>
           </div>
 
-          <!-- হতে / দোকানের নাম -->
           <div class="field">
-            <label id="labelSource">হতে / দোকানের নাম <span class="req">*</span></label>
-            <input type="text" class="input" id="fSource" placeholder="যেমন: মেসার্স করিম ট্রেডার্স" required>
-            <span class="hint" id="hintSource">ক্রয় হলে 'হতে', বিক্রয় হলে 'দোকানের নাম' লিখুন</span>
+            <label id="labelSource">হতে / দোকান <span class="req">*</span></label>
+            <input type="text" class="input" id="fSource" placeholder="নাম" required>
           </div>
 
-          <!-- বিক্রয় কারী - শুধু বিক্রয় হলে -->
           <div class="field" id="fieldSalesperson">
             <label>বিক্রয়কারী <span class="req">*</span></label>
             <div class="input-wrap">
               <select class="select" id="fSalesperson">
-                <option value="">সিলেক্ট করুন</option>
+                <option value="">সিলেক্ট</option>
               </select>
-              <button type="button" class="btn-icon" onclick="openAddModal('salesperson')" title="নতুন বিক্রয়কারী যোগ">＋</button>
+              <button type="button" class="btn-icon" onclick="openAddModal('salesperson')" title="নতুন বিক্রয়কারী">＋</button>
             </div>
-            <span class="hint">শুধুমাত্র বিক্রয় ক্যাটাগরিতে প্রযোজ্য</span>
           </div>
 
-          <!-- পরিমাণ -->
           <div class="field">
-            <label>পরিমাণ (বস্তা/পিস) <span class="req">*</span></label>
-            <input type="number" class="input" id="fQty" placeholder="যেমন: 20" min="0" step="0.01" required oninput="calcTotal()">
+            <label>পরিমাণ <span class="req">*</span></label>
+            <input type="number" class="input" id="fQty" placeholder="20" min="0" step="0.01" required oninput="calcTotal()">
           </div>
 
-          <!-- একক মূল্য -->
+          <!-- লাইন ২ -->
           <div class="field">
-            <label>একক মূল্য (৳) <span class="req">*</span></label>
-            <input type="number" class="input" id="fUnitPrice" placeholder="যেমন: 1200" min="0" step="0.01" required oninput="calcTotal()">
+            <label>একক মূল্য <span class="req">*</span></label>
+            <input type="number" class="input" id="fUnitPrice" placeholder="1200" min="0" step="0.01" required oninput="calcTotal()">
           </div>
 
-          <!-- মোট মূল্য -->
           <div class="field">
-            <label>মোট মূল্য (৳) <span class="req">*</span></label>
-            <input type="number" class="input" id="fTotalPrice" placeholder="অটো হিসাব হবে" min="0" step="0.01" required>
-            <div class="total-preview" id="totalPreview">পরিমাণ × একক মূল্য = ৳ 0</div>
+            <label>মোট মূল্য <span class="req">*</span></label>
+            <input type="number" class="input" id="fTotalPrice" placeholder="অটো" min="0" step="0.01" required>
+            <div class="total-preview" id="totalPreview">পরিমাণ × একক = ৳ 0</div>
           </div>
 
-          <!-- খরচ বিবরণ -->
           <div class="field">
             <label>খরচ বিবরণ</label>
-            <input type="text" class="input" id="fExpenseDesc" placeholder="যেমন: গাড়ি ভাড়া, লেবার">
+            <input type="text" class="input" id="fExpenseDesc" placeholder="গাড়ি ভাড়া">
           </div>
 
-          <!-- খরচ পরিমাণ -->
           <div class="field">
-            <label>খরচ পরিমাণ (৳)</label>
-            <input type="number" class="input" id="fExpenseAmount" placeholder="যেমন: 500" min="0" step="0.01" value="0">
+            <label>খরচ (৳)</label>
+            <input type="number" class="input" id="fExpenseAmount" placeholder="0" min="0" step="0.01" value="0">
           </div>
 
-          <!-- স্থিতি -->
           <div class="field">
-            <label>স্থিতি (Status)</label>
+            <label>স্থিতি <span style="color:var(--primary);font-weight:700">• আইটেমের লাস্ট স্থিতি</span></label>
             <select class="select" id="fStatus">
               <option value="পরিশোধিত">পরিশোধিত</option>
               <option value="বাকি">বাকি</option>
               <option value="আংশিক">আংশিক</option>
             </select>
-            <span class="hint">ক্যাটাগরি অনুযায়ী বাকি/পরিশোধিত</span>
+            <div class="last-status-hint" id="lastStatusHint"></div>
           </div>
-        </div>
 
-        <div class="form-actions">
-          <button type="submit" class="btn btn-primary" id="btnSave">💾 Save</button>
-          <button type="button" class="btn btn-ghost" onclick="resetForm()">↺ Reset</button>
-          <span style="margin-left:auto;font-size:12px;color:var(--muted);align-self:center">💡 মোট মূল্য স্বয়ংক্রিয়ভাবে হিসাব হবে, চাইলে ম্যানুয়ালি পরিবর্তন করতে পারেন</span>
+          <div class="field" style="justify-content:end">
+            <label style="opacity:0">action</label>
+            <div style="display:flex;gap:6px">
+              <button type="submit" class="btn btn-primary" id="btnSave" style="flex:1">💾 Save</button>
+              <button type="button" class="btn btn-ghost" onclick="resetForm()">↺</button>
+            </div>
+          </div>
         </div>
       </form>
     </div>
@@ -663,7 +678,7 @@ tbody tr:hover{background:#f8fafc}
         <div class="table-tools">
           <div class="search">
             <span>🔍</span>
-            <input type="text" id="searchInput" placeholder="সার্চ: আইটেম, দোকান..." oninput="renderTable()">
+            <input type="text" id="searchInput" placeholder="সার্চ..." oninput="renderTable()">
           </div>
           <select class="filter-select" id="filterCategory" onchange="renderTable()">
             <option value="">সব ক্যাটাগরি</option>
@@ -676,7 +691,7 @@ tbody tr:hover{background:#f8fafc}
             <option value="বাকি">বাকি</option>
             <option value="আংশিক">আংশিক</option>
           </select>
-          <button class="btn btn-ghost" style="padding:8px 12px;font-size:12px" onclick="exportCSV()">⬇️ Excel (CSV)</button>
+          <button class="btn btn-ghost" style="padding:6px 10px;font-size:11px;height:34px" onclick="exportCSV()">⬇️ Excel</button>
         </div>
       </div>
       <div class="table-wrap">
@@ -692,9 +707,8 @@ tbody tr:hover{background:#f8fafc}
               <th>পরিমাণ</th>
               <th>একক মূল্য</th>
               <th>মোট মূল্য</th>
-              <th>খরচ বিবরণ</th>
               <th>খরচ</th>
-              <th>স্থিতি</th>
+              <th>স্থিতি <span style="font-weight:400;text-transform:none">(লাস্ট)</span></th>
               <th>অ্যাকশন</th>
             </tr>
           </thead>
@@ -702,14 +716,14 @@ tbody tr:hover{background:#f8fafc}
         </table>
         <div id="emptyState" class="empty" style="display:none">
           <div class="empty-icon">📭</div>
-          <p style="font-weight:600">এখনো কোনো এন্ট্রি নেই</p>
-          <p style="font-size:13px">উপরের ফর্ম থেকে নতুন ক্রয়/বিক্রয় যোগ করুন</p>
+          <p style="font-weight:600;font-size:13px">এখনো কোনো এন্ট্রি নেই</p>
+          <p style="font-size:11px">উপরের ফর্ম থেকে যোগ করুন</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- REPORT PAGE -->
+  <!-- REPORT PAGE - DASHBOARD HERE -->
   <div id="page-report" class="page">
     <div class="card" style="padding:0;overflow:hidden">
       <div class="report-filters">
@@ -736,7 +750,7 @@ tbody tr:hover{background:#f8fafc}
           </select>
         </div>
         <div class="field">
-          <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="clearReportFilters()">✕ ফিল্টার ক্লিয়ার</button>
+          <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="clearReportFilters()">✕ ক্লিয়ার</button>
         </div>
       </div>
     </div>
@@ -766,29 +780,30 @@ tbody tr:hover{background:#f8fafc}
 
     <div class="charts">
       <div class="card chart-card">
-        <h4>📊 ক্রয় vs বিক্রয় (টাকায়) <span style="font-size:11px;color:var(--muted);font-weight:400">শেষ 6 মাস</span></h4>
+        <h4>📊 ক্রয় vs বিক্রয় <span style="font-size:10.5px;color:var(--muted);font-weight:400">শেষ 6 মাস</span></h4>
         <div class="bar-chart" id="barChart"></div>
-        <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;font-size:11px">
-          <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;background:#0f766e;border-radius:3px;display:inline-block"></span> বিক্রয়</span>
-          <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;background:#2563eb;border-radius:3px;display:inline-block"></span> ক্রয়</span>
-          <span style="display:flex;align-items:center;gap:6px"><span style="width:12px;height:12px;background:#f59e0b;border-radius:3px;display:inline-block"></span> খরচ</span>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;font-size:10.5px">
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:#0f766e;border-radius:3px;display:inline-block"></span> বিক্রয়</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:#2563eb;border-radius:3px;display:inline-block"></span> ক্রয়</span>
+          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:#f59e0b;border-radius:3px;display:inline-block"></span> খরচ</span>
         </div>
       </div>
       <div class="card chart-card">
-        <h4>🥧 ক্যাটাগরি অনুযায়ী স্থিতি</h4>
+        <h4>🥧 আইটেম অনুযায়ী লাস্ট স্থিতি</h4>
         <div class="donut-wrap">
           <div style="position:relative">
             <div class="donut" id="donut"></div>
             <div class="donut-center">
               <div>
-                <div style="font-size:20px;font-weight:800" id="donutTotal">0</div>
-                <div style="font-size:11px;color:var(--muted)">মোট এন্ট্রি</div>
+                <div style="font-size:18px;font-weight:800" id="donutTotal">0</div>
+                <div style="font-size:10px;color:var(--muted)">মোট এন্ট্রি</div>
               </div>
             </div>
           </div>
           <div class="legend" id="donutLegend"></div>
         </div>
-        <div id="categorySummary" style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+        <div id="categorySummary" style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px"></div>
+        <div id="itemLastStatus" style="margin-top:10px;display:grid;gap:6px"></div>
       </div>
     </div>
 
@@ -796,8 +811,8 @@ tbody tr:hover{background:#f8fafc}
       <div class="table-header">
         <h3>📑 বিস্তারিত রিপোর্ট</h3>
         <div class="table-tools">
-          <button class="btn btn-ghost" style="padding:8px 12px;font-size:12px" onclick="exportCSV(true)">⬇️ রিপোর্ট Excel</button>
-          <button class="btn btn-primary" style="padding:8px 12px;font-size:12px" onclick="window.print()">🖨️ প্রিন্ট</button>
+          <button class="btn btn-ghost" style="padding:6px 10px;font-size:11px;height:34px" onclick="exportCSV(true)">⬇️ Excel</button>
+          <button class="btn btn-primary" style="padding:6px 10px;font-size:11px;height:34px" onclick="window.print()">🖨️ প্রিন্ট</button>
         </div>
       </div>
       <div class="table-wrap">
@@ -821,7 +836,7 @@ tbody tr:hover{background:#f8fafc}
     </div>
   </div>
 
-  <div class="footer">© 2026 সেলস ট্র্যাকার — আপনার ব্যবসার হিসাব সহজ করুন। ডেটা ব্রাউজারে সংরক্ষিত থাকে (LocalStorage)।</div>
+  <div class="footer">© 2026 সেলস ট্র্যাকার — ডেটা ব্রাউজারে সংরক্ষিত (LocalStorage)</div>
 </div>
 
 <!-- Add Modal -->
@@ -829,7 +844,7 @@ tbody tr:hover{background:#f8fafc}
   <div class="modal">
     <h4 id="modalTitle">নতুন যোগ করুন</h4>
     <p id="modalDesc">নাম লিখুন</p>
-    <input type="text" class="input" id="modalInput" placeholder="নাম লিখুন">
+    <input type="text" class="input" id="modalInput" placeholder="নাম">
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
       <button class="btn btn-primary" onclick="confirmAdd()">যোগ করুন</button>
@@ -840,17 +855,17 @@ tbody tr:hover{background:#f8fafc}
 <!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal" style="text-align:center">
-    <div style="font-size:40px">⚠️</div>
-    <h4>এন্ট্রি ডিলিট করবেন?</h4>
-    <p>এই কাজটি ফিরিয়ে আনা যাবে না।</p>
+    <div style="font-size:32px">⚠️</div>
+    <h4>ডিলিট করবেন?</h4>
+    <p>ফিরিয়ে আনা যাবে না।</p>
     <div class="modal-actions" style="justify-content:center">
       <button class="btn btn-ghost" onclick="closeDeleteModal()">বাতিল</button>
-      <button class="btn" style="background:var(--danger);color:white" onclick="confirmDelete()">হ্যাঁ, ডিলিট করুন</button>
+      <button class="btn" style="background:var(--danger);color:white" onclick="confirmDelete()">হ্যাঁ, ডিলিট</button>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast">✅ সফলভাবে সেভ হয়েছে</div>
+<div class="toast" id="toast">✅ সেভ হয়েছে</div>
 
 <script>
 let entries = JSON.parse(localStorage.getItem('st_entries') || '[]');
@@ -861,32 +876,38 @@ let editingId = null;
 let deleteId = null;
 let addType = null;
 
-// Init
 document.getElementById('fDate').valueAsDate = new Date();
 refreshDropdowns();
 onCategoryChange();
 renderTable();
 renderReport();
 updateHeaderStats();
+updateDashboardVisibility('entry');
 
 function switchPage(p){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(el=>el.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   document.getElementById('btn-'+p).classList.add('active');
+  updateDashboardVisibility(p);
   if(p==='report') renderReport();
+}
+function updateDashboardVisibility(page){
+  const hs=document.getElementById('headerStats');
+  if(page==='entry'){
+    hs.classList.add('hidden');
+  } else {
+    hs.classList.remove('hidden');
+  }
 }
 
 function refreshDropdowns(){
-  // category
   const catSel = document.getElementById('fCategory');
   const rCatSel = document.getElementById('rCategory');
   const curCat = catSel.value;
   const curRCat = rCatSel.value;
-  // keep default options + custom
   function fillCat(sel, keepVal){
-    sel.innerHTML = '<option value="">সিলেক্ট করুন</option>';
-    // for report
+    sel.innerHTML = '<option value="">সিলেক্ট</option>';
     if(sel.id.startsWith('r')) sel.innerHTML = '<option value="">সব ক্যাটাগরি</option>';
     categories.forEach(c=>{
       const o=document.createElement('option');
@@ -897,14 +918,11 @@ function refreshDropdowns(){
   }
   fillCat(catSel, curCat);
   fillCat(rCatSel, curRCat);
-  // need to re-add default if not in categories? Already.
-  // also sync report filter category select differently
-  // items
   const itemSel = document.getElementById('fItem');
   const rItemSel = document.getElementById('rItem');
   const curItem = itemSel.value;
   const curRItem = rItemSel.value;
-  itemSel.innerHTML = '<option value="">সিলেক্ট করুন</option>';
+  itemSel.innerHTML = '<option value="">সিলেক্ট</option>';
   rItemSel.innerHTML = '<option value="">সব আইটেম</option>';
   items.forEach(it=>{
     const o=document.createElement('option');
@@ -916,11 +934,9 @@ function refreshDropdowns(){
   });
   if(curItem) itemSel.value = curItem;
   if(curRItem) rItemSel.value = curRItem;
-
-  // salesperson
   const spSel = document.getElementById('fSalesperson');
   const curSp = spSel.value;
-  spSel.innerHTML = '<option value="">সিলেক্ট করুন</option>';
+  spSel.innerHTML = '<option value="">সিলেক্ট</option>';
   salespersons.forEach(s=>{
     const o=document.createElement('option');
     o.value=s; o.textContent=s;
@@ -932,28 +948,50 @@ function refreshDropdowns(){
 function onCategoryChange(){
   const cat = document.getElementById('fCategory').value;
   const label = document.getElementById('labelSource');
-  const hint = document.getElementById('hintSource');
   const fieldSp = document.getElementById('fieldSalesperson');
   const spSel = document.getElementById('fSalesperson');
-
   if(cat === 'ক্রয়'){
     label.innerHTML = 'হতে <span class="req">*</span>';
-    document.getElementById('fSource').placeholder = 'যেমন: মেসার্স আলম ট্রেডার্স, খুলনা';
-    hint.textContent = 'কার কাছ থেকে ক্রয় করা হয়েছে';
+    document.getElementById('fSource').placeholder = 'যেমন: আলম ট্রেডার্স';
     fieldSp.classList.add('hidden');
     spSel.removeAttribute('required');
   } else if(cat === 'বিক্রয়'){
-    label.innerHTML = 'দোকানের নাম <span class="req">*</span>';
-    document.getElementById('fSource').placeholder = 'যেমন: মেসার্স রহিম স্টোর, দৌলতপুর';
-    hint.textContent = 'কোন দোকানে বিক্রয় করা হয়েছে';
+    label.innerHTML = 'দোকান <span class="req">*</span>';
+    document.getElementById('fSource').placeholder = 'যেমন: রহিম স্টোর';
     fieldSp.classList.remove('hidden');
     spSel.setAttribute('required','required');
   } else {
-    label.innerHTML = 'হতে / দোকানের নাম <span class="req">*</span>';
-    document.getElementById('fSource').placeholder = 'হতে / দোকানের নাম';
-    hint.textContent = "ক্রয় হলে 'হতে', বিক্রয় হলে 'দোকানের নাম'";
+    label.innerHTML = 'হতে / দোকান <span class="req">*</span>';
+    document.getElementById('fSource').placeholder = 'নাম';
     fieldSp.classList.remove('hidden');
     spSel.removeAttribute('required');
+  }
+}
+
+// নতুন: আইটেম সিলেক্ট করলে শেষ স্থিতি অটো বসবে
+function onItemChange(){
+  const item = document.getElementById('fItem').value;
+  const hint = document.getElementById('lastStatusHint');
+  if(!item){
+    hint.classList.remove('show');
+    hint.textContent='';
+    return;
+  }
+  // entries is newest first, so first match is last status
+  const last = entries.find(e=>e.item===item);
+  if(last){
+    document.getElementById('fStatus').value = last.status;
+    hint.textContent = `📌 "${item}" এর লাস্ট স্থিতি: ${last.status} — ${formatDate(last.date)} | ${last.category} | ৳${Number(last.totalPrice).toLocaleString('bn-BD')}`;
+    hint.className = 'last-status-hint show';
+    // subtle flash
+    hint.style.background = '#fef3c7';
+    setTimeout(()=>hint.style.background='#ecfdf5',600);
+  } else {
+    hint.textContent = `ℹ️ "${item}" এর কোনো আগের এন্ট্রি নেই — নতুন স্থিতি সিলেক্ট করুন`;
+    hint.className = 'last-status-hint show';
+    hint.style.background='#f1f5f9';
+    hint.style.borderColor='#e2e8f0';
+    hint.style.color='#64748b';
   }
 }
 
@@ -962,8 +1000,8 @@ function calcTotal(){
   const unit = parseFloat(document.getElementById('fUnitPrice').value) || 0;
   const total = qty * unit;
   document.getElementById('fTotalPrice').value = total ? total.toFixed(2) : '';
-  document.getElementById('totalPreview').textContent = `পরিমাণ ${qty} × একক মূল্য ৳ ${unit} = ৳ ${total.toLocaleString('bn-BD')}`;
-  if(!qty || !unit) document.getElementById('totalPreview').textContent = 'পরিমাণ × একক মূল্য = ৳ 0';
+  document.getElementById('totalPreview').textContent = `${qty} × ৳${unit} = ৳ ${total.toLocaleString('bn-BD')}`;
+  if(!qty || !unit) document.getElementById('totalPreview').textContent = 'পরিমাণ × একক = ৳ 0';
 }
 
 function handleSave(e){
@@ -983,7 +1021,6 @@ function handleSave(e){
     status: document.getElementById('fStatus').value
   };
   if(data.category !== 'বিক্রয়') data.salesperson = '-';
-  // validation for salesperson when বিক্রয়
   if(data.category==='বিক্রয়' && !document.getElementById('fSalesperson').value){
     showToast('⚠️ বিক্রয়কারী সিলেক্ট করুন');
     return;
@@ -991,10 +1028,10 @@ function handleSave(e){
   if(editingId){
     const idx = entries.findIndex(x=>x.id===editingId);
     if(idx>-1) entries[idx]=data;
-    showToast('✅ এন্ট্রি আপডেট হয়েছে');
+    showToast('✅ আপডেট হয়েছে');
   } else {
     entries.unshift(data);
-    showToast('✅ নতুন এন্ট্রি সেভ হয়েছে');
+    showToast('✅ সেভ হয়েছে');
   }
   saveAll();
   resetForm();
@@ -1008,7 +1045,8 @@ function resetForm(){
   document.getElementById('entryForm').reset();
   document.getElementById('fDate').valueAsDate = new Date();
   document.getElementById('fExpenseAmount').value = 0;
-  document.getElementById('totalPreview').textContent='পরিমাণ × একক মূল্য = ৳ 0';
+  document.getElementById('totalPreview').textContent='পরিমাণ × একক = ৳ 0';
+  document.getElementById('lastStatusHint').classList.remove('show');
   document.getElementById('editingBadge').classList.remove('show');
   document.getElementById('btnSave').innerHTML='💾 Save';
   onCategoryChange();
@@ -1021,7 +1059,6 @@ function editEntry(id){
   document.getElementById('fDate').value=e.date;
   document.getElementById('fCategory').value=e.category;
   refreshDropdowns();
-  // ensure values exist
   document.getElementById('fCategory').value=e.category;
   document.getElementById('fItem').value=e.item;
   document.getElementById('fSource').value=e.source;
@@ -1036,6 +1073,10 @@ function editEntry(id){
   document.getElementById('editingBadge').classList.add('show');
   document.getElementById('btnSave').innerHTML='✏️ Update';
   calcTotal();
+  // show last status hint but keep editing status
+  const hint=document.getElementById('lastStatusHint');
+  hint.textContent=`✏️ এডিট করছেন — আইটেম "${e.item}" এর এই এন্ট্রির স্থিতি: ${e.status}`;
+  hint.className='last-status-hint show';
   window.scrollTo({top:0,behavior:'smooth'});
   switchPage('entry');
 }
@@ -1055,7 +1096,7 @@ function confirmDelete(){
     renderTable();
     renderReport();
     updateHeaderStats();
-    showToast('🗑️ এন্ট্রি ডিলিট হয়েছে');
+    showToast('🗑️ ডিলিট হয়েছে');
   }
   closeDeleteModal();
 }
@@ -1089,7 +1130,6 @@ function renderTable(){
       <td style="text-align:center;font-weight:600">${e.qty}</td>
       <td style="text-align:right">৳ ${Number(e.unitPrice).toLocaleString('bn-BD')}</td>
       <td style="text-align:right;font-weight:700;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('bn-BD')}</td>
-      <td style="font-size:12px;color:var(--muted)">${e.expenseDesc||'-'}</td>
       <td style="text-align:right">${e.expenseAmount? '৳ '+Number(e.expenseAmount).toLocaleString('bn-BD'):'-'}</td>
       <td><span class="status-badge status-${e.status}">${e.status}</span></td>
       <td>
@@ -1123,12 +1163,7 @@ function renderReport(){
     totalExpense+= Number(e.expenseAmount)||0;
     if(e.category==='বিক্রয়'){ totalSale+= Number(e.totalPrice)||0; saleCount++; }
     else if(e.category==='ক্রয়'){ totalBuy+= Number(e.totalPrice)||0; buyCount++; }
-    else {
-      // custom category: treat as buy if contains ক্রয় else sale? For summary, count both?
-      // We'll split based on name? Better count as appropriate: if custom, consider as sale for profit? Let's just add to buy if not বিক্রয়
-      // Actually count any non-বিক্রয় as ক্রয় for simplicity
-      totalBuy+= Number(e.totalPrice)||0; buyCount++;
-    }
+    else { totalBuy+= Number(e.totalPrice)||0; buyCount++; }
   });
   const profit = totalSale - (totalBuy + totalExpense);
   document.getElementById('sSale').textContent='৳ '+ totalSale.toLocaleString('bn-BD');
@@ -1140,18 +1175,14 @@ function renderReport(){
   profitEl.textContent=(profit>=0?'৳ ':'-৳ ')+ Math.abs(profit).toLocaleString('bn-BD');
   profitEl.style.color= profit>=0 ? '#059669' : '#dc2626';
   document.getElementById('sProfitSub').textContent= profit>=0 ? 'লাভ' : 'ক্ষতি';
-
-  // Bar chart: group by month last 6 months
   renderBarChart(data);
-  // Donut
   renderDonut(data);
-  // report table
+  renderItemLastStatus(data);
   const tbody=document.getElementById('reportBody');
   if(data.length===0){
-    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:30px;color:var(--muted)">কোনো ডেটা পাওয়া যায়নি — ফিল্টার পরিবর্তন করুন</td></tr>';
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--muted)">কোনো ডেটা নেই — ফিল্টার পরিবর্তন করুন</td></tr>';
     return;
   }
-  // sort by date desc
   const sorted=[...data].sort((a,b)=> b.date.localeCompare(a.date));
   tbody.innerHTML=sorted.map(e=>{
     const net = (e.category==='বিক্রয়' ? Number(e.totalPrice) : -Number(e.totalPrice)) - Number(e.expenseAmount||0);
@@ -1171,12 +1202,11 @@ function renderReport(){
 
 function renderBarChart(data){
   const container=document.getElementById('barChart');
-  // get last 6 months keys
   const months=[];
   const now=new Date();
   for(let i=5;i>=0;i--){
     const d=new Date(now.getFullYear(), now.getMonth()-i,1);
-    const key=d.toISOString().slice(0,7); // YYYY-MM
+    const key=d.toISOString().slice(0,7);
     const label= d.toLocaleDateString('bn-BD',{month:'short'}) + ' ' + d.getFullYear().toString().slice(-2);
     months.push({key,label,sale:0,buy:0,exp:0});
   }
@@ -1191,14 +1221,14 @@ function renderBarChart(data){
   });
   const maxVal=Math.max(1, ...months.map(m=> Math.max(m.sale,m.buy,m.exp)));
   container.innerHTML=months.map(m=>{
-    const hSale = (m.sale/maxVal*140).toFixed(0);
-    const hBuy = (m.buy/maxVal*140).toFixed(0);
-    const hExp = (m.exp/maxVal*140).toFixed(0);
+    const hSale = (m.sale/maxVal*130).toFixed(0);
+    const hBuy = (m.buy/maxVal*130).toFixed(0);
+    const hExp = (m.exp/maxVal*130).toFixed(0);
     return `<div class="bar-group">
-      <div style="display:flex;gap:4px;align-items:end;height:140px">
-        <div class="bar" style="height:${hSale}px;background:#0f766e;min-width:22px" title="বিক্রয় ৳${m.sale}"></div>
-        <div class="bar" style="height:${hBuy}px;background:#2563eb;min-width:22px" title="ক্রয় ৳${m.buy}"></div>
-        <div class="bar" style="height:${hExp}px;background:#f59e0b;min-width:22px" title="খরচ ৳${m.exp}"></div>
+      <div style="display:flex;gap:3px;align-items:end;height:130px">
+        <div class="bar" style="height:${hSale}px;background:#0f766e;min-width:18px"></div>
+        <div class="bar" style="height:${hBuy}px;background:#2563eb;min-width:18px"></div>
+        <div class="bar" style="height:${hExp}px;background:#f59e0b;min-width:18px"></div>
       </div>
       <div class="bar-label">${m.label}</div>
     </div>`
@@ -1209,19 +1239,16 @@ function renderDonut(data){
   const total=data.length;
   document.getElementById('donutTotal').textContent=total;
   const counts={};
-  data.forEach(e=>{
-    counts[e.status]=(counts[e.status]||0)+1;
-  });
+  data.forEach(e=>{counts[e.status]=(counts[e.status]||0)+1});
   const colors={'পরিশোধিত':'#059669','বাকি':'#dc2626','আংশিক':'#f59e0b'};
   const entriesStatus=Object.entries(counts);
   if(entriesStatus.length===0){
     document.getElementById('donut').style.background='#f1f5f9';
-    document.getElementById('donutLegend').innerHTML='<span style="font-size:12px;color:var(--muted)">ডেটা নেই</span>';
+    document.getElementById('donutLegend').innerHTML='<span style="font-size:11px;color:var(--muted)">ডেটা নেই</span>';
     document.getElementById('categorySummary').innerHTML='';
     return;
   }
-  let acc=0;
-  let gradient=[];
+  let acc=0;let gradient=[];
   entriesStatus.forEach(([status,cnt])=>{
     const pct=cnt/total*100;
     const color=colors[status]||'#64748b';
@@ -1232,8 +1259,6 @@ function renderDonut(data){
   document.getElementById('donutLegend').innerHTML=entriesStatus.map(([s,c])=>`
     <div class="legend-item"><span class="legend-dot" style="background:${colors[s]||'#64748b'}"></span> ${s} — ${c} টি (${Math.round(c/total*100)}%)</div>
   `).join('');
-
-  // category wise summary
   const catMap={};
   data.forEach(e=>{
     if(!catMap[e.category]) catMap[e.category]={count:0,total:0};
@@ -1241,10 +1266,32 @@ function renderDonut(data){
     catMap[e.category].total+= Number(e.totalPrice)||0;
   });
   document.getElementById('categorySummary').innerHTML=Object.entries(catMap).map(([cat,info])=>`
-    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:10px;padding:10px;text-align:center">
-      <div style="font-size:11px;color:var(--muted);font-weight:600">${cat}</div>
-      <div style="font-weight:700;font-size:13px">${info.count} টি</div>
-      <div style="font-size:12px;color:var(--primary);font-weight:600">৳ ${info.total.toLocaleString('bn-BD')}</div>
+    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:9px;padding:8px;text-align:center">
+      <div style="font-size:10.5px;color:var(--muted);font-weight:600">${cat}</div>
+      <div style="font-weight:700;font-size:12px">${info.count} টি</div>
+      <div style="font-size:11px;color:var(--primary);font-weight:600">৳ ${info.total.toLocaleString('bn-BD')}</div>
+    </div>
+  `).join('');
+}
+
+function renderItemLastStatus(data){
+  const container=document.getElementById('itemLastStatus');
+  // Group by item, get last entry per item (by date desc)
+  const map={};
+  [...data].sort((a,b)=> b.date.localeCompare(a.date) || b.id.localeCompare(a.id)).forEach(e=>{
+    if(!map[e.item]) map[e.item]=e;
+  });
+  if(Object.keys(map).length===0){
+    container.innerHTML='';
+    return;
+  }
+  container.innerHTML='<div style="font-size:11px;font-weight:700;color:#334155;margin-bottom:4px">📦 আইটেম অনুযায়ী লাস্ট স্থিতি</div>' + Object.entries(map).map(([item,last])=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:7px 10px">
+      <div>
+        <div style="font-size:12px;font-weight:700">${item}</div>
+        <div style="font-size:10.5px;color:var(--muted)">${formatDate(last.date)} • ${last.category} • ${last.source}</div>
+      </div>
+      <span class="status-badge status-${last.status}">${last.status}</span>
     </div>
   `).join('');
 }
@@ -1279,13 +1326,12 @@ function formatDate(str){
   return d.toLocaleDateString('bn-BD',{day:'2-digit',month:'short',year:'numeric'});
 }
 
-// Modals
 function openAddModal(type){
   addType=type;
   const titles={
-    category:['নতুন ক্যাটাগরি যোগ করুন','যেমন: ফেরত, বোনাস'],
-    item:['নতুন আইটেম যোগ করুন','যেমন: ২০ এর বস্তা, খুচরা'],
-    salesperson:['নতুন বিক্রয়কারী যোগ করুন','যেমন: জামাল']
+    category:['নতুন ক্যাটাগরি','যেমন: ফেরত'],
+    item:['নতুন আইটেম','যেমন: ২০ এর বস্তা'],
+    salesperson:['নতুন বিক্রয়কারী','যেমন: জামাল']
   };
   document.getElementById('modalTitle').textContent=titles[type][0];
   document.getElementById('modalDesc').textContent=titles[type][1];
@@ -1302,26 +1348,26 @@ function confirmAdd(){
   const val=document.getElementById('modalInput').value.trim();
   if(!val){ showToast('⚠️ নাম লিখুন'); return; }
   if(addType==='category'){
-    if(categories.includes(val)){ showToast('⚠️ এই ক্যাটাগরি আগে থেকেই আছে'); return; }
+    if(categories.includes(val)){ showToast('⚠️ আছে'); return; }
     categories.push(val);
     localStorage.setItem('st_categories',JSON.stringify(categories));
   } else if(addType==='item'){
-    if(items.includes(val)){ showToast('⚠️ এই আইটেম আগে থেকেই আছে'); return; }
+    if(items.includes(val)){ showToast('⚠️ আছে'); return; }
     items.push(val);
     localStorage.setItem('st_items',JSON.stringify(items));
   } else if(addType==='salesperson'){
-    if(salespersons.includes(val)){ showToast('⚠️ এই নাম আগে থেকেই আছে'); return; }
+    if(salespersons.includes(val)){ showToast('⚠️ আছে'); return; }
     salespersons.push(val);
     localStorage.setItem('st_salespersons',JSON.stringify(salespersons));
   }
   refreshDropdowns();
-  // auto select new value
   if(addType==='category') document.getElementById('fCategory').value=val;
   if(addType==='item') document.getElementById('fItem').value=val;
   if(addType==='salesperson') document.getElementById('fSalesperson').value=val;
   if(addType==='category') onCategoryChange();
+  if(addType==='item') onItemChange();
   closeModal();
-  showToast('✅ যোগ করা হয়েছে: '+val);
+  showToast('✅ যোগ হয়েছে: '+val);
 }
 document.getElementById('addModal').addEventListener('click',e=>{ if(e.target.id==='addModal') closeModal(); });
 document.getElementById('deleteModal').addEventListener('click',e=>{ if(e.target.id==='deleteModal') closeDeleteModal(); });
@@ -1343,8 +1389,8 @@ function showToast(msg){
 
 function exportCSV(isReport=false){
   const data=isReport? getFilteredForReport() : entries;
-  if(data.length===0){ showToast('⚠️ এক্সপোর্ট করার মতো ডেটা নেই'); return; }
-  const headers=['তারিখ','ক্যাটাগরি','আইটেম','হতে/দোকান','বিক্রয়কারী','পরিমাণ','একক মূল্য','মোট মূল্য','খরচ বিবরণ','খরচ পরিমাণ','স্থিতি'];
+  if(data.length===0){ showToast('⚠️ ডেটা নেই'); return; }
+  const headers=['তারিখ','ক্যাটাগরি','আইটেম','হতে/দোকান','বিক্রয়কারী','পরিমাণ','একক মূল্য','মোট মূল্য','খরচ বিবরণ','খরচ','স্থিতি'];
   const rows=data.map(e=>[e.date,e.category,e.item,e.source,e.salesperson,e.qty,e.unitPrice,e.totalPrice,e.expenseDesc,e.expenseAmount,e.status]);
   let csv='\uFEFF'+[headers,...rows].map(r=> r.map(v=> `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
@@ -1354,16 +1400,15 @@ function exportCSV(isReport=false){
   a.download=isReport? 'report.csv' : 'sales_tracker.csv';
   a.click();
   URL.revokeObjectURL(url);
-  showToast('⬇️ CSV ডাউনলোড শুরু হয়েছে');
+  showToast('⬇️ ডাউনলোড শুরু');
 }
 
-// Seed demo data if empty
 if(entries.length===0){
   entries=[
-    {id:'1',date:'2026-09-10',category:'ক্রয়',item:'৫ এর বস্তা',source:'মেসার্স আলম ট্রেডার্স, খুলনা',salesperson:'-',qty:50,unitPrice:1150,totalPrice:57500,expenseDesc:'গাড়ি ভাড়া',expenseAmount:1200,status:'পরিশোধিত'},
-    {id:'2',date:'2026-09-12',category:'বিক্রয়',item:'৫ এর বস্তা',source:'মেসার্স রহিম স্টোর, দৌলতপুর',salesperson:'রহিম',qty:20,unitPrice:1350,totalPrice:27000,expenseDesc:'',expenseAmount:0,status:'বাকি'},
-    {id:'3',date:'2026-09-14',category:'বিক্রয়',item:'১০ এর বস্তা',source:'সততা ট্রেডার্স, ফুলবাড়ী',salesperson:'করিম',qty:15,unitPrice:2600,totalPrice:39000,expenseDesc:'লেবার',expenseAmount:500,status:'পরিশোধিত'},
-    {id:'4',date:'2026-09-15',category:'ক্রয়',item:'১০ এর বস্তা',source:'মেসার্স হক এন্টারপ্রাইজ',salesperson:'-',qty:30,unitPrice:2300,totalPrice:69000,expenseDesc:'',expenseAmount:0,status:'আংশিক'},
+    {id:'1',date:'2026-09-10',category:'ক্রয়',item:'৫ এর বস্তা',source:'আলম ট্রেডার্স',salesperson:'-',qty:50,unitPrice:1150,totalPrice:57500,expenseDesc:'গাড়ি ভাড়া',expenseAmount:1200,status:'পরিশোধিত'},
+    {id:'2',date:'2026-09-12',category:'বিক্রয়',item:'৫ এর বস্তা',source:'রহিম স্টোর',salesperson:'রহিম',qty:20,unitPrice:1350,totalPrice:27000,expenseDesc:'',expenseAmount:0,status:'বাকি'},
+    {id:'3',date:'2026-09-14',category:'বিক্রয়',item:'১০ এর বস্তা',source:'সততা ট্রেডার্স',salesperson:'করিম',qty:15,unitPrice:2600,totalPrice:39000,expenseDesc:'লেবার',expenseAmount:500,status:'পরিশোধিত'},
+    {id:'4',date:'2026-09-15',category:'ক্রয়',item:'১০ এর বস্তা',source:'হক এন্টারপ্রাইজ',salesperson:'-',qty:30,unitPrice:2300,totalPrice:69000,expenseDesc:'',expenseAmount:0,status:'আংশিক'},
   ];
   saveAll();
   renderTable();
