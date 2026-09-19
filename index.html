@@ -456,7 +456,7 @@ nav{
 }
 .filter-select:focus{border-color:var(--primary);background:white;outline:none}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:1050px}
+table{width:100%;border-collapse:collapse;min-width:1120px}
 thead th{
   background:#f8fafc;
   font-size:10.5px;
@@ -1077,6 +1077,7 @@ tbody tr:last-child td{border-bottom:none}
               <th>Category</th>
               <th>Item</th>
               <th>Salesperson</th>
+              <th>User</th>
               <th>Qty</th>
               <th>Unit Price</th>
               <th>Total</th>
@@ -1194,6 +1195,7 @@ tbody tr:last-child td{border-bottom:none}
               <th>Date</th>
               <th>Category</th>
               <th>Item</th>
+              <th>User</th>
               <th>Qty</th>
               <th>Total</th>
               <th>Expense</th>
@@ -1379,8 +1381,8 @@ function deleteUser(name){
   showToast('🗑️ Deleted: '+name);
 }
 function getUserFilteredEntries(list){
-  if(!currentUser) return [];
-  return list.filter(e=>e.user===currentUser);
+  // Shared data: all users see same platform data
+  return list;
 }
 function updateEntryStats(){
   const list = getUserFilteredEntries(entries);
@@ -1687,6 +1689,7 @@ function renderTable(){
       <td><span class="cat-badge cat-${e.category}">${e.category==='ক্রয়'?'Purchase':e.category==='বিক্রয়'?'Sale':e.category}</span></td>
       <td style="font-weight:700">${e.item==='৫ এর বস্তা'?'5 Bags':e.item==='১০ এর বস্তা'?'10 Bags':e.item}</td>
       <td>${e.salesperson||'-'}</td>
+      <td><span style="font-size:11px;font-weight:700;background:#f0f9ff;border:1px solid #dbeafe;color:#0369a1;padding:3px 7px;border-radius:20px;display:inline-block;white-space:nowrap">👤 ${e.user||'-'}</span></td>
       <td style="text-align:center;font-weight:700">${Number(e.qty).toLocaleString('en-US')}</td>
       <td style="text-align:right">৳ ${Number(e.unitPrice).toLocaleString('en-US')}</td>
       <td style="text-align:right;font-weight:800;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
@@ -1740,7 +1743,7 @@ function renderReport(){
   renderItemLastStatus(data);
   const tbody=document.getElementById('reportBody');
   if(data.length===0){
-    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">No data — change filters</td></tr>';
+    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--muted)">No data — change filters</td></tr>';
     return;
   }
   const sorted=[...data].sort((a,b)=> b.date.localeCompare(a.date));
@@ -1750,6 +1753,7 @@ function renderReport(){
       <td>${formatDate(e.date)}</td>
       <td><span class="cat-badge cat-${e.category}">${e.category==='ক্রয়'?'Purchase':e.category==='বিক্রয়'?'Sale':e.category}</span></td>
       <td>${e.item==='৫ এর বস্তা'?'5 Bags':e.item==='১০ এর বস্তা'?'10 Bags':e.item}</td>
+      <td><span style="font-size:11px;font-weight:700;background:#f0f9ff;border:1px solid #dbeafe;color:#0369a1;padding:3px 7px;border-radius:20px;display:inline-block;white-space:nowrap">👤 ${e.user||'-'}</span></td>
       <td style="text-align:center">${Number(e.qty).toLocaleString('en-US')}</td>
       <td style="text-align:right;font-weight:700">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
       <td style="text-align:right">৳ ${Number(e.expenseAmount||0).toLocaleString('en-US')}</td>
@@ -1937,8 +1941,8 @@ function showToast(msg){
 function exportCSV(isReport=false){
   const data=isReport? getFilteredForReport() : entries;
   if(data.length===0){ showToast('⚠️ No data'); return; }
-  const headers=['Date','Category','Item','Salesperson','Qty','Unit Price','Total','Expense Desc','Expense','Status'];
-  const rows=data.map(e=>[e.date,e.category,e.item,e.salesperson,e.qty,e.unitPrice,e.totalPrice,e.expenseDesc,e.expenseAmount,e.status]);
+  const headers=['Date','Category','Item','Salesperson','User','Qty','Unit Price','Total','Expense Desc','Expense','Status'];
+  const rows=data.map(e=>[e.date,e.category,e.item,e.salesperson,e.user||'',e.qty,e.unitPrice,e.totalPrice,e.expenseDesc,e.expenseAmount,e.status]);
   let csv='\uFEFF'+[headers,...rows].map(r=> r.map(v=> `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
