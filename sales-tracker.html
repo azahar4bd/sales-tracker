@@ -1201,8 +1201,8 @@ header nav{display:none}
           </div>
 
           <div class="field">
-            <label>📝 Expense Desc</label>
-            <input type="text" class="input" id="fExpenseDesc" placeholder="Transport, labor">
+            <label>📝 Expense Descriptionription</label>
+            <input type="text" class="input" id="fExpenseDesc" placeholder="Expense Descriptionription — e.g. Transport, Labour">
           </div>
 
           <div class="field">
@@ -2571,7 +2571,7 @@ function showToast(msg){
 function exportCSV(isReport=false){
   const data=isReport? getFilteredForReport() : entries;
   if(data.length===0){ showToast('⚠️ No data'); return; }
-  const headers=['Date','Category','Item','Salesperson','User','Qty','Unit Price','Total','Expense Desc','Expense','Status'];
+  const headers=['Date','Category','Item','Salesperson','User','Qty','Unit Price','Total','Expense Descriptionription','Expense','Status'];
   const rows=data.map(e=>[e.date,e.category,e.item,e.salesperson,e.user||'',e.qty,e.unitPrice,e.totalPrice,e.expenseDesc,e.expenseAmount,e.status]);
   let csv='\uFEFF'+[headers,...rows].map(r=> r.map(v=> `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
