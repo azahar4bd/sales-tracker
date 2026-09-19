@@ -3,48 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>সেলস ট্র্যাকার - ক্রয় বিক্রয় হিসাব</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>সেলস ট্র্যাকার — Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
   --primary:#0f766e;
-  --primary-dark:#115e59;
-  --primary-light:#ccfbf1;
-  --secondary:#f59e0b;
-  --bg:#f8fafc;
+  --primary-dark:#0c5e58;
+  --primary-light:#e6f7f5;
+  --primary-mid:#14b8a6;
+  --accent:#f59e0b;
+  --accent-light:#fffbeb;
+  --bg:#f1f5f9;
   --card:#ffffff;
   --border:#e2e8f0;
+  --border-light:#f1f5f9;
   --text:#0f172a;
   --muted:#64748b;
-  --success:#059669;
-  --danger:#dc2626;
-  --radius:14px;
+  --radius:16px;
+  --shadow:0 4px 24px rgba(15,23,42,0.06);
+  --shadow-lg:0 10px 40px rgba(15,23,42,0.10);
 }
 body{
-  font-family:'Hind Siliguri','Noto Sans Bengali',system-ui,sans-serif;
+  font-family:'Hind Siliguri',system-ui,sans-serif;
   background:var(--bg);
   color:var(--text);
   line-height:1.6;
+  background-image:
+    radial-gradient(at 20% 20%, rgba(20,184,166,0.08) 0%, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(245,158,11,0.06) 0%, transparent 50%);
+  min-height:100vh;
 }
+/* Header Premium */
 header{
-  background:linear-gradient(135deg,#0f766e 0%,#134e4a 100%);
+  background:linear-gradient(135deg,#0f766e 0%,#134e4a 60%,#0a3d39 100%);
   color:white;
-  padding:10px 0 0 0;
+  padding:0;
   position:sticky;
   top:0;
   z-index:50;
-  box-shadow:0 3px 12px rgba(0,0,0,0.1);
+  box-shadow:0 8px 32px rgba(0,0,0,0.18);
+  border-bottom:1px solid rgba(255,255,255,0.08);
 }
-.header-inner{
+.header-top{
   max-width:1380px;
   margin:0 auto;
-  padding:0 20px;
+  padding:14px 20px 12px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   gap:16px;
-  flex-wrap:wrap;
 }
 .logo{
   display:flex;
@@ -52,49 +60,58 @@ header{
   gap:12px;
 }
 .logo-icon{
-  width:40px;height:40px;
-  background:white;
-  border-radius:9px;
+  width:44px;height:44px;
+  background:linear-gradient(135deg,#fff 0%,#e6f7f5 100%);
+  border-radius:12px;
   display:grid;
   place-items:center;
-  font-size:20px;
+  font-size:22px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+  border:1px solid rgba(255,255,255,0.3);
 }
-.logo h1{font-size:20px;font-weight:700;letter-spacing:-0.5px}
-.logo p{font-size:11px;opacity:0.85;margin-top:-2px}
+.logo h1{
+  font-family:'Outfit',sans-serif;
+  font-size:20px;
+  font-weight:700;
+  letter-spacing:-0.5px;
+  line-height:1;
+}
+.logo p{font-size:11px;opacity:0.85;letter-spacing:0.3px;margin-top:2px;font-weight:400}
 .header-stats{
   display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  transition:all 0.3s;
+  gap:8px;
 }
 .header-stats.hidden{display:none !important}
 .h-stat{
-  background:rgba(255,255,255,0.15);
-  backdrop-filter:blur(6px);
-  border:1px solid rgba(255,255,255,0.2);
-  padding:7px 12px;
-  border-radius:9px;
+  background:rgba(255,255,255,0.10);
+  backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.12);
+  padding:8px 14px;
+  border-radius:12px;
   text-align:center;
-  min-width:100px;
+  min-width:105px;
+  transition:transform 0.2s;
 }
-.h-stat small{display:block;font-size:10px;opacity:0.85}
-.h-stat b{font-size:14px}
+.h-stat:hover{transform:translateY(-1px);background:rgba(255,255,255,0.14)}
+.h-stat small{display:block;font-size:9px;opacity:0.9;letter-spacing:0.5px;text-transform:uppercase;font-weight:600}
+.h-stat b{font-size:15px;font-weight:700;letter-spacing:-0.3px}
 nav{
   display:flex;
-  gap:6px;
-  margin-top:14px;
+  gap:8px;
   padding:0 20px;
   max-width:1380px;
-  margin-left:auto;
-  margin-right:auto;
+  margin:0 auto;
+  border-top:1px solid rgba(255,255,255,0.06);
+  padding-top:10px;
+  padding-bottom:0;
 }
 .nav-btn{
-  padding:9px 20px;
-  border-radius:9px 9px 0 0;
+  padding:10px 18px 12px;
+  border-radius:12px 12px 0 0;
   border:none;
-  background:rgba(255,255,255,0.15);
-  color:white;
-  font-family:inherit;
+  background:transparent;
+  color:rgba(255,255,255,0.75);
+  font-family:'Hind Siliguri',sans-serif;
   font-weight:600;
   font-size:13px;
   cursor:pointer;
@@ -102,290 +119,407 @@ nav{
   display:flex;
   align-items:center;
   gap:8px;
+  position:relative;
+  border:1px solid transparent;
+  border-bottom:none;
 }
+.nav-btn:hover{color:white;background:rgba(255,255,255,0.08)}
 .nav-btn.active{
   background:white;
   color:var(--primary-dark);
+  box-shadow:0 -4px 20px rgba(0,0,0,0.08);
+  border-color:rgba(226,232,240,0.8);
+}
+.nav-btn.active::after{
+  content:'';
+  position:absolute;
+  bottom:-1px;
+  left:0;right:0;
+  height:2px;
+  background:white;
 }
 .container{
   max-width:1380px;
-  margin:10px auto;
-  padding:0 12px 20px;
+  margin:18px auto;
+  padding:0 16px 40px;
 }
 .card{
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
-  box-shadow:0 1px 3px rgba(0,0,0,0.05);
+  box-shadow:var(--shadow);
+  transition:box-shadow 0.2s;
 }
+.card:hover{box-shadow:var(--shadow-lg)}
 .page{display:none}
-.page.active{display:block;animation:fadeIn 0.25s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.page.active{display:block;animation:fadeIn 0.35s cubic-bezier(0.16,1,0.3,1)}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* Form - COMPACT 1-2 lines */
-.form-card{padding:10px 12px}
-#page-entry .card.form-card{margin-bottom:8px}
+/* Balance Cards Premium */
+.balance-cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:14px;
+}
+@media(max-width:640px){.balance-cards{grid-template-columns:1fr 1fr;gap:8px}}
+.bal-card{
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:14px 16px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+}
+.bal-card::before{
+  content:'';
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:4px;
+  border-radius:16px 0 0 16px;
+}
+.bal-card:nth-child(1)::before{background:linear-gradient(180deg,#0ea5e9 0%,#0284c7 100%)}
+.bal-card:nth-child(2)::before{background:linear-gradient(180deg,#f59e0b 0%,#d97706 100%)}
+.bal-card::after{
+  content:'';
+  position:absolute;
+  top:-20px;
+  right:-20px;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  opacity:0.06;
+}
+.bal-card:nth-child(1)::after{background:#0ea5e9}
+.bal-card:nth-child(2)::after{background:#f59e0b}
+.bal-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(15,23,42,0.10)}
+.bal-left{display:flex;align-items:center;gap:12px}
+.bal-icon{
+  width:42px;height:42px;
+  border-radius:12px;
+  display:grid;
+  place-items:center;
+  font-size:18px;
+  font-weight:700;
+  flex-shrink:0;
+}
+.bal-card:nth-child(1) .bal-icon{background:linear-gradient(135deg,#e0f2fe 0%,#bae6fd 100%);color:#0284c7;border:1px solid #7dd3fc}
+.bal-card:nth-child(2) .bal-icon{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#d97706;border:1px solid #fcd34d}
+.bal-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:0.6px;text-transform:uppercase}
+.bal-sub{font-size:11px;color:var(--muted);font-weight:500}
+.bal-value{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1}
+.bal-card:nth-child(1) .bal-value{color:#0284c7}
+.bal-card:nth-child(2) .bal-value{color:#d97706}
+.bal-unit{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;text-align:right}
+
+/* Form Premium */
+.form-card{
+  padding:18px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:16px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.form-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:3px;
+  background:linear-gradient(90deg,var(--primary) 0%,var(--primary-mid) 50%,var(--accent) 100%);
+  border-radius:16px 16px 0 0;
+}
 .form-header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:10px;
-  flex-wrap:wrap;
-  gap:10px;
+  margin-bottom:14px;
+  padding-bottom:12px;
+  border-bottom:1px solid var(--border-light);
 }
-.form-header h2{font-size:15px;display:flex;align-items:center;gap:8px}
-.form-header h2 span.icon{
-  width:28px;height:28px;
-  background:var(--primary-light);
-  color:var(--primary-dark);
-  display:grid;place-items:center;
-  border-radius:7px;
-  font-size:14px;
-}
-.badge-editing{
-  background:#fef3c7;
-  border:1px solid #fde68a;
-  color:#92400e;
-  padding:5px 10px;
-  border-radius:20px;
-  font-size:11px;
-  font-weight:600;
-  display:none;
-}
-.badge-editing.show{display:block}
-.form-grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:6px 8px;
-}
-@media(max-width:1200px){.form-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:600px){.form-grid{grid-template-columns:repeat(3,1fr);gap:5px 6px}}
-@media(max-width:380px){.form-grid{grid-template-columns:repeat(3,1fr);gap:4px 5px}
-.input,.select{font-size:10.5px;height:28px;padding:4px 6px}
-.field label{font-size:10px}
-}
-.field{display:flex;flex-direction:column;gap:4px}
-.field label{
-  font-size:11px;
-  font-weight:600;
-  color:#334155;
+.form-header h2{
+  font-family:'Outfit',sans-serif;
+  font-size:15px;
+  font-weight:700;
   display:flex;
   align-items:center;
-  gap:4px;
-  white-space:nowrap;
+  gap:10px;
+  letter-spacing:-0.3px;
 }
-.field label .req{color:var(--danger)}
+.form-header h2 span.icon{
+  width:32px;height:32px;
+  background:linear-gradient(135deg,var(--primary) 0%,var(--primary-mid) 100%);
+  color:white;
+  display:grid;
+  place-items:center;
+  border-radius:10px;
+  font-size:15px;
+  box-shadow:0 4px 12px rgba(15,118,110,0.25);
+}
+.badge-editing{
+  background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);
+  border:1px solid #fcd34d;
+  color:#92400e;
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+  display:none;
+  box-shadow:0 2px 8px rgba(245,158,11,0.15);
+}
+.badge-editing.show{display:flex;align-items:center;gap:6px}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+@media(max-width:1100px){.form-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.form-grid{grid-template-columns:1fr 1fr;gap:10px}}
+@media(max-width:400px){.form-grid{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{
+  font-size:11px;
+  font-weight:700;
+  color:#1e293b;
+  display:flex;
+  align-items:center;
+  gap:5px;
+  letter-spacing:0.2px;
+}
+.field label .req{color:#ef4444;font-size:12px}
 .input, .select{
-  padding:5px 8px;
-  border:1px solid var(--border);
-  border-radius:6px;
-  font-family:inherit;
-  font-size:11.5px;
-  background:white;
-  transition:all 0.2s;
+  padding:10px 12px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:13px;
+  background:#f8fafc;
+  transition:all 0.2s cubic-bezier(0.16,1,0.3,1);
   width:100%;
   outline:none;
-  height:30px;
+  height:40px;
+  font-weight:500;
 }
+.input::placeholder{color:#94a3b8;font-weight:400}
 .input:focus, .select:focus{
+  background:white;
   border-color:var(--primary);
-  box-shadow:0 0 0 2px rgba(15,118,110,0.15);
+  box-shadow:0 0 0 4px rgba(15,118,110,0.08), 0 1px 3px rgba(15,118,110,0.08);
+  transform:translateY(-1px);
 }
 .input-wrap{
   display:flex;
-  gap:4px;
+  gap:6px;
 }
 .input-wrap .input, .input-wrap .select{flex:1}
 .btn-icon{
-  width:30px;height:30px;
-  border-radius:6px;
-  border:1px dashed var(--primary);
-  background:var(--primary-light);
-  color:var(--primary-dark);
-  font-size:16px;
+  width:40px;height:40px;
+  border-radius:10px;
+  border:1.5px dashed #cbd5e1;
+  background:white;
+  color:var(--muted);
+  font-size:18px;
   cursor:pointer;
   display:grid;
   place-items:center;
   flex-shrink:0;
-  transition:0.2s;
+  transition:all 0.2s;
+  font-weight:400;
 }
-.btn-icon:hover{background:var(--primary);color:white;border-style:solid}
-.hint{font-size:10px;color:var(--muted);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.field.hidden{display:none !important}
-.total-preview{
-  background:#f0fdfa;
-  border:1px solid #99f6e4;
-  padding:4px 6px;
-  border-radius:6px;
-  font-size:10px;
-  color:#115e59;
-  font-weight:600;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+.btn-icon:hover{
+  background:var(--primary);
+  color:white;
+  border-color:var(--primary);
+  border-style:solid;
+  transform:scale(1.05);
+  box-shadow:0 4px 12px rgba(15,118,110,0.2);
 }
-.last-status-hint{
-  font-size:10px;
-  color:var(--primary-dark);
-  background:#ecfdf5;
-  border:1px solid #a7f3d0;
-  padding:3px 6px;
-  border-radius:6px;
-  margin-top:2px;
-  display:none;
-  font-weight:600;
-}
-.last-status-hint.show{display:block}
 .form-actions{
   display:flex;
-  gap:8px;
-  margin-top:10px;
-  flex-wrap:wrap;
+  gap:10px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid var(--border-light);
   align-items:center;
 }
 .btn{
-  padding:6px 14px;
-  border-radius:7px;
+  padding:10px 18px;
+  border-radius:10px;
   border:none;
-  font-family:inherit;
-  font-weight:600;
-  font-size:11.5px;
+  font-family:'Hind Siliguri',sans-serif;
+  font-weight:700;
+  font-size:13px;
   cursor:pointer;
   display:inline-flex;
   align-items:center;
-  gap:6px;
-  transition:all 0.2s;
-  height:30px;
+  gap:8px;
+  transition:all 0.2s cubic-bezier(0.16,1,0.3,1);
+  letter-spacing:0.2px;
+  height:40px;
 }
 .btn-primary{
-  background:var(--primary);
+  background:linear-gradient(135deg,var(--primary) 0%,var(--primary-dark) 100%);
   color:white;
-  box-shadow:0 3px 10px rgba(15,118,110,0.25);
+  box-shadow:0 4px 14px rgba(15,118,110,0.25), 0 1px 3px rgba(0,0,0,0.08);
+  border:1px solid rgba(255,255,255,0.1);
 }
-.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+.btn-primary:hover{
+  background:linear-gradient(135deg,var(--primary-dark) 0%,#0a3d39 100%);
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(15,118,110,0.30);
+}
+.btn-primary:active{transform:translateY(0)}
 .btn-ghost{
   background:white;
-  border:1px solid var(--border);
+  border:1.5px solid var(--border);
   color:var(--text);
-  height:30px;
 }
-.btn-ghost:hover{background:#f1f5f9}
-.entry-note{font-size:11px;color:var(--muted);margin-left:auto}
+.btn-ghost:hover{background:#f8fafc;border-color:#cbd5e1;transform:translateY(-1px)}
+.field.hidden{display:none !important}
 
-/* Table */
-.table-card{margin-top:12px;overflow:hidden}
+/* Table Premium */
+.table-card{margin-top:14px;overflow:hidden;border-radius:16px}
 .table-header{
-  padding:12px 14px;
+  padding:14px 16px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   flex-wrap:wrap;
-  gap:10px;
+  gap:12px;
   border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%);
 }
-.table-header h3{font-size:13px}
+.table-header h3{
+  font-family:'Outfit',sans-serif;
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:-0.2px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.table-header h3::before{
+  content:'';
+  width:3px;
+  height:16px;
+  background:var(--primary);
+  border-radius:10px;
+}
 .table-tools{
   display:flex;
-  gap:6px;
+  gap:8px;
   flex-wrap:wrap;
   align-items:center;
 }
-.search{
-  position:relative;
-}
+.search{position:relative}
 .search input{
-  padding:7px 10px 7px 30px;
-  border:1px solid var(--border);
-  border-radius:7px;
-  font-family:inherit;
-  font-size:12px;
-  width:180px;
-  height:34px;
+  padding:9px 12px 9px 34px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:12.5px;
+  width:200px;
+  height:40px;
+  background:#f8fafc;
+  transition:all 0.2s;
 }
+.search input:focus{background:white;border-color:var(--primary);box-shadow:0 0 0 4px rgba(15,118,110,0.06);outline:none}
 .search span{
   position:absolute;
-  left:8px;
+  left:10px;
   top:50%;
   transform:translateY(-50%);
   color:var(--muted);
-  font-size:12px;
+  font-size:13px;
 }
 .filter-select{
-  padding:6px 8px;
-  border:1px solid var(--border);
-  border-radius:7px;
-  font-family:inherit;
-  font-size:12px;
-  background:white;
-  height:34px;
+  padding:8px 10px;
+  border:1.5px solid var(--border);
+  border-radius:10px;
+  font-family:'Hind Siliguri',sans-serif;
+  font-size:12.5px;
+  background:#f8fafc;
+  height:40px;
+  font-weight:500;
+  transition:all 0.2s;
 }
+.filter-select:focus{border-color:var(--primary);background:white;outline:none}
 .table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:1100px}
+table{width:100%;border-collapse:collapse;min-width:1050px}
 thead th{
   background:#f8fafc;
-  font-size:11px;
+  font-size:10.5px;
   font-weight:700;
   color:#475569;
   text-transform:uppercase;
-  letter-spacing:0.3px;
-  padding:9px 8px;
+  letter-spacing:0.5px;
+  padding:12px 10px;
   text-align:left;
   white-space:nowrap;
-  border-bottom:1px solid var(--border);
+  border-bottom:1.5px solid var(--border);
+  position:sticky;
+  top:0;
 }
 tbody td{
-  padding:8px 8px;
-  font-size:12.5px;
+  padding:11px 10px;
+  font-size:13px;
   border-bottom:1px solid #f1f5f9;
   vertical-align:middle;
+  font-weight:500;
 }
-tbody tr:hover{background:#f8fafc}
+tbody tr{transition:all 0.15s}
+tbody tr:hover{background:#f8fafc;transform:scale(1.001)}
+tbody tr:last-child td{border-bottom:none}
 .cat-badge{
-  padding:3px 8px;
+  padding:4px 10px;
   border-radius:20px;
-  font-size:10.5px;
+  font-size:11px;
   font-weight:700;
   display:inline-block;
+  letter-spacing:0.2px;
+  border:1px solid;
 }
-.cat-ক্রয়{background:#dcfce7;color:#166534;border:1px solid #bbf7d0}
-.cat-বিক্রয়{background:#dbeafe;color:#1e40af;border:1px solid #bfdbfe}
-.status-badge{
-  padding:3px 7px;
-  border-radius:20px;
-  font-size:10.5px;
-  font-weight:600;
-}
-.status-পরিশোধিত{background:#ecfdf5;color:#065f46}
-.status-বাকি{background:#fef2f2;color:#991b1b}
-.status-আংশিক{background:#fffbeb;color:#92400e}
-.action-btns{display:flex;gap:4px}
+.cat-Purchase,.cat-ক্রয়{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+.cat-Sale,.cat-বিক্রয়{background:#dbeafe;color:#1e40af;border-color:#bfdbfe}
+.action-btns{display:flex;gap:6px}
 .btn-sm{
-  width:28px;height:28px;
-  border-radius:6px;
-  border:1px solid var(--border);
+  width:32px;height:32px;
+  border-radius:9px;
+  border:1.5px solid var(--border);
   background:white;
   cursor:pointer;
   display:grid;
   place-items:center;
-  font-size:12px;
-  transition:0.2s;
+  font-size:13px;
+  transition:all 0.2s;
+  box-shadow:0 1px 3px rgba(0,0,0,0.04);
 }
-.btn-sm.edit:hover{background:#dbeafe;border-color:#93c5fd;color:#1d4ed8}
-.btn-sm.del:hover{background:#fee2e2;border-color:#fca5a5;color:#dc2626}
+.btn-sm:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+.btn-sm.edit:hover{background:#eff6ff;border-color:#93c5fd;color:#1d4ed8}
+.btn-sm.del:hover{background:#fef2f2;border-color:#fca5a5;color:#dc2626}
 .empty{
   text-align:center;
-  padding:30px 20px;
+  padding:40px 20px;
   color:var(--muted);
 }
-.empty-icon{font-size:32px;margin-bottom:8px}
+.empty-icon{font-size:36px;margin-bottom:12px;opacity:0.8}
 
-/* Report */
+/* Report Premium */
 .report-filters{
   display:grid;
   grid-template-columns:1.2fr 1.2fr 1fr 1fr auto;
   gap:10px;
-  padding:14px;
+  padding:16px;
   align-items:end;
+  background:linear-gradient(180deg,#ffffff 0%,#fcfcfd 100%);
 }
 @media(max-width:900px){.report-filters{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.report-filters{grid-template-columns:1fr}}
@@ -399,42 +533,46 @@ tbody tr:hover{background:#f8fafc}
 @media(max-width:560px){.stats{grid-template-columns:1fr}}
 .stat-card{
   padding:16px;
-  border-radius:12px;
+  border-radius:16px;
   border:1px solid var(--border);
   background:white;
   position:relative;
   overflow:hidden;
+  box-shadow:var(--shadow);
+  transition:all 0.3s;
 }
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lg)}
 .stat-card::before{
   content:'';
   position:absolute;
   top:0;left:0;right:0;
   height:3px;
 }
-.stat-card:nth-child(1)::before{background:#0f766e}
-.stat-card:nth-child(2)::before{background:#2563eb}
-.stat-card:nth-child(3)::before{background:#f59e0b}
-.stat-card:nth-child(4)::before{background:#059669}
+.stat-card:nth-child(1)::before{background:linear-gradient(90deg,#0f766e,#14b8a6)}
+.stat-card:nth-child(2)::before{background:linear-gradient(90deg,#2563eb,#3b82f6)}
+.stat-card:nth-child(3)::before{background:linear-gradient(90deg,#f59e0b,#fbbf24)}
+.stat-card:nth-child(4)::before{background:linear-gradient(90deg,#059669,#10b981)}
 .stat-top{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:8px;
+  margin-bottom:10px;
 }
 .stat-icon{
-  width:34px;height:34px;
-  border-radius:9px;
+  width:38px;height:38px;
+  border-radius:11px;
   display:grid;
   place-items:center;
-  font-size:16px;
+  font-size:17px;
+  border:1px solid;
 }
-.stat-card:nth-child(1) .stat-icon{background:#ccfbf1}
-.stat-card:nth-child(2) .stat-icon{background:#dbeafe}
-.stat-card:nth-child(3) .stat-icon{background:#fef3c7}
-.stat-card:nth-child(4) .stat-icon{background:#dcfce7}
-.stat-label{font-size:11px;color:var(--muted);font-weight:600}
-.stat-value{font-size:20px;font-weight:800;letter-spacing:-0.5px;margin:3px 0}
-.stat-sub{font-size:10.5px;color:var(--muted)}
+.stat-card:nth-child(1) .stat-icon{background:linear-gradient(135deg,#ccfbf1,#99f6e4);border-color:#5eead4;color:#0f766e}
+.stat-card:nth-child(2) .stat-icon{background:linear-gradient(135deg,#dbeafe,#bfdbfe);border-color:#93c5fd;color:#1d4ed8}
+.stat-card:nth-child(3) .stat-icon{background:linear-gradient(135deg,#fef3c7,#fde68a);border-color:#fcd34d;color:#92400e}
+.stat-card:nth-child(4) .stat-icon{background:linear-gradient(135deg,#dcfce7,#bbf7d0);border-color:#6ee7b7;color:#065f46}
+.stat-label{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.stat-value{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.8px;margin:4px 0}
+.stat-sub{font-size:11px;color:var(--muted);font-weight:500}
 .charts{
   display:grid;
   grid-template-columns:1.4fr 1fr;
@@ -442,35 +580,38 @@ tbody tr:hover{background:#f8fafc}
   margin-top:12px;
 }
 @media(max-width:900px){.charts{grid-template-columns:1fr}}
-.chart-card{padding:16px}
-.chart-card h4{font-size:13px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.chart-card{padding:18px;border-radius:16px}
+.chart-card h4{font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;letter-spacing:-0.2px}
 .bar-chart{
   display:flex;
   align-items:end;
   gap:8px;
   height:160px;
   padding-top:16px;
-  border-bottom:1px solid var(--border);
-  border-left:1px solid var(--border);
+  border-bottom:1.5px solid var(--border);
+  border-left:1.5px solid var(--border);
+  border-radius:0 0 0 8px;
 }
-.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
 .bar{
   width:100%;
-  border-radius:6px 6px 0 0;
-  transition:height 0.6s ease;
+  border-radius:8px 8px 0 0;
+  transition:all 0.6s cubic-bezier(0.16,1,0.3,1);
   display:flex;
   align-items:start;
   justify-content:center;
-  padding-top:4px;
+  padding-top:6px;
   color:white;
-  font-size:9px;
+  font-size:10px;
   font-weight:700;
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
 }
-.bar-label{font-size:10.5px;font-weight:600;color:#334155;text-align:center;line-height:1.2}
+.bar:hover{filter:brightness(1.05);transform:translateY(-2px)}
+.bar-label{font-size:11px;font-weight:600;color:#334155;text-align:center;line-height:1.2}
 .donut-wrap{
   display:flex;
   align-items:center;
-  gap:16px;
+  gap:18px;
   justify-content:center;
   flex-wrap:wrap;
 }
@@ -478,6 +619,7 @@ tbody tr:hover{background:#f8fafc}
   width:130px;height:130px;
   border-radius:50%;
   position:relative;
+  box-shadow:0 4px 20px rgba(0,0,0,0.08);
 }
 .donut-center{
   position:absolute;
@@ -487,190 +629,191 @@ tbody tr:hover{background:#f8fafc}
   display:grid;
   place-items:center;
   text-align:center;
-  box-shadow:0 1px 6px rgba(0,0,0,0.08);
+  box-shadow:0 2px 12px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+  border:1px solid var(--border);
 }
-.legend{display:flex;flex-direction:column;gap:6px}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:11px}
-.legend-dot{width:10px;height:10px;border-radius:3px}
-.report-table-wrap{margin-top:12px}
+.legend{display:flex;flex-direction:column;gap:8px}
+.legend-item{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600}
+.legend-dot{width:11px;height:11px;border-radius:4px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.report-table-wrap{margin-top:12px;border-radius:16px}
 
-/* Modal */
+/* Modal Premium */
 .modal-overlay{
   position:fixed;
   inset:0;
-  background:rgba(15,23,42,0.55);
-  backdrop-filter:blur(4px);
+  background:rgba(15,23,42,0.6);
+  backdrop-filter:blur(8px);
   display:none;
   place-items:center;
   z-index:100;
   padding:20px;
 }
-.modal-overlay.open{display:grid}
+.modal-overlay.open{display:grid;animation:fadeIn 0.2s ease}
 .modal{
   background:white;
-  border-radius:12px;
+  border-radius:16px;
   width:100%;
-  max-width:400px;
-  padding:18px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
-  animation:pop 0.2s ease;
+  max-width:420px;
+  padding:22px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.2);
+  animation:pop 0.3s cubic-bezier(0.16,1,0.3,1);
+  border:1px solid var(--border);
 }
-@keyframes pop{from{transform:scale(0.95);opacity:0}to{transform:scale(1);opacity:1}}
-.modal h4{font-size:15px;margin-bottom:4px}
-.modal p{font-size:11px;color:var(--muted);margin-bottom:12px}
-.modal-actions{display:flex;gap:8px;justify-content:end;margin-top:12px}
+@keyframes pop{from{transform:scale(0.95) translateY(10px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.modal h4{font-family:'Outfit',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px;letter-spacing:-0.3px}
+.modal p{font-size:12px;color:var(--muted);margin-bottom:16px;line-height:1.5}
+.modal-actions{display:flex;gap:10px;justify-content:end;margin-top:16px}
 .toast{
   position:fixed;
   bottom:20px;
   right:20px;
   background:#0f172a;
   color:white;
-  padding:10px 14px;
-  border-radius:9px;
-  font-size:12px;
-  font-weight:500;
+  padding:12px 16px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:600;
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:10px;
   transform:translateY(80px);
   opacity:0;
-  transition:all 0.3s;
+  transition:all 0.4s cubic-bezier(0.16,1,0.3,1);
   z-index:110;
-  box-shadow:0 8px 20px rgba(0,0,0,0.2);
+  box-shadow:0 12px 32px rgba(0,0,0,0.2);
+  border:1px solid rgba(255,255,255,0.1);
 }
 .toast.show{transform:translateY(0);opacity:1}
 .footer{
   text-align:center;
-  padding:16px;
+  padding:20px;
   color:var(--muted);
-  font-size:10.5px;
+  font-size:11px;
+  font-weight:500;
 }
 </style>
 </head>
 <body>
 <header>
-  <div class="header-inner">
+  <div class="header-top">
     <div class="logo">
-      <div class="logo-icon">📊</div>
+      <div class="logo-icon">◆</div>
       <div>
-        <h1>সেলস ট্র্যাকার</h1>
-        <p>ক্রয় • বিক্রয় • খরচ • রিপোর্ট — এক জায়গায়</p>
+        <h1>Sales Tracker</h1>
+        <p>সেলস ট্র্যাকার • ক্রয় • বিক্রয় • রিপোর্ট</p>
       </div>
     </div>
     <div class="header-stats hidden" id="headerStats">
-      <div class="h-stat"><small>মোট এন্ট্রি</small><b id="hTotal">0</b></div>
-      <div class="h-stat"><small>মোট বিক্রয়</small><b id="hSale">৳ 0</b></div>
-      <div class="h-stat"><small>মোট ক্রয়</small><b id="hBuy">৳ 0</b></div>
-      <div class="h-stat"><small>নিট লাভ</small><b id="hProfit">৳ 0</b></div>
+      <div class="h-stat"><small>Total Entries</small><b id="hTotal">0</b></div>
+      <div class="h-stat"><small>Total Sale</small><b id="hSale">৳ 0</b></div>
+      <div class="h-stat"><small>Total Buy</small><b id="hBuy">৳ 0</b></div>
+      <div class="h-stat"><small>Net Profit</small><b id="hProfit">৳ 0</b></div>
     </div>
   </div>
   <nav>
-    <button class="nav-btn active" onclick="switchPage('entry')" id="btn-entry">📝 এন্ট্রি</button>
-    <button class="nav-btn" onclick="switchPage('report')" id="btn-report">📈 রিপোর্ট</button>
+    <button class="nav-btn active" onclick="switchPage('entry')" id="btn-entry">📝 Entry</button>
+    <button class="nav-btn" onclick="switchPage('report')" id="btn-report">📊 Report</button>
   </nav>
 </header>
 
 <div class="container">
-  <!-- ENTRY PAGE - NO DASHBOARD, 1-2 LINES -->
   <div id="page-entry" class="page active">
-    <!-- 2 Cards on top: 5 and 10 status -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-      <div class="card" style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #0ea5e9">
-        <div>
-          <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0.3px">5 BAGS STOCK</div>
-          <div style="font-size:12px;color:#0c4a6e;font-weight:600;margin-top:2px">Balance</div>
+    <div class="balance-cards">
+      <div class="bal-card">
+        <div class="bal-left">
+          <div class="bal-icon">5</div>
+          <div>
+            <div class="bal-label">5 Bags Stock</div>
+            <div class="bal-sub">বর্তমান ব্যালেন্স</div>
+          </div>
         </div>
         <div style="text-align:right">
-          <div style="font-size:22px;font-weight:800;color:#0284c7" id="bal5Card">0</div>
-          <div style="font-size:10px;color:var(--muted)">pcs</div>
+          <div class="bal-value" id="bal5Card">0</div>
+          <div class="bal-unit">pcs</div>
         </div>
       </div>
-      <div class="card" style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #f59e0b">
-        <div>
-          <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0.3px">10 BAGS STOCK</div>
-          <div style="font-size:12px;color:#92400e;font-weight:600;margin-top:2px">Balance</div>
+      <div class="bal-card">
+        <div class="bal-left">
+          <div class="bal-icon">10</div>
+          <div>
+            <div class="bal-label">10 Bags Stock</div>
+            <div class="bal-sub">বর্তমান ব্যালেন্স</div>
+          </div>
         </div>
         <div style="text-align:right">
-          <div style="font-size:22px;font-weight:800;color:#d97706" id="bal10Card">0</div>
-          <div style="font-size:10px;color:var(--muted)">pcs</div>
+          <div class="bal-value" id="bal10Card">0</div>
+          <div class="bal-unit">pcs</div>
         </div>
       </div>
     </div>
 
     <div class="card form-card">
       <div class="form-header">
-        <h2><span class="icon">➕</span> নতুন এন্ট্রি</h2>
-        <div class="badge-editing" id="editingBadge">✏️ এডিট মোড</div>
-        
+        <h2><span class="icon">+</span> New Entry</h2>
+        <div class="badge-editing" id="editingBadge">✏️ Edit Mode</div>
       </div>
 
       <form id="entryForm" onsubmit="handleSave(event)">
         <div class="form-grid">
-          <!-- লাইন ১ -->
           <div class="field">
-            <label>তারিখ <span class="req">*</span></label>
+            <label>📅 Date <span class="req">*</span></label>
             <input type="date" class="input" id="fDate" required>
           </div>
-
           <div class="field">
-            <label>ক্যাটাগরি <span class="req">*</span></label>
+            <label>📂 Category <span class="req">*</span></label>
             <div class="input-wrap">
               <select class="select" id="fCategory" required onchange="onCategoryChange()">
-                <option value="">সিলেক্ট</option>
+                <option value="">Select</option>
                 <option value="ক্রয়">ক্রয়</option>
                 <option value="বিক্রয়">বিক্রয়</option>
               </select>
-              <button type="button" class="btn-icon" onclick="openAddModal('category')" title="নতুন ক্যাটাগরি">＋</button>
+              <button type="button" class="btn-icon" onclick="openAddModal('category')" title="Add category">＋</button>
             </div>
           </div>
-
           <div class="field">
-            <label>আইটেম <span class="req">*</span></label>
+            <label>📦 Item <span class="req">*</span></label>
             <div class="input-wrap">
               <select class="select" id="fItem" required onchange="onItemChange()">
-                <option value="">সিলেক্ট</option>
+                <option value="">Select</option>
                 <option value="৫ এর বস্তা">৫ এর বস্তা</option>
                 <option value="১০ এর বস্তা">১০ এর বস্তা</option>
               </select>
-              <button type="button" class="btn-icon" onclick="openAddModal('item')" title="নতুন আইটেম">＋</button>
+              <button type="button" class="btn-icon" onclick="openAddModal('item')" title="Add item">＋</button>
             </div>
           </div>
 
-          <!-- হতে/দোকান ফিল্ড বাদ দেওয়া হয়েছে -->
-
           <div class="field" id="fieldSalesperson">
-            <label>বিক্রয়কারী <span class="req">*</span></label>
+            <label>👤 Salesperson <span class="req">*</span></label>
             <div class="input-wrap">
               <select class="select" id="fSalesperson">
-                <option value="">সিলেক্ট</option>
+                <option value="">Select</option>
               </select>
-              <button type="button" class="btn-icon" onclick="openAddModal('salesperson')" title="নতুন বিক্রয়কারী">＋</button>
+              <button type="button" class="btn-icon" onclick="openAddModal('salesperson')" title="Add salesperson">＋</button>
             </div>
           </div>
 
           <div class="field">
-            <label>পরিমাণ <span class="req">*</span></label>
+            <label>🔢 Qty <span class="req">*</span></label>
             <input type="number" class="input" id="fQty" placeholder="20" min="0" step="0.01" required oninput="calcTotal()">
           </div>
 
-          <!-- লাইন ২ -->
           <div class="field">
-            <label>একক মূল্য <span class="req">*</span></label>
+            <label>💵 Unit Price <span class="req">*</span></label>
             <input type="number" class="input" id="fUnitPrice" placeholder="1200" min="0" step="0.01" required oninput="calcTotal()">
           </div>
 
           <div class="field">
-            <label>মোট মূল্য <span class="req">*</span></label>
-            <input type="number" class="input" id="fTotalPrice" placeholder="অটো" min="0" step="0.01" required>
+            <label>💰 Total <span class="req">*</span></label>
+            <input type="number" class="input" id="fTotalPrice" placeholder="Auto" min="0" step="0.01" required>
           </div>
 
           <div class="field">
-            <label>খরচ বিবরণ</label>
-            <input type="text" class="input" id="fExpenseDesc" placeholder="গাড়ি ভাড়া">
+            <label>📝 Expense Desc</label>
+            <input type="text" class="input" id="fExpenseDesc" placeholder="Transport, labor">
           </div>
 
           <div class="field">
-            <label>খরচ (৳)</label>
+            <label>🧾 Expense (৳)</label>
             <input type="number" class="input" id="fExpenseAmount" placeholder="0" min="0" step="0.01" value="0">
           </div>
 
@@ -680,37 +823,36 @@ tbody tr:hover{background:#f8fafc}
           </div>
 
           <div class="field" style="justify-content:end">
-            <label style="opacity:0">action</label>
-            <div style="display:flex;gap:6px">
-              <button type="submit" class="btn btn-primary" id="btnSave" style="flex:1">💾 Save</button>
-              <button type="button" class="btn btn-ghost" onclick="resetForm()">↺</button>
+            <label style="opacity:0">Action</label>
+            <div style="display:flex;gap:8px">
+              <button type="submit" class="btn btn-primary" id="btnSave" style="flex:1;justify-content:center">💾 Save</button>
+              <button type="button" class="btn btn-ghost" onclick="resetForm()" title="Reset">↺</button>
             </div>
           </div>
         </div>
       </form>
     </div>
 
-    <!-- Table -->
     <div class="card table-card">
       <div class="table-header">
-        <h3>📋 এন্ট্রি তালিকা — <span id="tableCount">0 টি</span></h3>
+        <h3>Entries — <span id="tableCount" style="color:var(--primary);font-weight:800">0</span></h3>
         <div class="table-tools">
           <div class="search">
-            <span>🔍</span>
-            <input type="text" id="searchInput" placeholder="সার্চ..." oninput="renderTable()">
+            <span>⌕</span>
+            <input type="text" id="searchInput" placeholder="Search..." oninput="renderTable()">
           </div>
           <select class="filter-select" id="filterCategory" onchange="renderTable()">
-            <option value="">সব ক্যাটাগরি</option>
-            <option value="ক্রয়">ক্রয়</option>
-            <option value="বিক্রয়">বিক্রয়</option>
+            <option value="">All Category</option>
+            <option value="ক্রয়">Purchase</option>
+            <option value="বিক্রয়">Sale</option>
           </select>
           <select class="filter-select" id="filterStatus" onchange="renderTable()">
-            <option value="">সব স্থিতি</option>
-            <option value="পরিশোধিত">পরিশোধিত</option>
-            <option value="বাকি">বাকি</option>
-            <option value="আংশিক">আংশিক</option>
+            <option value="">All Status</option>
+            <option value="পরিশোধিত">Paid</option>
+            <option value="বাকি">Due</option>
+            <option value="আংশিক">Partial</option>
           </select>
-          <button class="btn btn-ghost" style="padding:6px 10px;font-size:11px;height:34px" onclick="exportCSV()">⬇️ Excel</button>
+          <button class="btn btn-ghost" style="padding:8px 12px;height:40px;font-size:12px" onclick="exportCSV()">⬇ Excel</button>
         </div>
       </div>
       <div class="table-wrap">
@@ -734,103 +876,102 @@ tbody tr:hover{background:#f8fafc}
         </table>
         <div id="emptyState" class="empty" style="display:none">
           <div class="empty-icon">📭</div>
-          <p style="font-weight:600;font-size:13px">এখনো কোনো এন্ট্রি নেই</p>
-          <p style="font-size:11px">উপরের ফর্ম থেকে যোগ করুন</p>
+          <p style="font-weight:700;font-size:13px">No entries yet</p>
+          <p style="font-size:12px">Add your first purchase or sale</p>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- REPORT PAGE - DASHBOARD HERE -->
   <div id="page-report" class="page">
     <div class="card" style="padding:0;overflow:hidden">
       <div class="report-filters">
         <div class="field">
-          <label>শুরু তারিখ</label>
+          <label>From</label>
           <input type="date" class="input" id="rFrom" onchange="renderReport()">
         </div>
         <div class="field">
-          <label>শেষ তারিখ</label>
+          <label>To</label>
           <input type="date" class="input" id="rTo" onchange="renderReport()">
         </div>
         <div class="field">
-          <label>ক্যাটাগরি</label>
+          <label>Category</label>
           <select class="select" id="rCategory" onchange="renderReport()">
-            <option value="">সব ক্যাটাগরি</option>
-            <option value="ক্রয়">ক্রয়</option>
-            <option value="বিক্রয়">বিক্রয়</option>
+            <option value="">All</option>
+            <option value="ক্রয়">Purchase</option>
+            <option value="বিক্রয়">Sale</option>
           </select>
         </div>
         <div class="field">
-          <label>আইটেম</label>
+          <label>Item</label>
           <select class="select" id="rItem" onchange="renderReport()">
-            <option value="">সব আইটেম</option>
+            <option value="">All Items</option>
           </select>
         </div>
         <div class="field">
-          <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="clearReportFilters()">✕ ক্লিয়ার</button>
+          <button class="btn btn-ghost" style="width:100%;justify-content:center" onclick="clearReportFilters()">✕ Clear</button>
         </div>
       </div>
     </div>
 
     <div class="stats">
       <div class="stat-card">
-        <div class="stat-top"><span class="stat-label">মোট বিক্রয়</span><span class="stat-icon">💰</span></div>
+        <div class="stat-top"><span class="stat-label">Total Sale</span><span class="stat-icon">💹</span></div>
         <div class="stat-value" id="sSale">৳ 0</div>
-        <div class="stat-sub" id="sSaleCount">0 টি বিক্রয়</div>
+        <div class="stat-sub" id="sSaleCount">0 sales</div>
       </div>
       <div class="stat-card">
-        <div class="stat-top"><span class="stat-label">মোট ক্রয়</span><span class="stat-icon">🛒</span></div>
+        <div class="stat-top"><span class="stat-label">Total Buy</span><span class="stat-icon">🛒</span></div>
         <div class="stat-value" id="sBuy">৳ 0</div>
-        <div class="stat-sub" id="sBuyCount">0 টি ক্রয়</div>
+        <div class="stat-sub" id="sBuyCount">0 buys</div>
       </div>
       <div class="stat-card">
-        <div class="stat-top"><span class="stat-label">মোট খরচ</span><span class="stat-icon">🧾</span></div>
+        <div class="stat-top"><span class="stat-label">Expense</span><span class="stat-icon">🧾</span></div>
         <div class="stat-value" id="sExpense">৳ 0</div>
-        <div class="stat-sub">সব খরচের যোগফল</div>
+        <div class="stat-sub">All expenses</div>
       </div>
       <div class="stat-card">
-        <div class="stat-top"><span class="stat-label">নিট লাভ / ক্ষতি</span><span class="stat-icon">📊</span></div>
+        <div class="stat-top"><span class="stat-label">Net Profit</span><span class="stat-icon">📈</span></div>
         <div class="stat-value" id="sProfit">৳ 0</div>
-        <div class="stat-sub" id="sProfitSub">বিক্রয় - (ক্রয়+খরচ)</div>
+        <div class="stat-sub" id="sProfitSub">Sale - (Buy+Expense)</div>
       </div>
     </div>
 
     <div class="charts">
       <div class="card chart-card">
-        <h4>📊 ক্রয় vs বিক্রয় <span style="font-size:10.5px;color:var(--muted);font-weight:400">শেষ 6 মাস</span></h4>
+        <h4>📊 Buy vs Sale <span style="font-size:10px;color:var(--muted);font-weight:600;background:#f1f5f9;padding:4px 8px;border-radius:20px">Last 6 months</span></h4>
         <div class="bar-chart" id="barChart"></div>
-        <div style="display:flex;gap:12px;justify-content:center;margin-top:10px;font-size:10.5px">
-          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:#0f766e;border-radius:3px;display:inline-block"></span> বিক্রয়</span>
-          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:#2563eb;border-radius:3px;display:inline-block"></span> ক্রয়</span>
-          <span style="display:flex;align-items:center;gap:5px"><span style="width:10px;height:10px;background:#f59e0b;border-radius:3px;display:inline-block"></span> খরচ</span>
+        <div style="display:flex;gap:14px;justify-content:center;margin-top:12px;font-size:11px;font-weight:600">
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:linear-gradient(135deg,#0f766e,#14b8a6);border-radius:3px;display:inline-block"></span> Sale</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:linear-gradient(135deg,#2563eb,#3b82f6);border-radius:3px;display:inline-block"></span> Buy</span>
+          <span style="display:flex;align-items:center;gap:6px"><span style="width:10px;height:10px;background:linear-gradient(135deg,#f59e0b,#fbbf24);border-radius:3px;display:inline-block"></span> Expense</span>
         </div>
       </div>
       <div class="card chart-card">
-        <h4>🥧 আইটেম অনুযায়ী লাস্ট স্থিতি</h4>
+        <h4>📦 Item Balance</h4>
         <div class="donut-wrap">
           <div style="position:relative">
             <div class="donut" id="donut"></div>
             <div class="donut-center">
               <div>
-                <div style="font-size:18px;font-weight:800" id="donutTotal">0</div>
-                <div style="font-size:10px;color:var(--muted)">মোট এন্ট্রি</div>
+                <div style="font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.8px" id="donutTotal">0</div>
+                <div style="font-size:10px;color:var(--muted);font-weight:600;letter-spacing:0.5px;text-transform:uppercase">Entries</div>
               </div>
             </div>
           </div>
           <div class="legend" id="donutLegend"></div>
         </div>
-        <div id="categorySummary" style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px"></div>
-        <div id="itemLastStatus" style="margin-top:10px;display:grid;gap:6px"></div>
+        <div id="categorySummary" style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+        <div id="itemLastStatus" style="margin-top:12px;display:grid;gap:8px"></div>
       </div>
     </div>
 
     <div class="card report-table-wrap" style="overflow:hidden">
       <div class="table-header">
-        <h3>📑 বিস্তারিত রিপোর্ট</h3>
+        <h3>Detailed Report</h3>
         <div class="table-tools">
-          <button class="btn btn-ghost" style="padding:6px 10px;font-size:11px;height:34px" onclick="exportCSV(true)">⬇️ Excel</button>
-          <button class="btn btn-primary" style="padding:6px 10px;font-size:11px;height:34px" onclick="window.print()">🖨️ প্রিন্ট</button>
+          <button class="btn btn-ghost" style="padding:8px 12px;height:40px;font-size:12px" onclick="exportCSV(true)">⬇ Excel</button>
+          <button class="btn btn-primary" style="padding:8px 14px;height:40px;font-size:12px" onclick="window.print()">🖨 Print</button>
         </div>
       </div>
       <div class="table-wrap">
@@ -853,36 +994,34 @@ tbody tr:hover{background:#f8fafc}
     </div>
   </div>
 
-  <div class="footer">© 2026 সেলস ট্র্যাকার — ডেটা ব্রাউজারে সংরক্ষিত (LocalStorage)</div>
+  <div class="footer">© 2026 Sales Tracker — Premium • Data saved in browser (LocalStorage) • Crafted with ♥</div>
 </div>
 
-<!-- Add Modal -->
 <div class="modal-overlay" id="addModal">
   <div class="modal">
-    <h4 id="modalTitle">নতুন যোগ করুন</h4>
-    <p id="modalDesc">নাম লিখুন</p>
-    <input type="text" class="input" id="modalInput" placeholder="নাম">
+    <h4 id="modalTitle">Add New</h4>
+    <p id="modalDesc">Enter name</p>
+    <input type="text" class="input" id="modalInput" placeholder="Name" style="height:42px;background:white">
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal()">বাতিল</button>
-      <button class="btn btn-primary" onclick="confirmAdd()">যোগ করুন</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAdd()">Add</button>
     </div>
   </div>
 </div>
 
-<!-- Delete Modal -->
 <div class="modal-overlay" id="deleteModal">
   <div class="modal" style="text-align:center">
-    <div style="font-size:32px">⚠️</div>
-    <h4>ডিলিট করবেন?</h4>
-    <p>ফিরিয়ে আনা যাবে না।</p>
+    <div style="font-size:36px">⚠️</div>
+    <h4>Delete entry?</h4>
+    <p>This cannot be undone.</p>
     <div class="modal-actions" style="justify-content:center">
-      <button class="btn btn-ghost" onclick="closeDeleteModal()">বাতিল</button>
-      <button class="btn" style="background:var(--danger);color:white" onclick="confirmDelete()">হ্যাঁ, ডিলিট</button>
+      <button class="btn btn-ghost" onclick="closeDeleteModal()">Cancel</button>
+      <button class="btn" style="background:#dc2626;color:white;border:1px solid #b91c1c" onclick="confirmDelete()">Delete</button>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast">✅ সেভ হয়েছে</div>
+<div class="toast" id="toast">✅ Saved</div>
 
 <script>
 let entries = JSON.parse(localStorage.getItem('st_entries') || '[]');
@@ -912,21 +1051,16 @@ function switchPage(p){
 }
 function updateDashboardVisibility(page){
   const hs=document.getElementById('headerStats');
-  if(page==='entry'){
-    hs.classList.add('hidden');
-  } else {
-    hs.classList.remove('hidden');
-  }
+  if(page==='entry'){ hs.classList.add('hidden'); } else { hs.classList.remove('hidden'); }
 }
-
 function refreshDropdowns(){
   const catSel = document.getElementById('fCategory');
   const rCatSel = document.getElementById('rCategory');
   const curCat = catSel.value;
   const curRCat = rCatSel.value;
   function fillCat(sel, keepVal){
-    sel.innerHTML = '<option value="">সিলেক্ট</option>';
-    if(sel.id.startsWith('r')) sel.innerHTML = '<option value="">সব ক্যাটাগরি</option>';
+    sel.innerHTML = '<option value="">Select</option>';
+    if(sel.id.startsWith('r')) sel.innerHTML = '<option value="">All</option>';
     categories.forEach(c=>{
       const o=document.createElement('option');
       o.value=c; o.textContent=c;
@@ -940,8 +1074,8 @@ function refreshDropdowns(){
   const rItemSel = document.getElementById('rItem');
   const curItem = itemSel.value;
   const curRItem = rItemSel.value;
-  itemSel.innerHTML = '<option value="">সিলেক্ট</option>';
-  rItemSel.innerHTML = '<option value="">সব আইটেম</option>';
+  itemSel.innerHTML = '<option value="">Select</option>';
+  rItemSel.innerHTML = '<option value="">All Items</option>';
   items.forEach(it=>{
     const o=document.createElement('option');
     o.value=it; o.textContent=it;
@@ -954,7 +1088,7 @@ function refreshDropdowns(){
   if(curRItem) rItemSel.value = curRItem;
   const spSel = document.getElementById('fSalesperson');
   const curSp = spSel.value;
-  spSel.innerHTML = '<option value="">সিলেক্ট</option>';
+  spSel.innerHTML = '<option value="">Select</option>';
   salespersons.forEach(s=>{
     const o=document.createElement('option');
     o.value=s; o.textContent=s;
@@ -962,24 +1096,15 @@ function refreshDropdowns(){
   });
   if(curSp) spSel.value = curSp;
 }
-
 function onCategoryChange(){
   const cat = document.getElementById('fCategory').value;
   const fieldSp = document.getElementById('fieldSalesperson');
   const spSel = document.getElementById('fSalesperson');
-  if(cat === 'ক্রয়'){
-    fieldSp.classList.add('hidden');
-    spSel.removeAttribute('required');
-  } else if(cat === 'বিক্রয়'){
-    fieldSp.classList.remove('hidden');
-    spSel.setAttribute('required','required');
-  } else {
-    fieldSp.classList.remove('hidden');
-    spSel.removeAttribute('required');
-  }
+  if(cat === 'ক্রয়'){ fieldSp.classList.add('hidden'); spSel.removeAttribute('required'); }
+  else if(cat === 'বিক্রয়'){ fieldSp.classList.remove('hidden'); spSel.setAttribute('required','required'); }
+  else { fieldSp.classList.remove('hidden'); spSel.removeAttribute('required'); }
   updateBalanceDisplay();
 }
-
 function getItemBalance(item){
   let buyQty=0, sellQty=0;
   entries.forEach(e=>{
@@ -997,35 +1122,16 @@ function updateBalanceDisplay(){
   const el10=document.getElementById('bal10Card');
   if(el5) el5.textContent = bal5.toLocaleString('en-US');
   if(el10) el10.textContent = bal10.toLocaleString('en-US');
-  // update card colors if negative
-  if(el5){
-    const card5=el5.closest('.card');
-    if(card5){
-      card5.style.background = bal5<0? '#fef2f2' : 'white';
-      card5.style.borderLeftColor = bal5<0? '#ef4444' : '#0ea5e9';
-    }
-  }
-  if(el10){
-    const card10=el10.closest('.card');
-    if(card10){
-      card10.style.background = bal10<0? '#fef2f2' : 'white';
-      card10.style.borderLeftColor = bal10<0? '#ef4444' : '#f59e0b';
-    }
-  }
   const fStatus=document.getElementById('fStatus');
   if(fStatus) fStatus.value = `5:${bal5},10:${bal10}`;
 }
-function onItemChange(){
-  updateBalanceDisplay();
-}
-
+function onItemChange(){ updateBalanceDisplay(); }
 function calcTotal(){
   const qty = parseFloat(document.getElementById('fQty').value) || 0;
   const unit = parseFloat(document.getElementById('fUnitPrice').value) || 0;
   const total = qty * unit;
   document.getElementById('fTotalPrice').value = total ? total.toFixed(2) : '';
 }
-
 function handleSave(e){
   e.preventDefault();
   const data = {
@@ -1043,25 +1149,11 @@ function handleSave(e){
     status: document.getElementById('fStatus').value
   };
   if(data.category !== 'বিক্রয়') data.salesperson = '-';
-  if(data.category==='বিক্রয়' && !document.getElementById('fSalesperson').value){
-    showToast('⚠️ বিক্রয়কারী সিলেক্ট করুন');
-    return;
-  }
-  if(editingId){
-    const idx = entries.findIndex(x=>x.id===editingId);
-    if(idx>-1) entries[idx]=data;
-    showToast('✅ আপডেট হয়েছে');
-  } else {
-    entries.unshift(data);
-    showToast('✅ সেভ হয়েছে');
-  }
-  saveAll();
-  resetForm();
-  renderTable();
-  renderReport();
-  updateHeaderStats();
+  if(data.category==='বিক্রয়' && !document.getElementById('fSalesperson').value){ showToast('⚠️ Select salesperson'); return; }
+  if(editingId){ const idx = entries.findIndex(x=>x.id===editingId); if(idx>-1) entries[idx]=data; showToast('✅ Updated'); }
+  else { entries.unshift(data); showToast('✅ Saved'); }
+  saveAll(); resetForm(); renderTable(); renderReport(); updateHeaderStats();
 }
-
 function resetForm(){
   editingId=null;
   document.getElementById('entryForm').reset();
@@ -1071,10 +1163,8 @@ function resetForm(){
   if(hint) hint.classList.remove('show');
   document.getElementById('editingBadge').classList.remove('show');
   document.getElementById('btnSave').innerHTML='💾 Save';
-  onCategoryChange();
-  updateBalanceDisplay();
+  onCategoryChange(); updateBalanceDisplay();
 }
-
 function editEntry(id){
   const e = entries.find(x=>x.id===id);
   if(!e) return;
@@ -1095,35 +1185,18 @@ function editEntry(id){
   document.getElementById('editingBadge').classList.add('show');
   document.getElementById('btnSave').innerHTML='✏️ Update';
   calcTotal();
-  // show last status hint but keep editing status
-  const hint=document.getElementById('lastStatusHint');
-  hint.textContent=`✏️ এডিট করছেন — আইটেম "${e.item}" এর এই এন্ট্রির স্থিতি: ${e.status}`;
-  hint.className='last-status-hint show';
   window.scrollTo({top:0,behavior:'smooth'});
   switchPage('entry');
 }
-
-function askDelete(id){
-  deleteId=id;
-  document.getElementById('deleteModal').classList.add('open');
-}
-function closeDeleteModal(){
-  document.getElementById('deleteModal').classList.remove('open');
-  deleteId=null;
-}
+function askDelete(id){ deleteId=id; document.getElementById('deleteModal').classList.add('open'); }
+function closeDeleteModal(){ document.getElementById('deleteModal').classList.remove('open'); deleteId=null; }
 function confirmDelete(){
   if(deleteId){
     entries = entries.filter(x=>x.id!==deleteId);
-    saveAll();
-    renderTable();
-    renderReport();
-    updateHeaderStats();
-    updateBalanceDisplay();
-    showToast('🗑️ ডিলিট হয়েছে');
+    saveAll(); renderTable(); renderReport(); updateHeaderStats(); updateBalanceDisplay(); showToast('🗑️ Deleted');
   }
   closeDeleteModal();
 }
-
 function renderTable(){
   const tbody=document.getElementById('tableBody');
   const search=(document.getElementById('searchInput').value||'').toLowerCase();
@@ -1135,25 +1208,21 @@ function renderTable(){
     const matchStatus = !fStatus || e.status===fStatus;
     return matchSearch && matchCat && matchStatus;
   });
-  document.getElementById('tableCount').textContent=filtered.length+' টি';
-  if(filtered.length===0){
-    tbody.innerHTML='';
-    document.getElementById('emptyState').style.display='block';
-    return;
-  }
+  document.getElementById('tableCount').textContent=filtered.length;
+  if(filtered.length===0){ tbody.innerHTML=''; document.getElementById('emptyState').style.display='block'; return; }
   document.getElementById('emptyState').style.display='none';
   tbody.innerHTML=filtered.map((e,i)=>`
     <tr>
-      <td style="color:var(--muted)">${i+1}</td>
-      <td style="white-space:nowrap">${formatDate(e.date)}</td>
+      <td style="color:var(--muted);font-weight:600">${i+1}</td>
+      <td style="white-space:nowrap;font-weight:600">${formatDate(e.date)}</td>
       <td><span class="cat-badge cat-${e.category}">${e.category==='ক্রয়'?'Purchase':e.category==='বিক্রয়'?'Sale':e.category}</span></td>
-      <td style="font-weight:600">${e.item==='৫ এর বস্তা'?'5 Bags':e.item==='১০ এর বস্তা'?'10 Bags':e.item}</td>
+      <td style="font-weight:700">${e.item==='৫ এর বস্তা'?'5 Bags':e.item==='১০ এর বস্তা'?'10 Bags':e.item}</td>
       <td>${e.salesperson||'-'}</td>
-      <td style="text-align:center;font-weight:600">${Number(e.qty).toLocaleString('en-US')}</td>
+      <td style="text-align:center;font-weight:700">${Number(e.qty).toLocaleString('en-US')}</td>
       <td style="text-align:right">৳ ${Number(e.unitPrice).toLocaleString('en-US')}</td>
-      <td style="text-align:right;font-weight:700;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
+      <td style="text-align:right;font-weight:800;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
       <td style="text-align:right">${e.expenseAmount? '৳ '+Number(e.expenseAmount).toLocaleString('en-US'):'-'}</td>
-      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item==='৫ এর বস্তা'?'5 Bags': e.item==='১০ এর বস্তা'?'10 Bags': e.item} : ${getItemBalance(e.item).toLocaleString('en-US')} pcs</span></td>
+      <td><span style="font-size:11px;font-weight:700;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:4px 8px;border-radius:8px;display:inline-block;white-space:nowrap">${e.item==='৫ এর বস্তা'?'5 Bags': e.item==='১০ এর বস্তা'?'10 Bags': e.item} : ${getItemBalance(e.item).toLocaleString('en-US')} pcs</span></td>
       <td>
         <div class="action-btns">
           <button class="btn-sm edit" onclick="editEntry('${e.id}')" title="Edit">✏️</button>
@@ -1164,7 +1233,6 @@ function renderTable(){
   `).join('');
   setTimeout(updateBalanceDisplay,0);
 }
-
 function getFilteredForReport(){
   const from=document.getElementById('rFrom').value;
   const to=document.getElementById('rTo').value;
@@ -1178,7 +1246,6 @@ function getFilteredForReport(){
     return true;
   });
 }
-
 function renderReport(){
   const data=getFilteredForReport();
   let totalSale=0, totalBuy=0, totalExpense=0, saleCount=0, buyCount=0;
@@ -1189,21 +1256,21 @@ function renderReport(){
     else { totalBuy+= Number(e.totalPrice)||0; buyCount++; }
   });
   const profit = totalSale - (totalBuy + totalExpense);
-  document.getElementById('sSale').textContent='৳ '+ totalSale.toLocaleString('bn-BD');
-  document.getElementById('sBuy').textContent='৳ '+ totalBuy.toLocaleString('bn-BD');
-  document.getElementById('sExpense').textContent='৳ '+ totalExpense.toLocaleString('bn-BD');
-  document.getElementById('sSaleCount').textContent=saleCount+' টি বিক্রয়';
-  document.getElementById('sBuyCount').textContent=buyCount+' টি ক্রয়';
+  document.getElementById('sSale').textContent='৳ '+ totalSale.toLocaleString('en-US');
+  document.getElementById('sBuy').textContent='৳ '+ totalBuy.toLocaleString('en-US');
+  document.getElementById('sExpense').textContent='৳ '+ totalExpense.toLocaleString('en-US');
+  document.getElementById('sSaleCount').textContent=saleCount+' sales';
+  document.getElementById('sBuyCount').textContent=buyCount+' buys';
   const profitEl=document.getElementById('sProfit');
-  profitEl.textContent=(profit>=0?'৳ ':'-৳ ')+ Math.abs(profit).toLocaleString('bn-BD');
+  profitEl.textContent=(profit>=0?'৳ ':'-৳ ')+ Math.abs(profit).toLocaleString('en-US');
   profitEl.style.color= profit>=0 ? '#059669' : '#dc2626';
-  document.getElementById('sProfitSub').textContent= profit>=0 ? 'লাভ' : 'ক্ষতি';
+  document.getElementById('sProfitSub').textContent= profit>=0 ? 'Profit' : 'Loss';
   renderBarChart(data);
   renderDonut(data);
   renderItemLastStatus(data);
   const tbody=document.getElementById('reportBody');
   if(data.length===0){
-    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">কোনো ডেটা নেই — ফিল্টার পরিবর্তন করুন</td></tr>';
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">No data — change filters</td></tr>';
     return;
   }
   const sorted=[...data].sort((a,b)=> b.date.localeCompare(a.date));
@@ -1214,14 +1281,13 @@ function renderReport(){
       <td><span class="cat-badge cat-${e.category}">${e.category==='ক্রয়'?'Purchase':e.category==='বিক্রয়'?'Sale':e.category}</span></td>
       <td>${e.item==='৫ এর বস্তা'?'5 Bags':e.item==='১০ এর বস্তা'?'10 Bags':e.item}</td>
       <td style="text-align:center">${Number(e.qty).toLocaleString('en-US')}</td>
-      <td style="text-align:right;font-weight:600">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
+      <td style="text-align:right;font-weight:700">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
       <td style="text-align:right">৳ ${Number(e.expenseAmount||0).toLocaleString('en-US')}</td>
-      <td style="text-align:right;font-weight:700;color:${net>=0?'#059669':'#dc2626'}">${net>=0?'৳ ':'-৳ '}${Math.abs(net).toLocaleString('en-US')}</td>
-      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item==='৫ এর বস্তা'?'5 Bags': e.item==='১০ এর বস্তা'?'10 Bags': e.item} : ${getItemBalance(e.item).toLocaleString('en-US')} pcs</span></td>
+      <td style="text-align:right;font-weight:800;color:${net>=0?'#059669':'#dc2626'}">${net>=0?'৳ ':'-৳ '}${Math.abs(net).toLocaleString('en-US')}</td>
+      <td><span style="font-size:11px;font-weight:700;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:4px 8px;border-radius:8px;display:inline-block;white-space:nowrap">${e.item==='৫ এর বস্তা'?'5 Bags': e.item==='১০ এর বস্তা'?'10 Bags': e.item} : ${getItemBalance(e.item).toLocaleString('en-US')} pcs</span></td>
     </tr>`
   }).join('');
 }
-
 function renderBarChart(data){
   const container=document.getElementById('barChart');
   const months=[];
@@ -1229,7 +1295,7 @@ function renderBarChart(data){
   for(let i=5;i>=0;i--){
     const d=new Date(now.getFullYear(), now.getMonth()-i,1);
     const key=d.toISOString().slice(0,7);
-    const label= d.toLocaleDateString('bn-BD',{month:'short'}) + ' ' + d.getFullYear().toString().slice(-2);
+    const label= d.toLocaleDateString('en-US',{month:'short'}) + ' ' + d.getFullYear().toString().slice(-2);
     months.push({key,label,sale:0,buy:0,exp:0});
   }
   data.forEach(e=>{
@@ -1247,26 +1313,25 @@ function renderBarChart(data){
     const hBuy = (m.buy/maxVal*130).toFixed(0);
     const hExp = (m.exp/maxVal*130).toFixed(0);
     return `<div class="bar-group">
-      <div style="display:flex;gap:3px;align-items:end;height:130px">
-        <div class="bar" style="height:${hSale}px;background:#0f766e;min-width:18px"></div>
-        <div class="bar" style="height:${hBuy}px;background:#2563eb;min-width:18px"></div>
-        <div class="bar" style="height:${hExp}px;background:#f59e0b;min-width:18px"></div>
+      <div style="display:flex;gap:4px;align-items:end;height:130px">
+        <div class="bar" style="height:${hSale}px;background:linear-gradient(180deg,#0f766e,#14b8a6);min-width:20px"></div>
+        <div class="bar" style="height:${hBuy}px;background:linear-gradient(180deg,#2563eb,#3b82f6);min-width:20px"></div>
+        <div class="bar" style="height:${hExp}px;background:linear-gradient(180deg,#f59e0b,#fbbf24);min-width:20px"></div>
       </div>
       <div class="bar-label">${m.label}</div>
     </div>`
   }).join('');
 }
-
 function renderDonut(data){
   const total=data.length;
   document.getElementById('donutTotal').textContent=total;
   const counts={};
   data.forEach(e=>{counts[e.status]=(counts[e.status]||0)+1});
-  const colors={'পরিশোধিত':'#059669','বাকি':'#dc2626','আংশিক':'#f59e0b'};
+  const colors={'পরিশোধিত':'#059669','বাকি':'#dc2626','আংশিক':'#f59e0b','5:':'#0ea5e9','10:':'#f59e0b'};
   const entriesStatus=Object.entries(counts);
   if(entriesStatus.length===0){
     document.getElementById('donut').style.background='#f1f5f9';
-    document.getElementById('donutLegend').innerHTML='<span style="font-size:11px;color:var(--muted)">ডেটা নেই</span>';
+    document.getElementById('donutLegend').innerHTML='<span style="font-size:11px;color:var(--muted)">No data</span>';
     document.getElementById('categorySummary').innerHTML='';
     return;
   }
@@ -1274,12 +1339,16 @@ function renderDonut(data){
   entriesStatus.forEach(([status,cnt])=>{
     const pct=cnt/total*100;
     const color=colors[status]||'#64748b';
-    gradient.push(`${color} ${acc}% ${acc+pct}%`);
+    // if status is like 5:10, use gradient
+    let c=color;
+    if(status.includes('5:')) c='#0ea5e9';
+    else if(status.includes('10:')) c='#f59e0b';
+    gradient.push(`${c} ${acc}% ${acc+pct}%`);
     acc+=pct;
   });
   document.getElementById('donut').style.background=`conic-gradient(${gradient.join(',')})`;
-  document.getElementById('donutLegend').innerHTML=entriesStatus.map(([s,c])=>`
-    <div class="legend-item"><span class="legend-dot" style="background:${colors[s]||'#64748b'}"></span> ${s} — ${c} টি (${Math.round(c/total*100)}%)</div>
+  document.getElementById('donutLegend').innerHTML=entriesStatus.slice(0,4).map(([s,c])=>`
+    <div class="legend-item"><span class="legend-dot" style="background:${s.includes('5:')?'#0ea5e9':s.includes('10:')?'#f59e0b':(colors[s]||'#64748b')}"></span> ${s.slice(0,20)} — ${c} (${Math.round(c/total*100)}%)</div>
   `).join('');
   const catMap={};
   data.forEach(e=>{
@@ -1288,36 +1357,30 @@ function renderDonut(data){
     catMap[e.category].total+= Number(e.totalPrice)||0;
   });
   document.getElementById('categorySummary').innerHTML=Object.entries(catMap).map(([cat,info])=>`
-    <div style="background:#f8fafc;border:1px solid var(--border);border-radius:9px;padding:8px;text-align:center">
-      <div style="font-size:10.5px;color:var(--muted);font-weight:600">${cat}</div>
-      <div style="font-weight:700;font-size:12px">${info.count} টি</div>
-      <div style="font-size:11px;color:var(--primary);font-weight:600">৳ ${info.total.toLocaleString('bn-BD')}</div>
+    <div style="background:white;border:1px solid var(--border);border-radius:12px;padding:10px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.03)">
+      <div style="font-size:10px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase">${cat==='ক্রয়'?'Purchase':cat==='বিক্রয়'?'Sale':cat}</div>
+      <div style="font-weight:800;font-size:13px;font-family:'Outfit',sans-serif">${info.count}</div>
+      <div style="font-size:11px;color:var(--primary);font-weight:700">৳ ${info.total.toLocaleString('en-US')}</div>
     </div>
   `).join('');
 }
-
 function renderItemLastStatus(data){
   const container=document.getElementById('itemLastStatus');
-  // Group by item, get last entry per item (by date desc)
   const map={};
   [...data].sort((a,b)=> b.date.localeCompare(a.date) || b.id.localeCompare(a.id)).forEach(e=>{
     if(!map[e.item]) map[e.item]=e;
   });
-  if(Object.keys(map).length===0){
-    container.innerHTML='';
-    return;
-  }
-  container.innerHTML='<div style="font-size:11px;font-weight:700;color:#334155;margin-bottom:4px">📦 আইটেম অনুযায়ী লাস্ট স্থিতি</div>' + Object.entries(map).map(([item,last])=>`
-    <div style="display:flex;justify-content:space-between;align-items:center;background:#f8fafc;border:1px solid var(--border);border-radius:8px;padding:7px 10px">
+  if(Object.keys(map).length===0){ container.innerHTML=''; return; }
+  container.innerHTML='<div style="font-size:11px;font-weight:800;color:#1e293b;margin-bottom:6px;letter-spacing:0.3px;text-transform:uppercase">📦 Item Last Status</div>' + Object.entries(map).map(([item,last])=>`
+    <div style="display:flex;justify-content:space-between;align-items:center;background:white;border:1px solid var(--border);border-radius:12px;padding:10px 12px;box-shadow:0 1px 4px rgba(0,0,0,0.03)">
       <div>
-        <div style="font-size:12px;font-weight:700">${item}</div>
-        <div style="font-size:10.5px;color:var(--muted)">${formatDate(last.date)} • ${last.category} • ${last.source}</div>
+        <div style="font-size:12px;font-weight:700">${item==='৫ এর বস্তা'?'5 Bags':item==='১০ এর বস্তা'?'10 Bags':item}</div>
+        <div style="font-size:11px;color:var(--muted)">${formatDate(last.date)} • ${last.category==='ক্রয়'?'Purchase':last.category==='বিক্রয়'?'Sale':last.category}</div>
       </div>
-      <span class="status-badge status-${last.status}">${last.status}</span>
+      <span style="font-size:11px;font-weight:700;background:${item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:5px 10px;border-radius:8px">${getItemBalance(item).toLocaleString('en-US')} pcs</span>
     </div>
   `).join('');
 }
-
 function clearReportFilters(){
   document.getElementById('rFrom').value='';
   document.getElementById('rTo').value='';
@@ -1325,7 +1388,6 @@ function clearReportFilters(){
   document.getElementById('rItem').value='';
   renderReport();
 }
-
 function updateHeaderStats(){
   document.getElementById('hTotal').textContent=entries.length;
   let s=0,b=0;
@@ -1333,27 +1395,25 @@ function updateHeaderStats(){
     if(e.category==='বিক্রয়') s+=Number(e.totalPrice)||0;
     else b+=Number(e.totalPrice)||0;
   });
-  document.getElementById('hSale').textContent='৳ '+ s.toLocaleString('bn-BD');
-  document.getElementById('hBuy').textContent='৳ '+ b.toLocaleString('bn-BD');
+  document.getElementById('hSale').textContent='৳ '+ s.toLocaleString('en-US');
+  document.getElementById('hBuy').textContent='৳ '+ b.toLocaleString('en-US');
   const exp=entries.reduce((a,e)=>a+(Number(e.expenseAmount)||0),0);
   const profit=s-(b+exp);
   const el=document.getElementById('hProfit');
-  el.textContent=(profit>=0?'৳ ':'-৳ ')+Math.abs(profit).toLocaleString('bn-BD');
+  el.textContent=(profit>=0?'৳ ':'-৳ ')+Math.abs(profit).toLocaleString('en-US');
   el.style.color= profit>=0 ? '#a7f3d0' : '#fecaca';
 }
-
 function formatDate(str){
   if(!str) return '-';
   const d=new Date(str);
-  return d.toLocaleDateString('bn-BD',{day:'2-digit',month:'short',year:'numeric'});
+  return d.toLocaleDateString('en-US',{day:'2-digit',month:'short',year:'numeric'});
 }
-
 function openAddModal(type){
   addType=type;
   const titles={
-    category:['নতুন ক্যাটাগরি','যেমন: ফেরত'],
-    item:['নতুন আইটেম','যেমন: ২০ এর বস্তা'],
-    salesperson:['নতুন বিক্রয়কারী','যেমন: জামাল']
+    category:['Add Category','e.g. Return'],
+    item:['Add Item','e.g. 20 Bags'],
+    salesperson:['Add Salesperson','e.g. Jamal']
   };
   document.getElementById('modalTitle').textContent=titles[type][0];
   document.getElementById('modalDesc').textContent=titles[type][1];
@@ -1362,25 +1422,19 @@ function openAddModal(type){
   document.getElementById('addModal').classList.add('open');
   setTimeout(()=>document.getElementById('modalInput').focus(),100);
 }
-function closeModal(){
-  document.getElementById('addModal').classList.remove('open');
-  addType=null;
-}
+function closeModal(){ document.getElementById('addModal').classList.remove('open'); addType=null; }
 function confirmAdd(){
   const val=document.getElementById('modalInput').value.trim();
-  if(!val){ showToast('⚠️ নাম লিখুন'); return; }
+  if(!val){ showToast('⚠️ Enter name'); return; }
   if(addType==='category'){
-    if(categories.includes(val)){ showToast('⚠️ আছে'); return; }
-    categories.push(val);
-    localStorage.setItem('st_categories',JSON.stringify(categories));
+    if(categories.includes(val)){ showToast('⚠️ Exists'); return; }
+    categories.push(val); localStorage.setItem('st_categories',JSON.stringify(categories));
   } else if(addType==='item'){
-    if(items.includes(val)){ showToast('⚠️ আছে'); return; }
-    items.push(val);
-    localStorage.setItem('st_items',JSON.stringify(items));
+    if(items.includes(val)){ showToast('⚠️ Exists'); return; }
+    items.push(val); localStorage.setItem('st_items',JSON.stringify(items));
   } else if(addType==='salesperson'){
-    if(salespersons.includes(val)){ showToast('⚠️ আছে'); return; }
-    salespersons.push(val);
-    localStorage.setItem('st_salespersons',JSON.stringify(salespersons));
+    if(salespersons.includes(val)){ showToast('⚠️ Exists'); return; }
+    salespersons.push(val); localStorage.setItem('st_salespersons',JSON.stringify(salespersons));
   }
   refreshDropdowns();
   if(addType==='category') document.getElementById('fCategory').value=val;
@@ -1388,31 +1442,27 @@ function confirmAdd(){
   if(addType==='salesperson') document.getElementById('fSalesperson').value=val;
   if(addType==='category') onCategoryChange();
   if(addType==='item') onItemChange();
-  closeModal();
-  showToast('✅ যোগ হয়েছে: '+val);
+  closeModal(); showToast('✅ Added: '+val);
 }
 document.getElementById('addModal').addEventListener('click',e=>{ if(e.target.id==='addModal') closeModal(); });
 document.getElementById('deleteModal').addEventListener('click',e=>{ if(e.target.id==='deleteModal') closeDeleteModal(); });
 document.getElementById('modalInput').addEventListener('keydown',e=>{ if(e.key==='Enter') confirmAdd(); });
-
 function saveAll(){
   localStorage.setItem('st_entries',JSON.stringify(entries));
   localStorage.setItem('st_categories',JSON.stringify(categories));
   localStorage.setItem('st_items',JSON.stringify(items));
   localStorage.setItem('st_salespersons',JSON.stringify(salespersons));
 }
-
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
 }
-
 function exportCSV(isReport=false){
   const data=isReport? getFilteredForReport() : entries;
-  if(data.length===0){ showToast('⚠️ ডেটা নেই'); return; }
-  const headers=['তারিখ','ক্যাটাগরি','আইটেম','বিক্রয়কারী','পরিমাণ','একক মূল্য','মোট মূল্য','খরচ বিবরণ','খরচ','স্থিতি'];
+  if(data.length===0){ showToast('⚠️ No data'); return; }
+  const headers=['Date','Category','Item','Salesperson','Qty','Unit Price','Total','Expense Desc','Expense','Status'];
   const rows=data.map(e=>[e.date,e.category,e.item,e.salesperson,e.qty,e.unitPrice,e.totalPrice,e.expenseDesc,e.expenseAmount,e.status]);
   let csv='\uFEFF'+[headers,...rows].map(r=> r.map(v=> `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
@@ -1422,20 +1472,16 @@ function exportCSV(isReport=false){
   a.download=isReport? 'report.csv' : 'sales_tracker.csv';
   a.click();
   URL.revokeObjectURL(url);
-  showToast('⬇️ ডাউনলোড শুরু');
+  showToast('⬇️ Downloading');
 }
-
 if(entries.length===0){
   entries=[
-    {id:'1',date:'2026-09-10',category:'ক্রয়',item:'৫ এর বস্তা',source:'আলম ট্রেডার্স',salesperson:'-',qty:50,unitPrice:1150,totalPrice:57500,expenseDesc:'গাড়ি ভাড়া',expenseAmount:1200,status:'পরিশোধিত'},
-    {id:'2',date:'2026-09-12',category:'বিক্রয়',item:'৫ এর বস্তা',source:'রহিম স্টোর',salesperson:'রহিম',qty:20,unitPrice:1350,totalPrice:27000,expenseDesc:'',expenseAmount:0,status:'বাকি'},
-    {id:'3',date:'2026-09-14',category:'বিক্রয়',item:'১০ এর বস্তা',source:'সততা ট্রেডার্স',salesperson:'করিম',qty:15,unitPrice:2600,totalPrice:39000,expenseDesc:'লেবার',expenseAmount:500,status:'পরিশোধিত'},
-    {id:'4',date:'2026-09-15',category:'ক্রয়',item:'১০ এর বস্তা',source:'হক এন্টারপ্রাইজ',salesperson:'-',qty:30,unitPrice:2300,totalPrice:69000,expenseDesc:'',expenseAmount:0,status:'আংশিক'},
+    {id:'1',date:'2026-09-10',category:'ক্রয়',item:'৫ এর বস্তা',source:'-',salesperson:'-',qty:50,unitPrice:1150,totalPrice:57500,expenseDesc:'Transport',expenseAmount:1200,status:'5:50,10:0'},
+    {id:'2',date:'2026-09-12',category:'বিক্রয়',item:'৫ এর বস্তা',source:'-',salesperson:'রহিম',qty:20,unitPrice:1350,totalPrice:27000,expenseDesc:'',expenseAmount:0,status:'5:30,10:0'},
+    {id:'3',date:'2026-09-14',category:'বিক্রয়',item:'১০ এর বস্তা',source:'-',salesperson:'করিম',qty:15,unitPrice:2600,totalPrice:39000,expenseDesc:'Labor',expenseAmount:500,status:'5:30,10:-15'},
+    {id:'4',date:'2026-09-15',category:'ক্রয়',item:'১০ এর বস্তা',source:'-',salesperson:'-',qty:30,unitPrice:2300,totalPrice:69000,expenseDesc:'',expenseAmount:0,status:'5:30,10:15'},
   ];
-  saveAll();
-  renderTable();
-  renderReport();
-  updateHeaderStats();
+  saveAll(); renderTable(); renderReport(); updateHeaderStats();
 }
 </script>
 </body>
