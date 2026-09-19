@@ -715,7 +715,8 @@ tbody tr:last-child td{border-bottom:none}
   border-radius:20px;
   width:100%;
   max-width:420px;
-  overflow:hidden;
+  max-height:92vh;
+  overflow:auto;
   box-shadow:0 20px 60px rgba(14,165,233,0.15), 0 8px 24px rgba(0,0,0,0.06);
 }
 .auth-header{
@@ -993,12 +994,12 @@ header nav{display:none}
       <button class="auth-tab active" id="tabSignin" onclick="switchAuthTab('signin')">Sign In</button>
       <button class="auth-tab" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</button>
     </div>
-    <!-- Sign In -->
+    <!-- Sign In — User ID -->
     <div class="auth-form active" id="formSignin">
       <div class="auth-error" id="signinError"></div>
       <div class="auth-field">
-        <label>👤 Username</label>
-        <input type="text" class="auth-input" id="signinUser" placeholder="e.g. rahim123" autocomplete="username">
+        <label>🆔 User ID</label>
+        <input type="text" class="auth-input" id="signinUser" placeholder="Your User ID" autocomplete="username">
       </div>
       <div class="auth-field">
         <label>🔒 Password</label>
@@ -1007,13 +1008,21 @@ header nav{display:none}
       <button class="auth-btn" onclick="handleSignIn()">Sign In →</button>
       <div class="auth-switch">No account? <a onclick="switchAuthTab('signup')">Sign Up</a></div>
     </div>
-    <!-- Sign Up -->
+    <!-- Sign Up — Name, Mobile No, User ID, Password, Confirm Password -->
     <div class="auth-form" id="formSignup">
       <div class="auth-error" id="signupError"></div>
       <div class="auth-success" id="signupSuccess"></div>
       <div class="auth-field">
-        <label>👤 Username <span style="color:#ef4444">*</span></label>
-        <input type="text" class="auth-input" id="signupUser" placeholder="Choose username" autocomplete="username">
+        <label>👤 Name <span style="color:#ef4444">*</span></label>
+        <input type="text" class="auth-input" id="signupName" placeholder="Your full name" autocomplete="name">
+      </div>
+      <div class="auth-field">
+        <label>📱 Mobile No <span style="color:#ef4444">*</span></label>
+        <input type="tel" class="auth-input" id="signupMobile" placeholder="01XXXXXXXXX" autocomplete="tel" pattern="[0-9]*" inputmode="numeric">
+      </div>
+      <div class="auth-field">
+        <label>🆔 User ID <span style="color:#ef4444">*</span></label>
+        <input type="text" class="auth-input" id="signupUser" placeholder="Choose User ID (login)" autocomplete="username">
       </div>
       <div class="auth-field">
         <label>🔒 Password <span style="color:#ef4444">*</span></label>
@@ -1423,7 +1432,7 @@ if(users.length===0){
 }
 if(users.length===0){
   // create default demo account
-  users = [{username:'admin',password:'1234',createdAt:new Date().toISOString()}];
+  users = [{name:'Admin',mobile:'01700000000',username:'admin',password:'1234',createdAt:new Date().toISOString()}];
   localStorage.setItem('st_users_auth', JSON.stringify(users));
   localStorage.setItem('st_users', JSON.stringify(['admin']));
 }
@@ -1593,22 +1602,38 @@ function switchAuthTab(tab){
   const sus=document.getElementById('signupSuccess'); if(sus){ sus.textContent=''; sus.classList.remove('show'); }
 }
 function handleSignUp(){
+  const nEl=document.getElementById('signupName');
+  const mEl=document.getElementById('signupMobile');
   const uEl=document.getElementById('signupUser');
   const pEl=document.getElementById('signupPass');
   const cEl=document.getElementById('signupConfirm');
   const err=document.getElementById('signupError');
   const suc=document.getElementById('signupSuccess');
+  const name=(nEl.value||'').trim();
+  const mobile=(mEl.value||'').trim();
   const username=(uEl.value||'').trim();
   const password=(pEl.value||'').trim();
   const confirm=(cEl.value||'').trim();
   if(err) { err.textContent=''; err.classList.remove('show'); }
   if(suc) { suc.textContent=''; suc.classList.remove('show'); }
-  if(!username || !password || !confirm){
-    if(err){ err.textContent='⚠️ সব ঘর পূরণ করুন'; err.classList.add('show'); }
+  if(!name || !mobile || !username || !password || !confirm){
+    if(err){ err.textContent='⚠️ সব ঘর পূরণ করুন (Name, Mobile, User ID, Password)'; err.classList.add('show'); }
+    return;
+  }
+  if(name.length<2){
+    if(err){ err.textContent='⚠️ Name কমপক্ষে ২ অক্ষর'; err.classList.add('show'); }
+    return;
+  }
+  if(!/^[0-9]{11}$/.test(mobile)){
+    if(err){ err.textContent='⚠️ Mobile 11 digit (01XXXXXXXXX)'; err.classList.add('show'); }
     return;
   }
   if(username.length<3){
-    if(err){ err.textContent='⚠️ Username কমপক্ষে ৩ অক্ষর'; err.classList.add('show'); }
+    if(err){ err.textContent='⚠️ User ID কমপক্ষে ৩ অক্ষর'; err.classList.add('show'); }
+    return;
+  }
+  if(!/^[a-zA-Z0-9_.-]+$/.test(username)){
+    if(err){ err.textContent='⚠️ User ID তে শুধু a-z, 0-9, _, .,-'; err.classList.add('show'); }
     return;
   }
   if(password.length<4){
@@ -1620,10 +1645,10 @@ function handleSignUp(){
     return;
   }
   if(users.some(x=>x.username.toLowerCase()===username.toLowerCase())){
-    if(err){ err.textContent='⚠️ এই Username আগেই আছে'; err.classList.add('show'); }
+    if(err){ err.textContent='⚠️ এই User ID আগেই আছে'; err.classList.add('show'); }
     return;
   }
-  users.push({username,password,createdAt:new Date().toISOString()});
+  users.push({name,mobile,username,password,createdAt:new Date().toISOString()});
   localStorage.setItem('st_users_auth', JSON.stringify(users));
   // keep old st_users for compatibility
   localStorage.setItem('st_users', JSON.stringify(users.map(x=>x.username)));
@@ -1653,7 +1678,7 @@ function handleSignIn(){
     if(oldFound){
       if(err){ err.textContent='⚠️ ভুল Password'; err.classList.add('show'); }
     } else {
-      if(err){ err.textContent='⚠️ User পাওয়া যায়নি — Sign Up করুন'; err.classList.add('show'); }
+      if(err){ err.textContent='⚠️ User ID পাওয়া যায়নি — Sign Up করুন'; err.classList.add('show'); }
     }
     return;
   }
