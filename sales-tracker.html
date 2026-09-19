@@ -1132,10 +1132,33 @@ tbody tr:last-child td{border-bottom:none}
   </div>
 
   <div id="page-report" class="page">
-
+    <!-- Filter: এ মাস, এ বছর, এ পর্যন্ত, Date to Date -->
+    <div class="card report-filter-card" style="padding:14px 16px">
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button class="r-filter-btn active" data-filter="month" onclick="setReportFilter('month')">📅 এ মাস</button>
+          <button class="r-filter-btn" data-filter="year" onclick="setReportFilter('year')">📆 এ বছর</button>
+          <button class="r-filter-btn" data-filter="all" onclick="setReportFilter('all')">⏳ এ পর্যন্ত</button>
+          <button class="r-filter-btn" data-filter="custom" onclick="setReportFilter('custom')">📅 Date to Date</button>
+        </div>
+        <div id="reportCustomRange" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;background:#f0f9ff;border:1px solid #dbeafe;padding:10px 12px;border-radius:12px">
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:10px;font-weight:800;color:#0f766e;letter-spacing:0.5px;text-transform:uppercase">হতে (From)</span>
+            <input type="date" class="input" id="rFromCustom" style="height:38px;min-width:160px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
+          </div>
+          <span style="font-size:12px;font-weight:800;color:var(--muted);margin-top:16px">—</span>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            <span style="font-size:10px;font-weight:800;color:#0f766e;letter-spacing:0.5px;text-transform:uppercase">পর্যন্ত (To)</span>
+            <input type="date" class="input" id="rToCustom" style="height:38px;min-width:160px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
+          </div>
+          <button class="btn btn-primary" style="height:38px;padding:0 16px;font-size:12px;margin-top:16px" onclick="applyCustomReport()">Apply</button>
+        </div>
+      </div>
+      <div id="reportFilterInfo" style="margin-top:10px;font-size:11px;font-weight:700;color:#0f766e;background:#ecfdf5;border:1px solid #a7f3d0;padding:7px 12px;border-radius:10px;display:inline-block">📅 Filter: এ মাস</div>
+    </div>
 
     <!-- Summary Table: 2 rows (5 এর বস্তা, 10 এর বস্তা) -->
-    <div class="card" style="margin-top:0;overflow:hidden;border-radius:16px">
+    <div class="card" style="margin-top:12px;overflow:hidden;border-radius:16px">
       <div class="table-header" style="background:linear-gradient(180deg,#ffffff 0%,#f8fafc 100%)">
         <h3>📊 সারাংশ — Summary (Filter অনুযায়ী)</h3>
         <div class="table-tools">
@@ -1261,6 +1284,12 @@ if(users.length===0){
     users = oldUsers.map(u=>({username:u,password:'1234'}));
     localStorage.setItem('st_users_auth', JSON.stringify(users));
   }
+}
+if(users.length===0){
+  // create default demo account
+  users = [{username:'admin',password:'1234',createdAt:new Date().toISOString()}];
+  localStorage.setItem('st_users_auth', JSON.stringify(users));
+  localStorage.setItem('st_users', JSON.stringify(['admin']));
 }
 let currentUser = localStorage.getItem('st_current_user') || null;
 let editingId = null;
@@ -1701,7 +1730,7 @@ function renderTable(){
   setTimeout(updateBalanceDisplay,0);
 }
 // === NEW REPORT: Filter (এ মাস/এ বছর/এ পর্যন্ত/Date to Date) ===
-let reportFilter = {type:'all', from:null, to:null};
+let reportFilter = {type:'month', from:null, to:null};
 
 function getReportRange(){
   const now = new Date();
@@ -1726,12 +1755,12 @@ function getReportRange(){
 
 function setReportFilter(type){
   reportFilter.type = type;
-  const btns=document.querySelectorAll('.r-filter-btn');
-  if(btns.length) btns.forEach(b=>{
+  document.querySelectorAll('.r-filter-btn').forEach(b=>{
     b.classList.toggle('active', b.dataset.filter===type);
   });
   const customBox = document.getElementById('reportCustomRange');
   if(customBox) customBox.style.display = (type==='custom'?'flex':'none');
+  // default custom dates to this month if empty (example 1-9-26 to 20-9-26)
   if(type==='custom'){
     const fromEl=document.getElementById('rFromCustom');
     const toEl=document.getElementById('rToCustom');
@@ -1740,6 +1769,7 @@ function setReportFilter(type){
       fromEl.value = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
     }
     if(toEl && !toEl.value){
+      // default to 20th of this month if today before 20th, else today
       const now=new Date();
       const day20 = new Date(now.getFullYear(), now.getMonth(), 20).toISOString().slice(0,10);
       const today = now.toISOString().slice(0,10);
