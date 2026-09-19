@@ -955,6 +955,7 @@ function onCategoryChange(){
     fieldSp.classList.remove('hidden');
     spSel.removeAttribute('required');
   }
+  updateBalanceDisplay();
 }
 
 function getItemBalance(item){
@@ -968,9 +969,33 @@ function getItemBalance(item){
   return buyQty - sellQty;
 }
 function updateBalanceDisplay(){
+  const cat = document.getElementById('fCategory').value;
+  const el=document.getElementById('balanceDisplay');
+  const fStatus=document.getElementById('fStatus');
+  if(!el) return;
+  // ক্যাটাগরি সিলেক্ট থাকলে শুধু ওই ক্যাটাগরির ব্যালেন্স দেখাবে
+  if(cat){
+    let html='';
+    let statusVal='';
+    items.forEach(it=>{
+      let total=0;
+      entries.forEach(e=>{ if(e.category===cat && e.item===it) total+=Number(e.qty)||0; });
+      html += `${it}: <b>${total.toLocaleString('bn-BD')} টি</b> &nbsp;|&nbsp; `;
+      statusVal += `${it}:${total} `;
+    });
+    html = html.replace(/ &nbsp;\|&nbsp; $/,'');
+    if(!html) html=`${cat}: <b>০ টি</b>`;
+    else html = `${cat} ব্যালেন্স → ` + html;
+    el.innerHTML = html;
+    el.style.background='#e0f2fe';
+    el.style.borderColor='#7dd3fc';
+    el.style.color='#0c4a6e';
+    if(fStatus) fStatus.value = statusVal.trim();
+    return;
+  }
+  // ক্যাটাগরি না থাকলে ওভারঅল ব্যালেন্স (৫ ও ১০)
   const bal5 = getItemBalance('৫ এর বস্তা');
   const bal10 = getItemBalance('১০ এর বস্তা');
-  // also check custom items
   let extra='';
   const customItems = items.filter(it=> it!=='৫ এর বস্তা' && it!=='১০ এর বস্তা');
   if(customItems.length>0){
@@ -979,15 +1004,10 @@ function updateBalanceDisplay(){
       extra += ` | ${it}: ${b.toLocaleString('bn-BD')} টি`;
     });
   }
-  const el=document.getElementById('balanceDisplay');
-  if(el){
-    el.innerHTML = `৫ এর বস্তা: <b>${bal5.toLocaleString('bn-BD')} টি</b> &nbsp;|&nbsp; ১০ এর বস্তা: <b>${bal10.toLocaleString('bn-BD')} টি</b>${extra}`;
-    el.style.background = (bal5<0||bal10<0)? '#fef2f2' : '#f0fdfa';
-    el.style.borderColor = (bal5<0||bal10<0)? '#fecaca' : '#99f6e4';
-    el.style.color = (bal5<0||bal10<0)? '#991b1b' : '#115e59';
-  }
-  // also set hidden status value to combined
-  const fStatus=document.getElementById('fStatus');
+  el.innerHTML = `৫ এর বস্তা: <b>${bal5.toLocaleString('bn-BD')} টি</b> &nbsp;|&nbsp; ১০ এর বস্তা: <b>${bal10.toLocaleString('bn-BD')} টি</b>${extra}`;
+  el.style.background = (bal5<0||bal10<0)? '#fef2f2' : '#f0fdfa';
+  el.style.borderColor = (bal5<0||bal10<0)? '#fecaca' : '#99f6e4';
+  el.style.color = (bal5<0||bal10<0)? '#991b1b' : '#115e59';
   if(fStatus) fStatus.value = `৫:${bal5},১০:${bal10}`;
 }
 function onItemChange(){
@@ -1047,7 +1067,7 @@ function resetForm(){
   document.getElementById('editingBadge').classList.remove('show');
   document.getElementById('btnSave').innerHTML='💾 Save';
   onCategoryChange();
-  updateBalanceHint();
+  updateBalanceDisplay();
 }
 
 function editEntry(id){
