@@ -573,6 +573,30 @@ tbody tr:hover{background:#f8fafc}
 <div class="container">
   <!-- ENTRY PAGE - NO DASHBOARD, 1-2 LINES -->
   <div id="page-entry" class="page active">
+    <!-- 2 Cards on top: 5 and 10 status -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div class="card" style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #0ea5e9">
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0.3px">5 BAGS STOCK</div>
+          <div style="font-size:12px;color:#0c4a6e;font-weight:600;margin-top:2px">Balance</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:800;color:#0284c7" id="bal5Card">0</div>
+          <div style="font-size:10px;color:var(--muted)">pcs</div>
+        </div>
+      </div>
+      <div class="card" style="padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-left:4px solid #f59e0b">
+        <div>
+          <div style="font-size:11px;color:var(--muted);font-weight:600;letter-spacing:0.3px">10 BAGS STOCK</div>
+          <div style="font-size:12px;color:#92400e;font-weight:600;margin-top:2px">Balance</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:22px;font-weight:800;color:#d97706" id="bal10Card">0</div>
+          <div style="font-size:10px;color:var(--muted)">pcs</div>
+        </div>
+      </div>
+    </div>
+
     <div class="card form-card">
       <div class="form-header">
         <h2><span class="icon">➕</span> নতুন এন্ট্রি</h2>
@@ -650,9 +674,7 @@ tbody tr:hover{background:#f8fafc}
             <input type="number" class="input" id="fExpenseAmount" placeholder="0" min="0" step="0.01" value="0">
           </div>
 
-          <div class="field">
-            <label>স্থিতি — লাস্ট ব্যালেন্স <span style="color:var(--primary);font-size:9px">• অটো</span></label>
-            <div id="balanceDisplay" style="background:#f0fdfa;border:1px solid #99f6e4;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:700;color:#115e59;line-height:1.4;text-align:center">৫ এর বস্তা: ০ টি | ১০ এর বস্তা: ০ টি</div>
+          <div class="field" style="display:none">
             <input type="hidden" id="fStatus" value="পরিশোধিত">
             <div class="last-status-hint" id="lastStatusHint" style="display:none"></div>
           </div>
@@ -696,16 +718,16 @@ tbody tr:hover{background:#f8fafc}
           <thead>
             <tr>
               <th>#</th>
-              <th>তারিখ</th>
-              <th>ক্যাটাগরি</th>
-              <th>আইটেম</th>
-              <th>বিক্রয়কারী</th>
-              <th>পরিমাণ</th>
-              <th>একক মূল্য</th>
-              <th>মোট মূল্য</th>
-              <th>খরচ</th>
-              <th>স্থিতি / ব্যালেন্স</th>
-              <th>অ্যাকশন</th>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Item</th>
+              <th>Salesperson</th>
+              <th>Qty</th>
+              <th>Unit Price</th>
+              <th>Total</th>
+              <th>Expense</th>
+              <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody id="tableBody"></tbody>
@@ -815,14 +837,14 @@ tbody tr:hover{background:#f8fafc}
         <table>
           <thead>
             <tr>
-              <th>তারিখ</th>
-              <th>ক্যাটাগরি</th>
-              <th>আইটেম</th>
-              <th>পরিমাণ</th>
-              <th>মোট মূল্য</th>
-              <th>খরচ</th>
-              <th>নিট</th>
-              <th>স্থিতি</th>
+              <th>Date</th>
+              <th>Category</th>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Total</th>
+              <th>Expense</th>
+              <th>Net</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody id="reportBody"></tbody>
@@ -969,46 +991,29 @@ function getItemBalance(item){
   return buyQty - sellQty;
 }
 function updateBalanceDisplay(){
-  const cat = document.getElementById('fCategory').value;
-  const el=document.getElementById('balanceDisplay');
-  const fStatus=document.getElementById('fStatus');
-  if(!el) return;
-  // ক্যাটাগরি সিলেক্ট থাকলে শুধু ওই ক্যাটাগরির ব্যালেন্স দেখাবে
-  if(cat){
-    let html='';
-    let statusVal='';
-    items.forEach(it=>{
-      let total=0;
-      entries.forEach(e=>{ if(e.category===cat && e.item===it) total+=Number(e.qty)||0; });
-      html += `${it}: <b>${total.toLocaleString('bn-BD')} টি</b> &nbsp;|&nbsp; `;
-      statusVal += `${it}:${total} `;
-    });
-    html = html.replace(/ &nbsp;\|&nbsp; $/,'');
-    if(!html) html=`${cat}: <b>০ টি</b>`;
-    else html = `${cat} ব্যালেন্স → ` + html;
-    el.innerHTML = html;
-    el.style.background='#e0f2fe';
-    el.style.borderColor='#7dd3fc';
-    el.style.color='#0c4a6e';
-    if(fStatus) fStatus.value = statusVal.trim();
-    return;
-  }
-  // ক্যাটাগরি না থাকলে ওভারঅল ব্যালেন্স (৫ ও ১০)
   const bal5 = getItemBalance('৫ এর বস্তা');
   const bal10 = getItemBalance('১০ এর বস্তা');
-  let extra='';
-  const customItems = items.filter(it=> it!=='৫ এর বস্তা' && it!=='১০ এর বস্তা');
-  if(customItems.length>0){
-    customItems.forEach(it=>{
-      const b=getItemBalance(it);
-      extra += ` | ${it}: ${b.toLocaleString('bn-BD')} টি`;
-    });
+  const el5=document.getElementById('bal5Card');
+  const el10=document.getElementById('bal10Card');
+  if(el5) el5.textContent = bal5.toLocaleString('en-US');
+  if(el10) el10.textContent = bal10.toLocaleString('en-US');
+  // update card colors if negative
+  if(el5){
+    const card5=el5.closest('.card');
+    if(card5){
+      card5.style.background = bal5<0? '#fef2f2' : 'white';
+      card5.style.borderLeftColor = bal5<0? '#ef4444' : '#0ea5e9';
+    }
   }
-  el.innerHTML = `৫ এর বস্তা: <b>${bal5.toLocaleString('bn-BD')} টি</b> &nbsp;|&nbsp; ১০ এর বস্তা: <b>${bal10.toLocaleString('bn-BD')} টি</b>${extra}`;
-  el.style.background = (bal5<0||bal10<0)? '#fef2f2' : '#f0fdfa';
-  el.style.borderColor = (bal5<0||bal10<0)? '#fecaca' : '#99f6e4';
-  el.style.color = (bal5<0||bal10<0)? '#991b1b' : '#115e59';
-  if(fStatus) fStatus.value = `৫:${bal5},১০:${bal10}`;
+  if(el10){
+    const card10=el10.closest('.card');
+    if(card10){
+      card10.style.background = bal10<0? '#fef2f2' : 'white';
+      card10.style.borderLeftColor = bal10<0? '#ef4444' : '#f59e0b';
+    }
+  }
+  const fStatus=document.getElementById('fStatus');
+  if(fStatus) fStatus.value = `5:${bal5},10:${bal10}`;
 }
 function onItemChange(){
   updateBalanceDisplay();
@@ -1141,18 +1146,18 @@ function renderTable(){
     <tr>
       <td style="color:var(--muted)">${i+1}</td>
       <td style="white-space:nowrap">${formatDate(e.date)}</td>
-      <td><span class="cat-badge cat-${e.category}">${e.category}</span></td>
-      <td style="font-weight:600">${e.item}</td>
+      <td><span class="cat-badge cat-${e.category}">${e.category==='ক্রয়'?'Purchase':e.category==='বিক্রয়'?'Sale':e.category}</span></td>
+      <td style="font-weight:600">${e.item==='৫ এর বস্তা'?'5 Bags':e.item==='১০ এর বস্তা'?'10 Bags':e.item}</td>
       <td>${e.salesperson||'-'}</td>
-      <td style="text-align:center;font-weight:600">${e.qty}</td>
-      <td style="text-align:right">৳ ${Number(e.unitPrice).toLocaleString('bn-BD')}</td>
-      <td style="text-align:right;font-weight:700;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('bn-BD')}</td>
-      <td style="text-align:right">${e.expenseAmount? '৳ '+Number(e.expenseAmount).toLocaleString('bn-BD'):'-'}</td>
-      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item} • ${getItemBalance(e.item).toLocaleString('bn-BD')} টি</span></td>
+      <td style="text-align:center;font-weight:600">${Number(e.qty).toLocaleString('en-US')}</td>
+      <td style="text-align:right">৳ ${Number(e.unitPrice).toLocaleString('en-US')}</td>
+      <td style="text-align:right;font-weight:700;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
+      <td style="text-align:right">${e.expenseAmount? '৳ '+Number(e.expenseAmount).toLocaleString('en-US'):'-'}</td>
+      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item==='৫ এর বস্তা'?'5 Bags': e.item==='১০ এর বস্তা'?'10 Bags': e.item} : ${getItemBalance(e.item).toLocaleString('en-US')} pcs</span></td>
       <td>
         <div class="action-btns">
-          <button class="btn-sm edit" onclick="editEntry('${e.id}')" title="এডিট">✏️</button>
-          <button class="btn-sm del" onclick="askDelete('${e.id}')" title="ডিলিট">🗑️</button>
+          <button class="btn-sm edit" onclick="editEntry('${e.id}')" title="Edit">✏️</button>
+          <button class="btn-sm del" onclick="askDelete('${e.id}')" title="Delete">🗑️</button>
         </div>
       </td>
     </tr>
@@ -1206,13 +1211,13 @@ function renderReport(){
     const net = (e.category==='বিক্রয়' ? Number(e.totalPrice) : -Number(e.totalPrice)) - Number(e.expenseAmount||0);
     return `<tr>
       <td>${formatDate(e.date)}</td>
-      <td><span class="cat-badge cat-${e.category}">${e.category}</span></td>
-      <td>${e.item}</td>
-      <td style="text-align:center">${e.qty}</td>
-      <td style="text-align:right;font-weight:600">৳ ${Number(e.totalPrice).toLocaleString('bn-BD')}</td>
-      <td style="text-align:right">৳ ${Number(e.expenseAmount||0).toLocaleString('bn-BD')}</td>
-      <td style="text-align:right;font-weight:700;color:${net>=0?'#059669':'#dc2626'}">${net>=0?'৳ ':'-৳ '}${Math.abs(net).toLocaleString('bn-BD')}</td>
-      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item} • ${getItemBalance(e.item).toLocaleString('bn-BD')} টি</span></td>
+      <td><span class="cat-badge cat-${e.category}">${e.category==='ক্রয়'?'Purchase':e.category==='বিক্রয়'?'Sale':e.category}</span></td>
+      <td>${e.item==='৫ এর বস্তা'?'5 Bags':e.item==='১০ এর বস্তা'?'10 Bags':e.item}</td>
+      <td style="text-align:center">${Number(e.qty).toLocaleString('en-US')}</td>
+      <td style="text-align:right;font-weight:600">৳ ${Number(e.totalPrice).toLocaleString('en-US')}</td>
+      <td style="text-align:right">৳ ${Number(e.expenseAmount||0).toLocaleString('en-US')}</td>
+      <td style="text-align:right;font-weight:700;color:${net>=0?'#059669':'#dc2626'}">${net>=0?'৳ ':'-৳ '}${Math.abs(net).toLocaleString('en-US')}</td>
+      <td><span style="font-size:10.5px;font-weight:600;background:${e.item==='৫ এর বস্তা'?'#e0f2fe':'#fef3c7'};border:1px solid ${e.item==='৫ এর বস্তা'?'#7dd3fc':'#fde68a'};color:${e.item==='৫ এর বস্তা'?'#0c4a6e':'#92400e'};padding:3px 7px;border-radius:6px;display:inline-block;white-space:nowrap">${e.item==='৫ এর বস্তা'?'5 Bags': e.item==='১০ এর বস্তা'?'10 Bags': e.item} : ${getItemBalance(e.item).toLocaleString('en-US')} pcs</span></td>
     </tr>`
   }).join('');
 }
