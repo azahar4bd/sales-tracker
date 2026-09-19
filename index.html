@@ -577,7 +577,7 @@ tbody tr:hover{background:#f8fafc}
       <div class="form-header">
         <h2><span class="icon">➕</span> নতুন এন্ট্রি</h2>
         <div class="badge-editing" id="editingBadge">✏️ এডিট মোড</div>
-        <span class="entry-note">💡 মোট মূল্য অটো হিসাব হবে</span>
+        
       </div>
 
       <form id="entryForm" onsubmit="handleSave(event)">
@@ -612,10 +612,7 @@ tbody tr:hover{background:#f8fafc}
             </div>
           </div>
 
-          <div class="field">
-            <label id="labelSource">হতে / দোকান <span class="req">*</span></label>
-            <input type="text" class="input" id="fSource" placeholder="নাম" required>
-          </div>
+          <!-- হতে/দোকান ফিল্ড বাদ দেওয়া হয়েছে -->
 
           <div class="field" id="fieldSalesperson">
             <label>বিক্রয়কারী <span class="req">*</span></label>
@@ -641,7 +638,6 @@ tbody tr:hover{background:#f8fafc}
           <div class="field">
             <label>মোট মূল্য <span class="req">*</span></label>
             <input type="number" class="input" id="fTotalPrice" placeholder="অটো" min="0" step="0.01" required>
-            <div class="total-preview" id="totalPreview">পরিমাণ × একক = ৳ 0</div>
           </div>
 
           <div class="field">
@@ -655,13 +651,10 @@ tbody tr:hover{background:#f8fafc}
           </div>
 
           <div class="field">
-            <label>স্থিতি — লাস্ট ব্যালেন্স <span style="color:var(--primary);font-weight:700">• অটো</span></label>
-            <select class="select" id="fStatus">
-              <option value="পরিশোধিত">পরিশোধিত</option>
-              <option value="বাকি">বাকি</option>
-              <option value="আংশিক">আংশিক</option>
-            </select>
-            <div class="last-status-hint" id="lastStatusHint" style="font-size:9.5px;line-height:1.3"></div>
+            <label>স্থিতি — লাস্ট ব্যালেন্স <span style="color:var(--primary);font-size:9px">• অটো</span></label>
+            <div id="balanceDisplay" style="background:#f0fdfa;border:1px solid #99f6e4;border-radius:7px;padding:6px 8px;font-size:11px;font-weight:700;color:#115e59;line-height:1.4;text-align:center">৫ এর বস্তা: ০ টি | ১০ এর বস্তা: ০ টি</div>
+            <input type="hidden" id="fStatus" value="পরিশোধিত">
+            <div class="last-status-hint" id="lastStatusHint" style="display:none"></div>
           </div>
 
           <div class="field" style="justify-content:end">
@@ -706,13 +699,12 @@ tbody tr:hover{background:#f8fafc}
               <th>তারিখ</th>
               <th>ক্যাটাগরি</th>
               <th>আইটেম</th>
-              <th>হতে / দোকান</th>
               <th>বিক্রয়কারী</th>
               <th>পরিমাণ</th>
               <th>একক মূল্য</th>
               <th>মোট মূল্য</th>
               <th>খরচ</th>
-              <th>স্থিতি <span style="font-weight:400;text-transform:none">(লাস্ট)</span></th>
+              <th>স্থিতি / ব্যালেন্স</th>
               <th>অ্যাকশন</th>
             </tr>
           </thead>
@@ -826,7 +818,6 @@ tbody tr:hover{background:#f8fafc}
               <th>তারিখ</th>
               <th>ক্যাটাগরি</th>
               <th>আইটেম</th>
-              <th>হতে/দোকান</th>
               <th>পরিমাণ</th>
               <th>মোট মূল্য</th>
               <th>খরচ</th>
@@ -887,6 +878,7 @@ renderTable();
 renderReport();
 updateHeaderStats();
 updateDashboardVisibility('entry');
+updateBalanceDisplay();
 
 function switchPage(p){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
@@ -951,68 +943,55 @@ function refreshDropdowns(){
 
 function onCategoryChange(){
   const cat = document.getElementById('fCategory').value;
-  const label = document.getElementById('labelSource');
   const fieldSp = document.getElementById('fieldSalesperson');
   const spSel = document.getElementById('fSalesperson');
   if(cat === 'ক্রয়'){
-    label.innerHTML = 'হতে <span class="req">*</span>';
-    document.getElementById('fSource').placeholder = 'যেমন: আলম ট্রেডার্স';
     fieldSp.classList.add('hidden');
     spSel.removeAttribute('required');
   } else if(cat === 'বিক্রয়'){
-    label.innerHTML = 'দোকান <span class="req">*</span>';
-    document.getElementById('fSource').placeholder = 'যেমন: রহিম স্টোর';
     fieldSp.classList.remove('hidden');
     spSel.setAttribute('required','required');
   } else {
-    label.innerHTML = 'হতে / দোকান <span class="req">*</span>';
-    document.getElementById('fSource').placeholder = 'নাম';
     fieldSp.classList.remove('hidden');
     spSel.removeAttribute('required');
   }
 }
 
-// আইটেম সিলেক্ট করলে লাস্ট ব্যালেন্স + লাস্ট স্থিতি অটো দেখাবে
 function getItemBalance(item){
-  let buyQty=0, sellQty=0, buyAmt=0, sellAmt=0;
+  let buyQty=0, sellQty=0;
   entries.forEach(e=>{
     if(e.item!==item) return;
-    if(e.category==='ক্রয়'){ buyQty+=Number(e.qty)||0; buyAmt+=Number(e.totalPrice)||0; }
-    else if(e.category==='বিক্রয়'){ sellQty+=Number(e.qty)||0; sellAmt+=Number(e.totalPrice)||0; }
-    else { buyQty+=Number(e.qty)||0; buyAmt+=Number(e.totalPrice)||0; }
+    if(e.category==='ক্রয়'){ buyQty+=Number(e.qty)||0; }
+    else if(e.category==='বিক্রয়'){ sellQty+=Number(e.qty)||0; }
+    else { buyQty+=Number(e.qty)||0; }
   });
-  return {
-    qty: buyQty - sellQty,
-    amount: buyAmt - sellAmt,
-    buyQty, sellQty, buyAmt, sellAmt
-  };
+  return buyQty - sellQty;
+}
+function updateBalanceDisplay(){
+  const bal5 = getItemBalance('৫ এর বস্তা');
+  const bal10 = getItemBalance('১০ এর বস্তা');
+  // also check custom items
+  let extra='';
+  const customItems = items.filter(it=> it!=='৫ এর বস্তা' && it!=='১০ এর বস্তা');
+  if(customItems.length>0){
+    customItems.forEach(it=>{
+      const b=getItemBalance(it);
+      extra += ` | ${it}: ${b.toLocaleString('bn-BD')} টি`;
+    });
+  }
+  const el=document.getElementById('balanceDisplay');
+  if(el){
+    el.innerHTML = `৫ এর বস্তা: <b>${bal5.toLocaleString('bn-BD')} টি</b> &nbsp;|&nbsp; ১০ এর বস্তা: <b>${bal10.toLocaleString('bn-BD')} টি</b>${extra}`;
+    el.style.background = (bal5<0||bal10<0)? '#fef2f2' : '#f0fdfa';
+    el.style.borderColor = (bal5<0||bal10<0)? '#fecaca' : '#99f6e4';
+    el.style.color = (bal5<0||bal10<0)? '#991b1b' : '#115e59';
+  }
+  // also set hidden status value to combined
+  const fStatus=document.getElementById('fStatus');
+  if(fStatus) fStatus.value = `৫:${bal5},১০:${bal10}`;
 }
 function onItemChange(){
-  const item = document.getElementById('fItem').value;
-  const hint = document.getElementById('lastStatusHint');
-  if(!item){
-    hint.classList.remove('show');
-    hint.textContent='';
-    return;
-  }
-  const last = entries.find(e=>e.item===item);
-  const bal = getItemBalance(item);
-  if(last){
-    document.getElementById('fStatus').value = last.status;
-    const qtyText = bal.qty>0? `${bal.qty.toLocaleString('bn-BD')} বস্তা বাকি` : bal.qty<0? `${Math.abs(bal.qty).toLocaleString('bn-BD')} বেশি বিক্রি` : `০ বস্তা`;
-    const amtText = bal.amount>=0? `৳${Math.abs(bal.amount).toLocaleString('bn-BD')} পাওনা` : `৳${Math.abs(bal.amount).toLocaleString('bn-BD')} দেনা`;
-    hint.innerHTML = `💰 <b>লাস্ট ব্যালেন্স:</b> ${qtyText} • ${amtText} <br>📌 লাস্ট স্থিতি: <b>${last.status}</b> (${formatDate(last.date)})`;
-    hint.className = 'last-status-hint show';
-    hint.style.background = '#f0fdfa';
-    hint.style.borderColor='#99f6e4';
-    hint.style.color='#115e59';
-  } else {
-    hint.innerHTML = `ℹ️ "${item}" নতুন — ব্যালেন্স ০ • স্থিতি সিলেক্ট করুন`;
-    hint.className = 'last-status-hint show';
-    hint.style.background='#f1f5f9';
-    hint.style.borderColor='#e2e8f0';
-    hint.style.color='#64748b';
-  }
+  updateBalanceDisplay();
 }
 
 function calcTotal(){
@@ -1020,8 +999,6 @@ function calcTotal(){
   const unit = parseFloat(document.getElementById('fUnitPrice').value) || 0;
   const total = qty * unit;
   document.getElementById('fTotalPrice').value = total ? total.toFixed(2) : '';
-  document.getElementById('totalPreview').textContent = `${qty} × ৳${unit} = ৳ ${total.toLocaleString('bn-BD')}`;
-  if(!qty || !unit) document.getElementById('totalPreview').textContent = 'পরিমাণ × একক = ৳ 0';
 }
 
 function handleSave(e){
@@ -1031,7 +1008,7 @@ function handleSave(e){
     date: document.getElementById('fDate').value,
     category: document.getElementById('fCategory').value,
     item: document.getElementById('fItem').value,
-    source: document.getElementById('fSource').value.trim(),
+    source: '-',
     salesperson: document.getElementById('fSalesperson').value,
     qty: parseFloat(document.getElementById('fQty').value) || 0,
     unitPrice: parseFloat(document.getElementById('fUnitPrice').value) || 0,
@@ -1065,11 +1042,12 @@ function resetForm(){
   document.getElementById('entryForm').reset();
   document.getElementById('fDate').valueAsDate = new Date();
   document.getElementById('fExpenseAmount').value = 0;
-  document.getElementById('totalPreview').textContent='পরিমাণ × একক = ৳ 0';
-  document.getElementById('lastStatusHint').classList.remove('show');
+  const hint=document.getElementById('lastStatusHint');
+  if(hint) hint.classList.remove('show');
   document.getElementById('editingBadge').classList.remove('show');
   document.getElementById('btnSave').innerHTML='💾 Save';
   onCategoryChange();
+  updateBalanceHint();
 }
 
 function editEntry(id){
@@ -1081,7 +1059,6 @@ function editEntry(id){
   refreshDropdowns();
   document.getElementById('fCategory').value=e.category;
   document.getElementById('fItem').value=e.item;
-  document.getElementById('fSource').value=e.source;
   document.getElementById('fSalesperson').value=e.salesperson !== '-' ? e.salesperson : '';
   document.getElementById('fQty').value=e.qty;
   document.getElementById('fUnitPrice').value=e.unitPrice;
@@ -1116,6 +1093,7 @@ function confirmDelete(){
     renderTable();
     renderReport();
     updateHeaderStats();
+    updateBalanceDisplay();
     showToast('🗑️ ডিলিট হয়েছে');
   }
   closeDeleteModal();
@@ -1145,13 +1123,12 @@ function renderTable(){
       <td style="white-space:nowrap">${formatDate(e.date)}</td>
       <td><span class="cat-badge cat-${e.category}">${e.category}</span></td>
       <td style="font-weight:600">${e.item}</td>
-      <td>${e.source}</td>
       <td>${e.salesperson||'-'}</td>
       <td style="text-align:center;font-weight:600">${e.qty}</td>
       <td style="text-align:right">৳ ${Number(e.unitPrice).toLocaleString('bn-BD')}</td>
       <td style="text-align:right;font-weight:700;color:${e.category==='বিক্রয়'?'#059669':'#dc2626'}">৳ ${Number(e.totalPrice).toLocaleString('bn-BD')}</td>
       <td style="text-align:right">${e.expenseAmount? '৳ '+Number(e.expenseAmount).toLocaleString('bn-BD'):'-'}</td>
-      <td><span class="status-badge status-${e.status}">${e.status}</span></td>
+      <td>${e.status.includes('৫:')||e.status.includes('5:')? `<span style="font-size:10.5px;font-weight:600;background:#f0fdfa;border:1px solid #99f6e4;padding:3px 6px;border-radius:6px;display:inline-block;white-space:nowrap">${e.status}</span>` : `<span class="status-badge status-${e.status}">${e.status}</span>`}</td>
       <td>
         <div class="action-btns">
           <button class="btn-sm edit" onclick="editEntry('${e.id}')" title="এডিট">✏️</button>
@@ -1160,6 +1137,7 @@ function renderTable(){
       </td>
     </tr>
   `).join('');
+  setTimeout(updateBalanceDisplay,0);
 }
 
 function getFilteredForReport(){
@@ -1200,7 +1178,7 @@ function renderReport(){
   renderItemLastStatus(data);
   const tbody=document.getElementById('reportBody');
   if(data.length===0){
-    tbody.innerHTML='<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--muted)">কোনো ডেটা নেই — ফিল্টার পরিবর্তন করুন</td></tr>';
+    tbody.innerHTML='<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--muted)">কোনো ডেটা নেই — ফিল্টার পরিবর্তন করুন</td></tr>';
     return;
   }
   const sorted=[...data].sort((a,b)=> b.date.localeCompare(a.date));
@@ -1210,7 +1188,6 @@ function renderReport(){
       <td>${formatDate(e.date)}</td>
       <td><span class="cat-badge cat-${e.category}">${e.category}</span></td>
       <td>${e.item}</td>
-      <td>${e.source}</td>
       <td style="text-align:center">${e.qty}</td>
       <td style="text-align:right;font-weight:600">৳ ${Number(e.totalPrice).toLocaleString('bn-BD')}</td>
       <td style="text-align:right">৳ ${Number(e.expenseAmount||0).toLocaleString('bn-BD')}</td>
@@ -1410,8 +1387,8 @@ function showToast(msg){
 function exportCSV(isReport=false){
   const data=isReport? getFilteredForReport() : entries;
   if(data.length===0){ showToast('⚠️ ডেটা নেই'); return; }
-  const headers=['তারিখ','ক্যাটাগরি','আইটেম','হতে/দোকান','বিক্রয়কারী','পরিমাণ','একক মূল্য','মোট মূল্য','খরচ বিবরণ','খরচ','স্থিতি'];
-  const rows=data.map(e=>[e.date,e.category,e.item,e.source,e.salesperson,e.qty,e.unitPrice,e.totalPrice,e.expenseDesc,e.expenseAmount,e.status]);
+  const headers=['তারিখ','ক্যাটাগরি','আইটেম','বিক্রয়কারী','পরিমাণ','একক মূল্য','মোট মূল্য','খরচ বিবরণ','খরচ','স্থিতি'];
+  const rows=data.map(e=>[e.date,e.category,e.item,e.salesperson,e.qty,e.unitPrice,e.totalPrice,e.expenseDesc,e.expenseAmount,e.status]);
   let csv='\uFEFF'+[headers,...rows].map(r=> r.map(v=> `"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob);
