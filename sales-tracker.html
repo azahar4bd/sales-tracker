@@ -1275,9 +1275,9 @@ header nav{display:none}
     <div class="card report-filter-card" style="padding:14px 16px">
       <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
         <div style="display:flex;flex-wrap:wrap;gap:8px">
-          <button type="button" class="r-filter-btn active" data-filter="month" onclick="setReportFilter('month')">📅 এ মাস</button>
+          <button type="button" class="r-filter-btn" data-filter="month" onclick="setReportFilter('month')">📅 এ মাস</button>
           <button type="button" class="r-filter-btn" data-filter="year" onclick="setReportFilter('year')">📆 এ বছর</button>
-          <button type="button" class="r-filter-btn" data-filter="all" onclick="setReportFilter('all')">⏳ এ পর্যন্ত</button>
+          <button type="button" class="r-filter-btn active" data-filter="all" onclick="setReportFilter('all')">⏳ এ পর্যন্ত</button>
 
         </div>
         <div id="reportCustomRange" style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#fffbeb;border:1px solid #fde68a;padding:10px 12px;border-radius:12px">
@@ -1457,7 +1457,7 @@ refreshDropdowns();
 onCategoryChange();
 checkAuth();
 renderTable();
-setReportFilter('month');
+setReportFilter('all');
 updateHeaderStats();
 updateDashboardVisibility('entry');
 updateBalanceDisplay();
