@@ -912,12 +912,7 @@ tbody tr:last-child td{border-bottom:none}
         <span style="width:1px;height:16px;background:rgba(255,255,255,0.2)"></span>
         <button onclick="handleLogout()" style="background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.25);color:white;padding:5px 10px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;transition:all 0.2s">Logout</button>
       </div>
-      <div class="header-stats hidden" id="headerStats">
-        <div class="h-stat"><small>Total Entries</small><b id="hTotal">0</b></div>
-        <div class="h-stat"><small>Total Sale</small><b id="hSale">৳ 0</b></div>
-        <div class="h-stat"><small>Total Buy</small><b id="hBuy">৳ 0</b></div>
-        <div class="h-stat"><small>Net Profit</small><b id="hProfit">৳ 0</b></div>
-      </div>
+
     </div>
   </div>
   <nav>
@@ -1132,29 +1127,21 @@ tbody tr:last-child td{border-bottom:none}
   </div>
 
   <div id="page-report" class="page">
-    <!-- Filter: এ মাস, এ বছর, এ পর্যন্ত, Date to Date -->
+    <!-- Filter: Entry page এর মতো From-To Date Filter (Native Calendar) -->
     <div class="card report-filter-card" style="padding:14px 16px">
-      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
-        <div style="display:flex;flex-wrap:wrap;gap:8px">
-          <button class="r-filter-btn active" data-filter="month" onclick="setReportFilter('month')">📅 এ মাস</button>
-          <button class="r-filter-btn" data-filter="year" onclick="setReportFilter('year')">📆 এ বছর</button>
-          <button class="r-filter-btn" data-filter="all" onclick="setReportFilter('all')">⏳ এ পর্যন্ত</button>
-          <button class="r-filter-btn" data-filter="custom" onclick="setReportFilter('custom')">📅 Date to Date</button>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:end">
+        <div class="field" style="flex:1;min-width:160px;margin:0">
+          <label style="font-size:11px;font-weight:700;color:#1e293b">📅 From Date</label>
+          <input type="date" class="input" id="reportFromDate" style="background:white;height:40px" onchange="renderReport()">
         </div>
-        <div id="reportCustomRange" style="display:none;align-items:center;gap:10px;flex-wrap:wrap;background:#f0f9ff;border:1px solid #dbeafe;padding:10px 12px;border-radius:12px">
-          <div style="display:flex;flex-direction:column;gap:4px">
-            <span style="font-size:10px;font-weight:800;color:#0f766e;letter-spacing:0.5px;text-transform:uppercase">হতে (From)</span>
-            <input type="date" class="input" id="rFromCustom" style="height:38px;min-width:160px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
-          </div>
-          <span style="font-size:12px;font-weight:800;color:var(--muted);margin-top:16px">—</span>
-          <div style="display:flex;flex-direction:column;gap:4px">
-            <span style="font-size:10px;font-weight:800;color:#0f766e;letter-spacing:0.5px;text-transform:uppercase">পর্যন্ত (To)</span>
-            <input type="date" class="input" id="rToCustom" style="height:38px;min-width:160px;background:white" onchange="if(reportFilter.type==='custom') renderReport()" >
-          </div>
-          <button class="btn btn-primary" style="height:38px;padding:0 16px;font-size:12px;margin-top:16px" onclick="applyCustomReport()">Apply</button>
+        <span style="font-size:12px;font-weight:800;color:var(--muted);padding-bottom:12px">to</span>
+        <div class="field" style="flex:1;min-width:160px;margin:0">
+          <label style="font-size:11px;font-weight:700;color:#1e293b">📅 To Date</label>
+          <input type="date" class="input" id="reportToDate" style="background:white;height:40px" onchange="renderReport()">
         </div>
+        <button class="btn btn-ghost" style="height:40px;padding:0 14px;font-size:12px" onclick="clearReportDateFilter()">✕ Clear</button>
       </div>
-      <div id="reportFilterInfo" style="margin-top:10px;font-size:11px;font-weight:700;color:#0f766e;background:#ecfdf5;border:1px solid #a7f3d0;padding:7px 12px;border-radius:10px;display:inline-block">📅 Filter: এ মাস</div>
+      <div id="reportFilterInfo" style="margin-top:10px;font-size:11px;font-weight:600;color:var(--muted);background:#f0f9ff;border:1px solid #dbeafe;padding:7px 12px;border-radius:10px;display:inline-block">📅 সব ডেটা (এ পর্যন্ত)</div>
     </div>
 
     <!-- Summary Table: 2 rows (5 এর বস্তা, 10 এর বস্তা) -->
@@ -1285,6 +1272,12 @@ if(users.length===0){
     localStorage.setItem('st_users_auth', JSON.stringify(users));
   }
 }
+if(users.length===0){
+  // create default demo account
+  users = [{username:'admin',password:'1234',createdAt:new Date().toISOString()}];
+  localStorage.setItem('st_users_auth', JSON.stringify(users));
+  localStorage.setItem('st_users', JSON.stringify(['admin']));
+}
 let currentUser = localStorage.getItem('st_current_user') || null;
 let editingId = null;
 let deleteId = null;
@@ -1317,6 +1310,7 @@ function switchPage(p){
 }
 function updateDashboardVisibility(page){
   const hs=document.getElementById('headerStats');
+  if(!hs) return;
   if(page==='entry'){ hs.classList.add('hidden'); } else { hs.classList.remove('hidden'); }
 }
 function initUsers(){
@@ -1723,55 +1717,29 @@ function renderTable(){
   `).join('');
   setTimeout(updateBalanceDisplay,0);
 }
-// === NEW REPORT: Filter (এ মাস/এ বছর/এ পর্যন্ত/Date to Date) ===
-let reportFilter = {type:'month', from:null, to:null};
-
 function getReportRange(){
-  const now = new Date();
-  const todayStr = now.toISOString().slice(0,10);
-  let from=null, to=todayStr;
-  if(reportFilter.type==='month'){
-    from = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
-    to = todayStr;
-  } else if(reportFilter.type==='year'){
-    from = new Date(now.getFullYear(), 0, 1).toISOString().slice(0,10);
-    to = todayStr;
-  } else if(reportFilter.type==='all'){
-    from = null;
-    to = null; // no limit, show all till now
-  } else if(reportFilter.type==='custom'){
-    from = document.getElementById('rFromCustom')?.value || null;
-    to = document.getElementById('rToCustom')?.value || null;
-    if(from && to && from>to){ const tmp=from; from=to; to=tmp; }
-  }
+  // Entry-style From-To (Native Calendar) — same as entry table
+  let from = document.getElementById('reportFromDate')?.value || null;
+  let to = document.getElementById('reportToDate')?.value || null;
+  // normalize: empty = no filter, else ensure from <= to
+  if(from && to && from>to){ const tmp=from; from=to; to=tmp; }
+  if(!from) from=null;
+  if(!to) to=null;
   return {from, to};
 }
-
-function setReportFilter(type){
-  reportFilter.type = type;
-  document.querySelectorAll('.r-filter-btn').forEach(b=>{
-    b.classList.toggle('active', b.dataset.filter===type);
-  });
-  const customBox = document.getElementById('reportCustomRange');
-  if(customBox) customBox.style.display = (type==='custom'?'flex':'none');
-  // default custom dates to this month if empty (example 1-9-26 to 20-9-26)
-  if(type==='custom'){
-    const fromEl=document.getElementById('rFromCustom');
-    const toEl=document.getElementById('rToCustom');
-    if(fromEl && !fromEl.value){
-      const now=new Date();
-      fromEl.value = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
-    }
-    if(toEl && !toEl.value){
-      // default to 20th of this month if today before 20th, else today
-      const now=new Date();
-      const day20 = new Date(now.getFullYear(), now.getMonth(), 20).toISOString().slice(0,10);
-      const today = now.toISOString().slice(0,10);
-      toEl.value = today < day20 ? day20 : today;
-    }
-  }
+// keep old reportFilter for backward compat but not used now
+let reportFilter = {type:'all', from:null, to:null};
+function setReportFilter(type){ reportFilter.type=type; renderReport(); }
+function applyCustomReport(){ renderReport(); }
+function clearReportDateFilter(){
+  const f=document.getElementById('reportFromDate');
+  const tt=document.getElementById('reportToDate');
+  if(f) f.value='';
+  if(tt) tt.value='';
   renderReport();
+  showToast('✕ Filter cleared');
 }
+
 
 function applyCustomReport(){
   renderReport();
@@ -1817,20 +1785,19 @@ function getAvgPurchasePriceAsOf(item, asOfDate){
 }
 
 function renderReport(){
-  // update info
+  // update info — entry-style
   const {from,to} = getReportRange();
   const infoEl=document.getElementById('reportFilterInfo');
   if(infoEl){
     let label='';
-    if(reportFilter.type==='month'){
-      const now=new Date();
-      label = `📅 এ মাস: ${new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString('en-US',{month:'long',year:'numeric'})} ( ${from} to ${to} )`;
-    } else if(reportFilter.type==='year'){
-      label = `📆 এ বছর: ${new Date().getFullYear()} ( ${from} to ${to} )`;
-    } else if(reportFilter.type==='all'){
-      label = `⏳ এ পর্যন্ত: All entries (Total ${getUserFilteredEntries(entries).length} entries)`;
-    } else if(reportFilter.type==='custom'){
-      label = `📅 Date to Date: ${from||'—'} to ${to||'—'}`;
+    if(!from && !to){
+      label = `📅 সব ডেটা (এ পর্যন্ত) — Total ${getUserFilteredEntries(entries).length} entries`;
+    } else if(from && to){
+      label = `📅 Filter: ${formatDate(from)} to ${formatDate(to)}`;
+    } else if(from){
+      label = `📅 Filter: From ${formatDate(from)}`;
+    } else if(to){
+      label = `📅 Filter: Up to ${formatDate(to)}`;
     }
     infoEl.textContent = label;
   }
@@ -2086,19 +2053,24 @@ function renderItemLastStatus(data){ /* kept for compatibility */ }
 
 function updateHeaderStats(){
   const list = getUserFilteredEntries(entries);
-  document.getElementById('hTotal').textContent=list.length;
+  const hTotal=document.getElementById('hTotal');
+  if(hTotal) hTotal.textContent=list.length;
   let s=0,b=0;
   list.forEach(e=>{
     if(e.category==='বিক্রয়') s+=Number(e.totalPrice)||0;
     else b+=Number(e.totalPrice)||0;
   });
-  document.getElementById('hSale').textContent='৳ '+ s.toLocaleString('en-US');
-  document.getElementById('hBuy').textContent='৳ '+ b.toLocaleString('en-US');
+  const hSale=document.getElementById('hSale');
+  if(hSale) hSale.textContent='৳ '+ s.toLocaleString('en-US');
+  const hBuy=document.getElementById('hBuy');
+  if(hBuy) hBuy.textContent='৳ '+ b.toLocaleString('en-US');
   const exp=list.reduce((a,e)=>a+(Number(e.expenseAmount)||0),0);
   const profit=s-(b+exp);
   const el=document.getElementById('hProfit');
-  el.textContent=(profit>=0?'৳ ':'-৳ ')+Math.abs(profit).toLocaleString('en-US');
-  el.style.color= profit>=0 ? '#a7f3d0' : '#fecaca';
+  if(el){
+    el.textContent=(profit>=0?'৳ ':'-৳ ')+Math.abs(profit).toLocaleString('en-US');
+    el.style.color= profit>=0 ? '#a7f3d0' : '#fecaca';
+  }
 }
 function formatDate(str){
   if(!str) return '-';
