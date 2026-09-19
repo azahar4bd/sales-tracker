@@ -1426,6 +1426,46 @@ let entries = JSON.parse(localStorage.getItem('st_entries') || '[]');
 let categories = JSON.parse(localStorage.getItem('st_categories') || JSON.stringify(["ক্রয়","বিক্রয়"]));
 let items = JSON.parse(localStorage.getItem('st_items') || JSON.stringify(["৫ এর বস্তা","১০ এর বস্তা"]));
 let salespersons = JSON.parse(localStorage.getItem('st_salespersons') || JSON.stringify(["রহিম","করিম","সোহেল"]));
+const USE_NEON = true;
+const NEON_BASE = '/.netlify/functions';
+async function syncEntriesFromNeon(){
+  if(!USE_NEON) return;
+  try{
+    const res = await fetch(NEON_BASE + '/entries');
+    if(res.ok){
+      const data = await res.json();
+      if(Array.isArray(data)){
+        entries = data;
+        localStorage.setItem('st_entries', JSON.stringify(entries));
+        renderTable(); renderReport(); updateHeaderStats(); updateBalanceDisplay(); updateEntryStats();
+        console.log('Neon sync loaded', entries.length);
+      }
+    }
+  }catch(e){ console.warn('Neon sync failed', e); }
+}
+async function saveEntryToNeon(entry, method='POST'){
+  if(!USE_NEON) return false;
+  try{
+    const r = await fetch(NEON_BASE + '/entries', {method, headers:{'Content-Type':'application/json'}, body: JSON.stringify(entry)});
+    return r.ok;
+  }catch(e){ console.warn('Neon save failed', e); return false; }
+}
+async function deleteEntryFromNeon(id){
+  if(!USE_NEON) return false;
+  try{
+    const r = await fetch(NEON_BASE + '/entries?id='+encodeURIComponent(id), {method:'DELETE'});
+    return r.ok;
+  }catch(e){ return false; }
+}
+async function neonAuth(action, payload){
+  if(!USE_NEON) return null;
+  try{
+    const r = await fetch(NEON_BASE + '/auth', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({action, ...payload})});
+    const j = await r.json();
+    if(!r.ok) return {success:false, error: j.error||'Auth failed'};
+    return j;
+  }catch(e){ console.warn('Neon auth failed', e); return null; }
+}
 let users = JSON.parse(localStorage.getItem('st_users_auth') || '[]');
 if(users.length===0){
   // migrate old string users if exist
@@ -1462,6 +1502,8 @@ updateHeaderStats();
 updateDashboardVisibility('entry');
 updateBalanceDisplay();
 updateEntryStats();
+if(USE_NEON) syncEntriesFromNeon();
+
 
 function switchPage(p){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
@@ -1606,7 +1648,7 @@ function switchAuthTab(tab){
   const sue=document.getElementById('signupError'); if(sue){ sue.textContent=''; sue.classList.remove('show'); }
   const sus=document.getElementById('signupSuccess'); if(sus){ sus.textContent=''; sus.classList.remove('show'); }
 }
-function handleSignUp(){
+async function handleSignUp(){
   const nEl=document.getElementById('signupName');
   const mEl=document.getElementById('signupMobile');
   const uEl=document.getElementById('signupUser');
@@ -1653,8 +1695,25 @@ function handleSignUp(){
     if(err){ err.textContent='⚠️ এই User ID আগেই আছে'; err.classList.add('show'); }
     return;
   }
-  users.push({name,mobile,username,password,createdAt:new Date().toISOString()});
-  localStorage.setItem('st_users_auth', JSON.stringify(users));
+  // Try Neon
+  if(USE_NEON){
+    const neonRes = await neonAuth('signup', {name, mobile, username, password});
+    if(neonRes && neonRes.success){
+      // also keep local cache
+      users.push({name,mobile,username,password,createdAt:new Date().toISOString()});
+      localStorage.setItem('st_users_auth', JSON.stringify(users));
+    } else if(neonRes===null){
+      // fallback to local
+      users.push({name,mobile,username,password,createdAt:new Date().toISOString()});
+      localStorage.setItem('st_users_auth', JSON.stringify(users));
+    } else {
+      // neon returned error (e.g., exists) — already shown
+      return;
+    }
+  } else {
+    users.push({name,mobile,username,password,createdAt:new Date().toISOString()});
+    localStorage.setItem('st_users_auth', JSON.stringify(users));
+  }
   // keep old st_users for compatibility
   localStorage.setItem('st_users', JSON.stringify(users.map(x=>x.username)));
   currentUser=username;
@@ -1665,7 +1724,7 @@ function handleSignUp(){
     showToast('✅ Welcome, '+username);
   },600);
 }
-function handleSignIn(){
+async function handleSignIn(){
   const uEl=document.getElementById('signinUser');
   const pEl=document.getElementById('signinPass');
   const err=document.getElementById('signinError');
@@ -1673,12 +1732,31 @@ function handleSignIn(){
   const password=(pEl.value||'').trim();
   if(err){ err.textContent=''; err.classList.remove('show'); }
   if(!username || !password){
-    if(err){ err.textContent='⚠️ Username ও Password দিন'; err.classList.add('show'); }
+    if(err){ err.textContent='⚠️ User ID ও Password দিন'; err.classList.add('show'); }
     return;
+  }
+  // Try Neon first
+  if(USE_NEON){
+    const neonRes = await neonAuth('signin', {username, password});
+    if(neonRes && neonRes.success){
+      currentUser=neonRes.user.username;
+      localStorage.setItem('st_current_user', currentUser);
+      // cache user locally
+      if(!users.some(u=>u.username===currentUser)){
+        users.push({name:neonRes.user.name, mobile:neonRes.user.mobile, username:neonRes.user.username, password, createdAt:neonRes.user.created_at});
+        localStorage.setItem('st_users_auth', JSON.stringify(users));
+      }
+      checkAuth(); await syncEntriesFromNeon(); updateHeaderStats(); updateBalanceDisplay(); updateEntryStats();
+      showToast('✅ Signed in (Neon): '+currentUser);
+      uEl.value=''; pEl.value=''; return;
+    } else if(neonRes && neonRes.error){
+      if(err){ err.textContent='⚠️ '+neonRes.error; err.classList.add('show'); }
+      return;
+    }
+    // fallback to local if neon failed (offline)
   }
   const found = users.find(x=>x.username.toLowerCase()===username.toLowerCase() && x.password===password);
   if(!found){
-    // check old format where password is 1234
     const oldFound = users.find(x=>x.username.toLowerCase()===username.toLowerCase());
     if(oldFound){
       if(err){ err.textContent='⚠️ ভুল Password'; err.classList.add('show'); }
@@ -1691,7 +1769,6 @@ function handleSignIn(){
   localStorage.setItem('st_current_user', currentUser);
   checkAuth(); renderTable(); renderReport(); updateHeaderStats(); updateBalanceDisplay(); updateEntryStats();
   showToast('✅ Signed in: '+currentUser);
-  // clear fields
   uEl.value=''; pEl.value='';
 }
 function handleLogout(){
@@ -1788,9 +1865,9 @@ function calcTotal(){
   const total = qty * unit;
   document.getElementById('fTotalPrice').value = total ? total.toFixed(2) : '';
 }
-function handleSave(e){
+async function handleSave(e){
   e.preventDefault();
-  const saveUser = currentUser==='__ALL__' ? users[0] : currentUser;
+  const saveUser = currentUser || 'admin';
   const data = {
     id: editingId || Date.now().toString(),
     date: document.getElementById('fDate').value,
@@ -1808,6 +1885,16 @@ function handleSave(e){
   };
   if(data.category !== 'বিক্রয়') data.salesperson = '-';
   if(data.category==='বিক্রয়' && !document.getElementById('fSalesperson').value){ showToast('⚠️ Select salesperson'); return; }
+  // Try Neon first
+  if(USE_NEON){
+    const ok = await saveEntryToNeon(data, 'POST');
+    if(ok){
+      // Sync from Neon to get latest
+      await syncEntriesFromNeon();
+      showToast(editingId?'✅ Updated (Neon)':'✅ Saved (Neon)');
+      resetForm(); return;
+    }
+  }
   if(editingId){ const idx = entries.findIndex(x=>x.id===editingId); if(idx>-1) entries[idx]=data; showToast('✅ Updated'); }
   else { entries.unshift(data); showToast('✅ Saved'); }
   saveAll(); resetForm(); renderTable(); renderReport(); updateHeaderStats();
@@ -1848,8 +1935,16 @@ function editEntry(id){
 }
 function askDelete(id){ deleteId=id; document.getElementById('deleteModal').classList.add('open'); }
 function closeDeleteModal(){ document.getElementById('deleteModal').classList.remove('open'); deleteId=null; }
-function confirmDelete(){
+async function confirmDelete(){
   if(deleteId){
+    if(USE_NEON){
+      const ok = await deleteEntryFromNeon(deleteId);
+      if(ok){
+        await syncEntriesFromNeon();
+        showToast('🗑️ Deleted (Neon)');
+        closeDeleteModal(); return;
+      }
+    }
     entries = entries.filter(x=>x.id!==deleteId);
     saveAll(); renderTable(); renderReport(); updateHeaderStats(); updateBalanceDisplay(); showToast('🗑️ Deleted');
   }
