@@ -890,7 +890,9 @@ tbody tr:last-child td{border-bottom:none}
             <span>⌕</span>
             <input type="text" id="searchInput" placeholder="Search..." oninput="renderTable()">
           </div>
-          <input type="date" class="filter-select" id="filterDate" onchange="renderTable()" title="Filter by date" style="padding:6px 8px;min-width:140px">
+          <input type="date" class="filter-select" id="filterFromDate" onchange="renderTable()" title="From date" style="padding:6px 8px;min-width:135px">
+          <span style="font-size:12px;color:var(--muted);font-weight:600">to</span>
+          <input type="date" class="filter-select" id="filterToDate" onchange="renderTable()" title="To date" style="padding:6px 8px;min-width:135px">
           <select class="filter-select" id="filterCategory" onchange="renderTable()">
             <option value="">All Category</option>
             <option value="ক্রয়">Purchase</option>
@@ -1385,13 +1387,14 @@ function renderTable(){
   const search=(document.getElementById('searchInput').value||'').toLowerCase();
   const fCat=document.getElementById('filterCategory').value;
   const fStatus=document.getElementById('filterStatus').value;
-  const fDate=document.getElementById('filterDate').value;
+  const fFrom=document.getElementById('filterFromDate').value;
+  const fTo=document.getElementById('filterToDate').value;
   const baseEntries = getUserFilteredEntries(entries);
   let filtered=baseEntries.filter(e=>{
     const matchSearch = !search || `${e.item} ${e.source} ${e.salesperson} ${e.category} ${e.expenseDesc}`.toLowerCase().includes(search);
     const matchCat = !fCat || e.category===fCat;
     const matchStatus = !fStatus || e.status===fStatus;
-    const matchDate = !fDate || e.date===fDate;
+    const matchDate = (!fFrom || e.date>=fFrom) && (!fTo || e.date<=fTo);
     return matchSearch && matchCat && matchStatus && matchDate;
   });
   document.getElementById('tableCount').textContent=filtered.length;
