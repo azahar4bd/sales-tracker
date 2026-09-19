@@ -856,6 +856,83 @@ tbody tr:last-child td{border-bottom:none}
   background:white !important;
 }
 
+
+/* Premium Tables — no border, but border-feel via shadow + spacing */
+.table-card, .report-table-wrap, .card:has(.table-wrap){
+  border:none !important;
+  box-shadow:0 4px 24px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04), 0 0 0 1px rgba(253,230,138,0.35) !important;
+  overflow:visible;
+}
+.table-wrap{
+  background:transparent;
+  padding:8px 10px 12px;
+  overflow-x:auto;
+  overflow-y:visible;
+}
+table{
+  border-collapse:separate !important;
+  border-spacing:0 7px !important;
+  border:none !important;
+
+}
+thead tr{
+  background:transparent !important;
+}
+thead th{
+  background:transparent !important;
+  border:none !important;
+  border-bottom:none !important;
+  box-shadow:none !important;
+  color:#64748b !important;
+  font-size:10px !important;
+  font-weight:800 !important;
+  letter-spacing:0.6px !important;
+  text-transform:uppercase !important;
+  padding:8px 10px 4px !important;
+  white-space:nowrap;
+  position:static !important;
+}
+thead th::after{display:none !important}
+tbody tr{
+  background:white !important;
+  box-shadow:0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.04), 0 0 0 1px rgba(226,232,240,0.6) !important;
+  border-radius:12px !important;
+  transition:all 0.22s cubic-bezier(0.16,1,0.3,1) !important;
+}
+tbody tr:hover{
+  background:white !important;
+  box-shadow:0 4px 16px rgba(15,23,42,0.08), 0 2px 8px rgba(15,23,42,0.06), 0 0 0 1px rgba(253,230,138,0.5) !important;
+  transform:translateY(-1px) !important;
+}
+tbody td{
+  border:none !important;
+  border-bottom:none !important;
+  background:transparent !important;
+  padding:11px 10px !important;
+  vertical-align:middle !important;
+}
+tbody td:first-child{border-radius:12px 0 0 12px !important}
+tbody td:last-child{border-radius:0 12px 12px 0 !important}
+tbody tr:last-child td{border-bottom:none !important}
+.table-header{
+  border-bottom:none !important;
+  background:var(--card) !important;
+  box-shadow:0 1px 0 rgba(226,232,240,0.8);
+}
+/* Keep biscuit cards warm but borderless */
+.card, .form-card, .bal-card, .stat-card, .report-filter-card{
+  border:none !important;
+  box-shadow:0 4px 20px rgba(15,23,42,0.06), 0 1px 3px rgba(15,23,42,0.04), 0 0 0 1px rgba(253,230,138,0.35) !important;
+}
+.input, .select{
+  border:1.5px solid #e2e8f0 !important;
+  box-shadow:0 1px 2px rgba(0,0,0,0.03) !important;
+}
+.input:focus, .select:focus{
+  border-color:#f59e0b !important;
+  box-shadow:0 0 0 4px rgba(245,158,11,0.10), 0 1px 3px rgba(0,0,0,0.06) !important;
+}
+
 </style>
 </head>
 <body>
