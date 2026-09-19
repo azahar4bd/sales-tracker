@@ -1230,10 +1230,6 @@ header nav{display:none}
       <div class="table-header">
         <h3>Entries — <span id="tableCount" style="color:var(--primary);font-weight:800">0</span></h3>
         <div class="table-tools">
-          <div class="search">
-            <span>⌕</span>
-            <input type="text" id="searchInput" placeholder="Search..." oninput="renderTable()">
-          </div>
           <input type="date" class="filter-select" id="filterFromDate" onchange="renderTable()" title="From date" style="padding:6px 8px;min-width:135px">
           <span style="font-size:12px;color:var(--muted);font-weight:600">to</span>
           <input type="date" class="filter-select" id="filterToDate" onchange="renderTable()" title="To date" style="padding:6px 8px;min-width:135px">
@@ -1241,12 +1237,6 @@ header nav{display:none}
             <option value="">All Category</option>
             <option value="ক্রয়">Purchase</option>
             <option value="বিক্রয়">Sale</option>
-          </select>
-          <select class="filter-select" id="filterStatus" onchange="renderTable()">
-            <option value="">All Status</option>
-            <option value="পরিশোধিত">Paid</option>
-            <option value="বাকি">Due</option>
-            <option value="আংশিক">Partial</option>
           </select>
           <button class="btn btn-ghost" style="padding:8px 12px;height:40px;font-size:12px" onclick="exportCSV()">⬇ Excel</button>
         </div>
@@ -1867,11 +1857,11 @@ function confirmDelete(){
 }
 function renderTable(){
   const tbody=document.getElementById('tableBody');
-  const search=(document.getElementById('searchInput').value||'').toLowerCase();
-  const fCat=document.getElementById('filterCategory').value;
-  const fStatus=document.getElementById('filterStatus').value;
-  const fFrom=document.getElementById('filterFromDate').value;
-  const fTo=document.getElementById('filterToDate').value;
+  const search=(document.getElementById('searchInput')?.value||'').toLowerCase();
+  const fCat=document.getElementById('filterCategory')?.value||'';
+  const fStatus=document.getElementById('filterStatus')?.value||'';
+  const fFrom=document.getElementById('filterFromDate')?.value||'';
+  const fTo=document.getElementById('filterToDate')?.value||'';
   const baseEntries = getUserFilteredEntries(entries);
   let filtered=baseEntries.filter(e=>{
     const matchSearch = !search || `${e.item} ${e.source} ${e.salesperson} ${e.category} ${e.expenseDesc}`.toLowerCase().includes(search);
