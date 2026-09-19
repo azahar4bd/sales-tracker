@@ -529,8 +529,12 @@ tbody tr:last-child td{border-bottom:none}
   gap:12px;
   margin-top:14px;
 }
-@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:560px){.stats{grid-template-columns:1fr}}
+#entryStats{
+  grid-template-columns:repeat(3,1fr);
+}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)} #entryStats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.stats{grid-template-columns:1fr} #entryStats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:400px){#entryStats{grid-template-columns:1fr}}
 .stat-card{
   padding:16px;
   border-radius:16px;
@@ -703,11 +707,19 @@ tbody tr:last-child td{border-bottom:none}
         <p>সেলস ট্র্যাকার • ক্রয় • বিক্রয় • রিপোর্ট</p>
       </div>
     </div>
-    <div class="header-stats hidden" id="headerStats">
-      <div class="h-stat"><small>Total Entries</small><b id="hTotal">0</b></div>
-      <div class="h-stat"><small>Total Sale</small><b id="hSale">৳ 0</b></div>
-      <div class="h-stat"><small>Total Buy</small><b id="hBuy">৳ 0</b></div>
-      <div class="h-stat"><small>Net Profit</small><b id="hProfit">৳ 0</b></div>
+    <div style="display:flex;align-items:center;gap:10px;margin-left:auto;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.12);backdrop-filter:blur(8px);padding:6px 10px;border-radius:12px;border:1px solid rgba(255,255,255,0.15)">
+        <span style="font-size:14px">👤</span>
+        <select id="userSelect" onchange="switchUser(this.value)" style="background:transparent;border:none;color:white;font-weight:700;font-size:13px;outline:none;cursor:pointer;min-width:110px">
+        </select>
+        <button onclick="openUserModal()" style="width:28px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,0.25);background:rgba(255,255,255,0.18);color:white;cursor:pointer;display:grid;place-items:center;font-size:16px;flex-shrink:0" title="Add user">＋</button>
+      </div>
+      <div class="header-stats hidden" id="headerStats">
+        <div class="h-stat"><small>Total Entries</small><b id="hTotal">0</b></div>
+        <div class="h-stat"><small>Total Sale</small><b id="hSale">৳ 0</b></div>
+        <div class="h-stat"><small>Total Buy</small><b id="hBuy">৳ 0</b></div>
+        <div class="h-stat"><small>Net Profit</small><b id="hProfit">৳ 0</b></div>
+      </div>
     </div>
   </div>
   <nav>
@@ -744,6 +756,40 @@ tbody tr:last-child td{border-bottom:none}
           <div class="bal-value" id="bal10Card">0</div>
           <div class="bal-unit">pcs</div>
         </div>
+      </div>
+    </div>
+
+    <!-- 6 Summary Cards for Entry Page -->
+    <div class="stats" style="margin-bottom:12px;grid-template-columns:repeat(3,1fr);gap:10px" id="entryStats">
+      <div class="stat-card" style="padding:12px">
+        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট ক্রয়</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">🛒</span></div>
+        <div class="stat-value" style="font-size:18px" id="eBuyCount">0 টি</div>
+        <div class="stat-sub" style="font-size:10px">Total Buy Count</div>
+      </div>
+      <div class="stat-card" style="padding:12px">
+        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট বিক্রয়</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">💰</span></div>
+        <div class="stat-value" style="font-size:18px" id="eSaleCount">0 টি</div>
+        <div class="stat-sub" style="font-size:10px">Total Sale Count</div>
+      </div>
+      <div class="stat-card" style="padding:12px">
+        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট ক্রয় মূল্য</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">💵</span></div>
+        <div class="stat-value" style="font-size:16px" id="eBuyAmount">৳ 0</div>
+        <div class="stat-sub" style="font-size:10px">Total Buy Amount</div>
+      </div>
+      <div class="stat-card" style="padding:12px">
+        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট বিক্রয় মূল্য</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">💹</span></div>
+        <div class="stat-value" style="font-size:16px" id="eSaleAmount">৳ 0</div>
+        <div class="stat-sub" style="font-size:10px">Total Sale Amount</div>
+      </div>
+      <div class="stat-card" style="padding:12px">
+        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট খরচ</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">🧾</span></div>
+        <div class="stat-value" style="font-size:16px" id="eExpense">৳ 0</div>
+        <div class="stat-sub" style="font-size:10px">Total Expense</div>
+      </div>
+      <div class="stat-card" style="padding:12px;border:1.5px solid var(--primary)">
+        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট লাভ</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">📈</span></div>
+        <div class="stat-value" style="font-size:16px" id="eProfit">৳ 0</div>
+        <div class="stat-sub" style="font-size:10px" id="eProfitSub">Sale - (Buy+Expense)</div>
       </div>
     </div>
 
@@ -1021,6 +1067,24 @@ tbody tr:last-child td{border-bottom:none}
   </div>
 </div>
 
+<div class="modal-overlay" id="userModal">
+  <div class="modal" style="max-width:460px">
+    <h4>👥 Multi-User System</h4>
+    <p style="margin-bottom:12px">ইউজার সিলেক্ট করুন — প্রতিটি ইউজারের ডেটা আলাদা ফিল্টার হবে। নতুন ইউজার যোগ করুন।</p>
+    <div style="display:flex;gap:8px;margin-bottom:14px">
+      <input type="text" class="input" id="newUserInput" placeholder="নতুন ইউজারের নাম" style="flex:1;height:42px;background:white">
+      <button class="btn btn-primary" onclick="addUser()" style="height:42px">＋ Add</button>
+    </div>
+    <div id="userList" style="display:grid;gap:8px;max-height:240px;overflow-y:auto"></div>
+    <div style="margin-top:12px;padding:10px;background:#f8fafc;border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--muted);line-height:1.5">
+      💡 <b>All Users</b> সিলেক্ট করলে সব ইউজারের ডেটা একসাথে দেখাবে। প্রতিটি এন্ট্রিতে ইউজারের নাম সেভ হবে।
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeUserModal()">Close</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast">✅ Saved</div>
 
 <script>
@@ -1028,18 +1092,26 @@ let entries = JSON.parse(localStorage.getItem('st_entries') || '[]');
 let categories = JSON.parse(localStorage.getItem('st_categories') || JSON.stringify(["ক্রয়","বিক্রয়"]));
 let items = JSON.parse(localStorage.getItem('st_items') || JSON.stringify(["৫ এর বস্তা","১০ এর বস্তা"]));
 let salespersons = JSON.parse(localStorage.getItem('st_salespersons') || JSON.stringify(["রহিম","করিম","সোহেল"]));
+let users = JSON.parse(localStorage.getItem('st_users') || JSON.stringify(["Admin","Rahim","Karim"]));
+let currentUser = localStorage.getItem('st_current_user') || users[0] || "Admin";
 let editingId = null;
 let deleteId = null;
 let addType = null;
+// migrate old entries without user
+let _migrated=false;
+entries.forEach(e=>{ if(!e.user){ e.user=users[0]||"Admin"; _migrated=true; }});
+if(_migrated) localStorage.setItem('st_entries',JSON.stringify(entries));
 
 document.getElementById('fDate').valueAsDate = new Date();
 refreshDropdowns();
 onCategoryChange();
+initUsers();
 renderTable();
 renderReport();
 updateHeaderStats();
 updateDashboardVisibility('entry');
 updateBalanceDisplay();
+updateEntryStats();
 
 function switchPage(p){
   document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
@@ -1052,6 +1124,110 @@ function switchPage(p){
 function updateDashboardVisibility(page){
   const hs=document.getElementById('headerStats');
   if(page==='entry'){ hs.classList.add('hidden'); } else { hs.classList.remove('hidden'); }
+}
+function initUsers(){
+  if(!users.includes(currentUser)) currentUser=users[0];
+  renderUserSelect();
+}
+function renderUserSelect(){
+  const sel=document.getElementById('userSelect');
+  if(!sel) return;
+  sel.innerHTML='';
+  const allOpt=document.createElement('option');
+  allOpt.value='__ALL__'; allOpt.textContent='All Users'; allOpt.style.color='#0f172a';
+  sel.appendChild(allOpt);
+  users.forEach(u=>{
+    const o=document.createElement('option');
+    o.value=u; o.textContent=u; o.style.color='#0f172a';
+    sel.appendChild(o);
+  });
+  sel.value = currentUser==='__ALL__' ? '__ALL__' : currentUser;
+  renderUserList();
+}
+function switchUser(val){
+  currentUser=val;
+  localStorage.setItem('st_current_user',currentUser);
+  renderTable(); renderReport(); updateHeaderStats(); updateBalanceDisplay(); updateEntryStats();
+  showToast('👤 User: '+(val==='__ALL__'?'All Users':val));
+}
+function openUserModal(){ document.getElementById('userModal').classList.add('open'); renderUserList(); setTimeout(()=>{const i=document.getElementById('newUserInput'); if(i) i.focus();},100); }
+function closeUserModal(){ document.getElementById('userModal').classList.remove('open'); }
+function renderUserList(){
+  const list=document.getElementById('userList');
+  if(!list) return;
+  const isAll = currentUser==='__ALL__';
+  list.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:${isAll?'#e0f2fe':'white'};border:1.5px solid ${isAll?'#7dd3fc':'var(--border)'};border-radius:10px;cursor:pointer" onclick="switchUser('__ALL__');closeUserModal()">
+      <div style="display:flex;align-items:center;gap:8px"><span style="width:28px;height:28px;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;display:grid;place-items:center;border-radius:8px;font-size:13px">◈</span><b>All Users</b><span style="font-size:11px;color:var(--muted)">(সব ডেটা)</span></div>
+      <span style="font-size:11px;color:var(--primary);font-weight:700">${isAll?'✓ Active':''}</span>
+    </div>
+  ` + users.map(u=>{
+    const active = currentUser===u;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:${active?'#ecfdf5':'white'};border:1.5px solid ${active?'#6ee7b7':'var(--border)'};border-radius:10px">
+      <div style="display:flex;align-items:center;gap:8px;cursor:pointer;flex:1" onclick="switchUser('${u}');closeUserModal()">
+        <span style="width:28px;height:28px;background:linear-gradient(135deg,#0f766e,#14b8a6);color:white;display:grid;place-items:center;border-radius:8px;font-size:12px;font-weight:700">${u.charAt(0).toUpperCase()}</span>
+        <b>${u}</b> ${active?'<span style="font-size:10px;background:#059669;color:white;padding:2px 6px;border-radius:20px">Active</span>':''}
+        <span style="font-size:11px;color:var(--muted)">${entries.filter(e=>e.user===u).length} entries</span>
+      </div>
+      <button onclick="deleteUser('${u}')" style="width:28px;height:28px;border-radius:8px;border:1px solid #fecaca;background:#fef2f2;color:#dc2626;cursor:pointer;display:grid;place-items:center" title="Delete">🗑️</button>
+    </div>`;
+  }).join('');
+}
+function addUser(){
+  const inp=document.getElementById('newUserInput');
+  const val=(inp.value||'').trim();
+  if(!val){ showToast('⚠️ নাম লিখুন'); return; }
+  if(users.includes(val)){ showToast('⚠️ ইউজার আছে'); return; }
+  users.push(val);
+  localStorage.setItem('st_users',JSON.stringify(users));
+  inp.value='';
+  currentUser=val;
+  localStorage.setItem('st_current_user',currentUser);
+  renderUserSelect(); renderTable(); renderReport(); updateHeaderStats(); updateBalanceDisplay(); updateEntryStats();
+  showToast('✅ User Added: '+val);
+  renderUserList();
+}
+function deleteUser(name){
+  if(users.length<=1){ showToast('⚠️ শেষ ইউজার ডিলিট করা যাবে না'); return; }
+  if(!confirm(`"${name}" ইউজার ডিলিট করবেন? তার সব এন্ট্রি থেকে যাবে কিন্তু user tag মুছে যাবে।`)) return;
+  users=users.filter(u=>u!==name);
+  localStorage.setItem('st_users',JSON.stringify(users));
+  // reassign entries of deleted user to first user
+  let changed=false;
+  entries.forEach(e=>{ if(e.user===name){ e.user=users[0]; changed=true; }});
+  if(changed) localStorage.setItem('st_entries',JSON.stringify(entries));
+  if(currentUser===name) currentUser=users[0];
+  localStorage.setItem('st_current_user',currentUser);
+  renderUserSelect(); renderTable(); renderReport(); updateHeaderStats(); updateBalanceDisplay(); updateEntryStats();
+  showToast('🗑️ Deleted: '+name);
+}
+function getUserFilteredEntries(list){
+  if(currentUser==='__ALL__') return list;
+  return list.filter(e=>e.user===currentUser);
+}
+function updateEntryStats(){
+  const list = getUserFilteredEntries(entries);
+  let buyCount=0, saleCount=0, buyAmt=0, saleAmt=0, exp=0;
+  list.forEach(e=>{
+    exp+=Number(e.expenseAmount)||0;
+    if(e.category==='ক্রয়'){ buyCount++; buyAmt+=Number(e.totalPrice)||0; }
+    else if(e.category==='বিক্রয়'){ saleCount++; saleAmt+=Number(e.totalPrice)||0; }
+    else { buyCount++; buyAmt+=Number(e.totalPrice)||0; }
+  });
+  const profit = saleAmt - (buyAmt + exp);
+  const set = (id,val)=>{ const el=document.getElementById(id); if(el) el.textContent=val; };
+  set('eBuyCount', buyCount.toLocaleString('en-US')+' টি');
+  set('eSaleCount', saleCount.toLocaleString('en-US')+' টি');
+  set('eBuyAmount', '৳ '+buyAmt.toLocaleString('en-US'));
+  set('eSaleAmount', '৳ '+saleAmt.toLocaleString('en-US'));
+  set('eExpense', '৳ '+exp.toLocaleString('en-US'));
+  const pEl=document.getElementById('eProfit');
+  if(pEl){
+    pEl.textContent=(profit>=0?'৳ ':'-৳ ')+Math.abs(profit).toLocaleString('en-US');
+    pEl.style.color = profit>=0 ? '#059669' : '#dc2626';
+  }
+  const sub=document.getElementById('eProfitSub');
+  if(sub) sub.textContent = profit>=0 ? 'Profit' : 'Loss';
 }
 function refreshDropdowns(){
   const catSel = document.getElementById('fCategory');
@@ -1106,8 +1282,9 @@ function onCategoryChange(){
   updateBalanceDisplay();
 }
 function getItemBalance(item){
+  const list = getUserFilteredEntries(entries);
   let buyQty=0, sellQty=0;
-  entries.forEach(e=>{
+  list.forEach(e=>{
     if(e.item!==item) return;
     if(e.category==='ক্রয়'){ buyQty+=Number(e.qty)||0; }
     else if(e.category==='বিক্রয়'){ sellQty+=Number(e.qty)||0; }
@@ -1134,6 +1311,7 @@ function calcTotal(){
 }
 function handleSave(e){
   e.preventDefault();
+  const saveUser = currentUser==='__ALL__' ? users[0] : currentUser;
   const data = {
     id: editingId || Date.now().toString(),
     date: document.getElementById('fDate').value,
@@ -1146,7 +1324,8 @@ function handleSave(e){
     totalPrice: parseFloat(document.getElementById('fTotalPrice').value) || 0,
     expenseDesc: document.getElementById('fExpenseDesc').value.trim(),
     expenseAmount: parseFloat(document.getElementById('fExpenseAmount').value) || 0,
-    status: document.getElementById('fStatus').value
+    status: document.getElementById('fStatus').value,
+    user: saveUser
   };
   if(data.category !== 'বিক্রয়') data.salesperson = '-';
   if(data.category==='বিক্রয়' && !document.getElementById('fSalesperson').value){ showToast('⚠️ Select salesperson'); return; }
@@ -1202,7 +1381,8 @@ function renderTable(){
   const search=(document.getElementById('searchInput').value||'').toLowerCase();
   const fCat=document.getElementById('filterCategory').value;
   const fStatus=document.getElementById('filterStatus').value;
-  let filtered=entries.filter(e=>{
+  const baseEntries = getUserFilteredEntries(entries);
+  let filtered=baseEntries.filter(e=>{
     const matchSearch = !search || `${e.item} ${e.source} ${e.salesperson} ${e.category} ${e.expenseDesc}`.toLowerCase().includes(search);
     const matchCat = !fCat || e.category===fCat;
     const matchStatus = !fStatus || e.status===fStatus;
@@ -1238,7 +1418,8 @@ function getFilteredForReport(){
   const to=document.getElementById('rTo').value;
   const cat=document.getElementById('rCategory').value;
   const item=document.getElementById('rItem').value;
-  return entries.filter(e=>{
+  const base = getUserFilteredEntries(entries);
+  return base.filter(e=>{
     if(from && e.date < from) return false;
     if(to && e.date > to) return false;
     if(cat && e.category!==cat) return false;
@@ -1389,15 +1570,16 @@ function clearReportFilters(){
   renderReport();
 }
 function updateHeaderStats(){
-  document.getElementById('hTotal').textContent=entries.length;
+  const list = getUserFilteredEntries(entries);
+  document.getElementById('hTotal').textContent=list.length;
   let s=0,b=0;
-  entries.forEach(e=>{
+  list.forEach(e=>{
     if(e.category==='বিক্রয়') s+=Number(e.totalPrice)||0;
     else b+=Number(e.totalPrice)||0;
   });
   document.getElementById('hSale').textContent='৳ '+ s.toLocaleString('en-US');
   document.getElementById('hBuy').textContent='৳ '+ b.toLocaleString('en-US');
-  const exp=entries.reduce((a,e)=>a+(Number(e.expenseAmount)||0),0);
+  const exp=list.reduce((a,e)=>a+(Number(e.expenseAmount)||0),0);
   const profit=s-(b+exp);
   const el=document.getElementById('hProfit');
   el.textContent=(profit>=0?'৳ ':'-৳ ')+Math.abs(profit).toLocaleString('en-US');
@@ -1446,12 +1628,16 @@ function confirmAdd(){
 }
 document.getElementById('addModal').addEventListener('click',e=>{ if(e.target.id==='addModal') closeModal(); });
 document.getElementById('deleteModal').addEventListener('click',e=>{ if(e.target.id==='deleteModal') closeDeleteModal(); });
+document.getElementById('userModal').addEventListener('click',e=>{ if(e.target.id==='userModal') closeUserModal(); });
 document.getElementById('modalInput').addEventListener('keydown',e=>{ if(e.key==='Enter') confirmAdd(); });
+document.getElementById('newUserInput').addEventListener('keydown',e=>{ if(e.key==='Enter') addUser(); });
 function saveAll(){
   localStorage.setItem('st_entries',JSON.stringify(entries));
   localStorage.setItem('st_categories',JSON.stringify(categories));
   localStorage.setItem('st_items',JSON.stringify(items));
   localStorage.setItem('st_salespersons',JSON.stringify(salespersons));
+  localStorage.setItem('st_users',JSON.stringify(users));
+  localStorage.setItem('st_current_user',currentUser);
 }
 function showToast(msg){
   const t=document.getElementById('toast');
