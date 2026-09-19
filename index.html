@@ -14,15 +14,15 @@
   --primary-mid:#14b8a6;
   --accent:#f59e0b;
   --accent-light:#fffbeb;
-  --bg:#f1f5f9;
+  --bg:#e6f7ff;
   --card:#ffffff;
-  --border:#e2e8f0;
-  --border-light:#f1f5f9;
+  --border:#dbeafe;
+  --border-light:#f0f9ff;
   --text:#0f172a;
   --muted:#64748b;
-  --radius:16px;
-  --shadow:0 4px 24px rgba(15,23,42,0.06);
-  --shadow-lg:0 10px 40px rgba(15,23,42,0.10);
+  --radius:14px;
+  --shadow:0 2px 12px rgba(14,165,233,0.08);
+  --shadow-lg:0 6px 24px rgba(14,165,233,0.14);
 }
 body{
   font-family:'Hind Siliguri',system-ui,sans-serif;
@@ -30,8 +30,11 @@ body{
   color:var(--text);
   line-height:1.6;
   background-image:
-    radial-gradient(at 20% 20%, rgba(20,184,166,0.08) 0%, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(245,158,11,0.06) 0%, transparent 50%);
+    radial-gradient(at 15% 15%, rgba(14,165,233,0.10) 0%, transparent 45%),
+    radial-gradient(at 85% 5%, rgba(56,189,248,0.08) 0%, transparent 40%),
+    radial-gradient(at 50% 100%, rgba(224,242,254,0.6) 0%, transparent 60%),
+    linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);
+  background-attachment:fixed;
   min-height:100vh;
 }
 /* Header Premium */
@@ -155,26 +158,26 @@ nav{
 .page.active{display:block;animation:fadeIn 0.35s cubic-bezier(0.16,1,0.3,1)}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 
-/* Balance Cards Premium */
+/* Balance Cards Premium - Smaller & Beautiful */
 .balance-cards{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:12px;
-  margin-bottom:14px;
+  gap:10px;
+  margin-bottom:12px;
 }
 @media(max-width:640px){.balance-cards{grid-template-columns:1fr 1fr;gap:8px}}
 .bal-card{
   background:white;
   border:1px solid var(--border);
-  border-radius:16px;
-  padding:14px 16px;
+  border-radius:12px;
+  padding:10px 12px;
   display:flex;
   justify-content:space-between;
   align-items:center;
   position:relative;
   overflow:hidden;
-  box-shadow:var(--shadow);
-  transition:all 0.3s cubic-bezier(0.16,1,0.3,1);
+  box-shadow:0 2px 10px rgba(14,165,233,0.07);
+  transition:all 0.25s cubic-bezier(0.16,1,0.3,1);
 }
 .bal-card::before{
   content:'';
@@ -182,42 +185,42 @@ nav{
   left:0;
   top:0;
   bottom:0;
-  width:4px;
-  border-radius:16px 0 0 16px;
+  width:3px;
+  border-radius:12px 0 0 12px;
 }
 .bal-card:nth-child(1)::before{background:linear-gradient(180deg,#0ea5e9 0%,#0284c7 100%)}
 .bal-card:nth-child(2)::before{background:linear-gradient(180deg,#f59e0b 0%,#d97706 100%)}
 .bal-card::after{
   content:'';
   position:absolute;
-  top:-20px;
-  right:-20px;
-  width:80px;
-  height:80px;
+  top:-16px;
+  right:-16px;
+  width:60px;
+  height:60px;
   border-radius:50%;
-  opacity:0.06;
+  opacity:0.05;
 }
 .bal-card:nth-child(1)::after{background:#0ea5e9}
 .bal-card:nth-child(2)::after{background:#f59e0b}
-.bal-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(15,23,42,0.10)}
-.bal-left{display:flex;align-items:center;gap:12px}
+.bal-card:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(14,165,233,0.12)}
+.bal-left{display:flex;align-items:center;gap:9px}
 .bal-icon{
-  width:42px;height:42px;
-  border-radius:12px;
+  width:32px;height:32px;
+  border-radius:9px;
   display:grid;
   place-items:center;
-  font-size:18px;
+  font-size:14px;
   font-weight:700;
   flex-shrink:0;
 }
 .bal-card:nth-child(1) .bal-icon{background:linear-gradient(135deg,#e0f2fe 0%,#bae6fd 100%);color:#0284c7;border:1px solid #7dd3fc}
 .bal-card:nth-child(2) .bal-icon{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#d97706;border:1px solid #fcd34d}
-.bal-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:0.6px;text-transform:uppercase}
-.bal-sub{font-size:11px;color:var(--muted);font-weight:500}
-.bal-value{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1}
+.bal-label{font-size:9px;color:var(--muted);font-weight:700;letter-spacing:0.5px;text-transform:uppercase}
+.bal-sub{font-size:10px;color:var(--muted);font-weight:500}
+.bal-value{font-family:'Outfit',sans-serif;font-size:19px;font-weight:800;letter-spacing:-0.7px;line-height:1}
 .bal-card:nth-child(1) .bal-value{color:#0284c7}
 .bal-card:nth-child(2) .bal-value{color:#d97706}
-.bal-unit{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.5px;text-align:right}
+.bal-unit{font-size:9px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:0.4px;text-align:right}
 
 /* Form Premium */
 .form-card{
@@ -759,37 +762,37 @@ tbody tr:last-child td{border-bottom:none}
       </div>
     </div>
 
-    <!-- 6 Summary Cards for Entry Page -->
-    <div class="stats" style="margin-bottom:12px;grid-template-columns:repeat(3,1fr);gap:10px" id="entryStats">
-      <div class="stat-card" style="padding:12px">
-        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট ক্রয়</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">🛒</span></div>
-        <div class="stat-value" style="font-size:18px" id="eBuyCount">0 টি</div>
-        <div class="stat-sub" style="font-size:10px">Total Buy Count</div>
+    <!-- 6 Summary Cards for Entry Page - Compact & Beautiful -->
+    <div class="stats" style="margin-bottom:12px;grid-template-columns:repeat(3,1fr);gap:8px" id="entryStats">
+      <div class="stat-card" style="padding:10px 11px;border-radius:12px;box-shadow:0 2px 8px rgba(14,165,233,0.06);border:1px solid #dbeafe">
+        <div class="stat-top" style="margin-bottom:4px"><span class="stat-label" style="font-size:9px;letter-spacing:0.4px">মোট ক্রয়</span><span class="stat-icon" style="width:26px;height:26px;font-size:13px;border-radius:8px">🛒</span></div>
+        <div class="stat-value" style="font-size:15px;margin:2px 0" id="eBuyCount">0 টি</div>
+        <div class="stat-sub" style="font-size:9px">Buy Count</div>
       </div>
-      <div class="stat-card" style="padding:12px">
-        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট বিক্রয়</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">💰</span></div>
-        <div class="stat-value" style="font-size:18px" id="eSaleCount">0 টি</div>
-        <div class="stat-sub" style="font-size:10px">Total Sale Count</div>
+      <div class="stat-card" style="padding:10px 11px;border-radius:12px;box-shadow:0 2px 8px rgba(14,165,233,0.06);border:1px solid #dbeafe">
+        <div class="stat-top" style="margin-bottom:4px"><span class="stat-label" style="font-size:9px;letter-spacing:0.4px">মোট বিক্রয়</span><span class="stat-icon" style="width:26px;height:26px;font-size:13px;border-radius:8px">💰</span></div>
+        <div class="stat-value" style="font-size:15px;margin:2px 0" id="eSaleCount">0 টি</div>
+        <div class="stat-sub" style="font-size:9px">Sale Count</div>
       </div>
-      <div class="stat-card" style="padding:12px">
-        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট ক্রয় মূল্য</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">💵</span></div>
-        <div class="stat-value" style="font-size:16px" id="eBuyAmount">৳ 0</div>
-        <div class="stat-sub" style="font-size:10px">Total Buy Amount</div>
+      <div class="stat-card" style="padding:10px 11px;border-radius:12px;box-shadow:0 2px 8px rgba(14,165,233,0.06);border:1px solid #dbeafe">
+        <div class="stat-top" style="margin-bottom:4px"><span class="stat-label" style="font-size:9px;letter-spacing:0.4px">মোট ক্রয় মূল্য</span><span class="stat-icon" style="width:26px;height:26px;font-size:13px;border-radius:8px">💵</span></div>
+        <div class="stat-value" style="font-size:13px;margin:2px 0" id="eBuyAmount">৳ 0</div>
+        <div class="stat-sub" style="font-size:9px">Buy Amount</div>
       </div>
-      <div class="stat-card" style="padding:12px">
-        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট বিক্রয় মূল্য</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">💹</span></div>
-        <div class="stat-value" style="font-size:16px" id="eSaleAmount">৳ 0</div>
-        <div class="stat-sub" style="font-size:10px">Total Sale Amount</div>
+      <div class="stat-card" style="padding:10px 11px;border-radius:12px;box-shadow:0 2px 8px rgba(14,165,233,0.06);border:1px solid #dbeafe">
+        <div class="stat-top" style="margin-bottom:4px"><span class="stat-label" style="font-size:9px;letter-spacing:0.4px">মোট বিক্রয় মূল্য</span><span class="stat-icon" style="width:26px;height:26px;font-size:13px;border-radius:8px">💹</span></div>
+        <div class="stat-value" style="font-size:13px;margin:2px 0" id="eSaleAmount">৳ 0</div>
+        <div class="stat-sub" style="font-size:9px">Sale Amount</div>
       </div>
-      <div class="stat-card" style="padding:12px">
-        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট খরচ</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">🧾</span></div>
-        <div class="stat-value" style="font-size:16px" id="eExpense">৳ 0</div>
-        <div class="stat-sub" style="font-size:10px">Total Expense</div>
+      <div class="stat-card" style="padding:10px 11px;border-radius:12px;box-shadow:0 2px 8px rgba(14,165,233,0.06);border:1px solid #dbeafe">
+        <div class="stat-top" style="margin-bottom:4px"><span class="stat-label" style="font-size:9px;letter-spacing:0.4px">মোট খরচ</span><span class="stat-icon" style="width:26px;height:26px;font-size:13px;border-radius:8px">🧾</span></div>
+        <div class="stat-value" style="font-size:13px;margin:2px 0" id="eExpense">৳ 0</div>
+        <div class="stat-sub" style="font-size:9px">Expense</div>
       </div>
-      <div class="stat-card" style="padding:12px;border:1.5px solid var(--primary)">
-        <div class="stat-top" style="margin-bottom:6px"><span class="stat-label" style="font-size:10px">মোট লাভ</span><span class="stat-icon" style="width:32px;height:32px;font-size:15px">📈</span></div>
-        <div class="stat-value" style="font-size:16px" id="eProfit">৳ 0</div>
-        <div class="stat-sub" style="font-size:10px" id="eProfitSub">Sale - (Buy+Expense)</div>
+      <div class="stat-card" style="padding:10px 11px;border-radius:12px;box-shadow:0 2px 10px rgba(15,118,110,0.10);border:1.5px solid #99f6e4;background:linear-gradient(135deg,#f0fdfa 0%,#ffffff 100%)">
+        <div class="stat-top" style="margin-bottom:4px"><span class="stat-label" style="font-size:9px;letter-spacing:0.4px;color:#0f766e">মোট লাভ</span><span class="stat-icon" style="width:26px;height:26px;font-size:13px;border-radius:8px;background:linear-gradient(135deg,#ccfbf1,#99f6e4);border-color:#5eead4;color:#0f766e">📈</span></div>
+        <div class="stat-value" style="font-size:14px;margin:2px 0" id="eProfit">৳ 0</div>
+        <div class="stat-sub" style="font-size:9px" id="eProfitSub">Profit</div>
       </div>
     </div>
 
